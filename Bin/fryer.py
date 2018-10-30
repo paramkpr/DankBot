@@ -126,9 +126,9 @@ def __get_gif_reader(url, filepath):
 def __fry(img, n, e, b):
 	coords = __find_chars(img)
 	# eyecoords = __find_eyes(img)
-
 	if coords:
 		img = __add_b(img, coords, e / 20)
+
 	img = __add_emojis(img, n * e)
 	# if eyecoords:
 	# 	img = __add_flares(img, eyecoords)
