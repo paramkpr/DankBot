@@ -39,7 +39,7 @@ from dotenv import load_dotenv
 from imageio.plugins import ffmpeg
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-from Bin.handlers import *
+from bin.handlers import *
 
 
 ffmpeg.download()
