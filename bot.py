@@ -36,9 +36,10 @@ Copyright (C) 2018  Ishan Manchanda (@Rippr)
 from os import environ
 
 from dotenv import load_dotenv
+from imageio.plugins import ffmpeg
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-from Bin.handlers import *
+from bin.handlers import *
 
 
 ffmpeg.download()
