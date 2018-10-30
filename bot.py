@@ -41,6 +41,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from Bin.handlers import *
 
+
 ffmpeg.download()
 
 if 'TELEGRAM_TOKEN' not in environ:
