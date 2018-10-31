@@ -174,8 +174,8 @@ def __find_chars(img):
 @jit(fastmath=True)
 def __find_eyes(img):
 	coords = []
-	face_cascade = CascadeClassifier(bin_path + '/Classifiers/haarcascade_frontalface_default.xml')
-	eye_cascade = CascadeClassifier(bin_path + '/Classifiers/haarcascade_eye.xml')
+	face_cascade = CascadeClassifier(bin_path + '/Resources/haarcascade_frontalface_default.xml')
+	eye_cascade = CascadeClassifier(bin_path + '/Resources/haarcascade_eye.xml')
 	gray = array(img.convert("L"))
 
 	faces = face_cascade.detectMultiScale(gray, 1.3, 5)
