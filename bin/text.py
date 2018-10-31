@@ -55,8 +55,8 @@ To invoke, reply to a message containing an image, GIF, or video using one of th
 	f) Heavy: Extra bulges are added.
 	g) Light: No bulges are added.
 
-Also note that emojis and bulges are disabled by default for GIFs/Videos.
-Use No-/Low-/High- fat and Light/Heavy to enable them as needed.
+Also note that emojis and bulges are disabled by default for GIFs and Videos.
+Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
 
 
 Use */help* to print all commands and */cookbook* for frying help.
