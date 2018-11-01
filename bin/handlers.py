@@ -18,7 +18,6 @@ def fry_handler(bot, update):
 		args = {key: 1 if key in text else 0 for key in keys}
 		if update.message.reply_to_message.document:
 			url = bot.get_file(update.message.reply_to_message.document.file_id).file_path
-			print(url)
 			fry_gif(update, url, n, args)
 
 		elif update.message.reply_to_message.video:
@@ -73,11 +72,6 @@ def cookbook_handler(bot, update):
 
 @run_async
 def reply_handler(bot, update):
-	print(
-		'(%s) %s: %s' % (update.message.chat.title, update.message.from_user.first_name, update.message.text)
-		if update.message.chat.type == 'group' else
-		'%s: %s' % (update.message.from_user.first_name, update.message.text)
-	)
 	if fry_handler(bot, update):
 		return
 
@@ -90,11 +84,6 @@ def reply_handler(bot, update):
 @run_async
 def main_handler(bot, update):
 	textn = update.message.text
-	print(
-		'(%s) %s: %s' % (update.message.chat.title, update.message.from_user.first_name, textn)
-		if update.message.chat.type == 'group' else
-		'%s: %s' % (update.message.from_user.first_name, textn)
-	)
 	text = textn.lower()
 
 	if ', not ' in text:
