@@ -73,6 +73,11 @@ def cookbook_handler(bot, update):
 
 @run_async
 def reply_handler(bot, update):
+	print(
+		'(%s) %s: %s' % (update.message.chat.title, update.message.from_user.first_name, update.message.text)
+		if update.message.chat.type == 'group' else
+		'%s: %s' % (update.message.from_user.first_name, update.message.text)
+	)
 	if fry_handler(bot, update):
 		return
 
@@ -85,6 +90,11 @@ def reply_handler(bot, update):
 @run_async
 def main_handler(bot, update):
 	textn = update.message.text
+	print(
+		'(%s) %s: %s' % (update.message.chat.title, update.message.from_user.first_name, textn)
+		if update.message.chat.type == 'group' else
+		'%s: %s' % (update.message.from_user.first_name, textn)
+	)
 	text = textn.lower()
 
 	if ', not ' in text:
