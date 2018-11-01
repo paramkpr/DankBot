@@ -49,6 +49,7 @@ def fry_image(update, url, n, args):
 
 @run_async
 def fry_gif(update, url, n, args):
+	print("Entered fry_gif")
 	e = 1.5 if args['high-fat'] else 1 if args['low-fat'] else 0
 	b = 0.3 if args['heavy'] else 0.15 if args['light'] else 0
 	m = 4 if args['deep'] else 1 if args['shallow'] else 2
@@ -60,14 +61,19 @@ def fry_gif(update, url, n, args):
 	gifbio.name = filename + '.gif'
 	caption = "Requested by %s, %d Cycle(s)" % (name, n)
 
+	print("Getting file")
 	success, reader = __get_gif_reader(url, filepath)
+	print("Back in func. Success:", success)
 	if success:
 		fps = reader.get_meta_data()['fps'] if 'fps' in reader.get_meta_data() else 30
 		fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 		shuffle(fs)
 
+		print("Init'ing writer")
 		with get_writer(gifbio, format='gif', fps=fps) as writer:
+			print("Initted")
 			for i, img in enumerate(reader):
+				print(i)
 				img = Image.fromarray(img)
 				img = __fry(img, n, e, b)
 
@@ -83,12 +89,16 @@ def fry_gif(update, url, n, args):
 				image = imread(bio)
 				writer.append_data(image)
 
+		print("Done! Sending...")
 		gifbio.seek(0)
 		update.message.reply_animation(document=gifbio, caption=caption)
+		print("Done! Removing...")
 		remove(filepath + '.mp4')
+		print("Done! Saving gif...")
 		gifbio.seek(0)
 		with open(filepath + '.gif', 'wb') as f:
 			f.write(gifbio.read())
+		print("Done! Uploading...")
 		__upload_to_imgur(filepath + '.gif', caption)
 
 
@@ -107,9 +117,11 @@ def __get_image(url):
 
 
 def __get_gif_reader(url, filepath):
-	for _ in range(5):
+	for k in range(5):
+		print(k)
 		try:
 			urlretrieve(url, filepath + '.mp4')
+			print("File Downloaded")
 			return 1, get_reader(filepath + '.mp4')
 		except HTTPError or URLError:
 			sleep(1)

@@ -18,6 +18,7 @@ def fry_handler(bot, update):
 		args = {key: 1 if key in text else 0 for key in keys}
 		if update.message.reply_to_message.document:
 			url = bot.get_file(update.message.reply_to_message.document.file_id).file_path
+			print(url)
 			fry_gif(update, url, n, args)
 
 		elif update.message.reply_to_message.video:
