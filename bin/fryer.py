@@ -91,7 +91,7 @@ def fry_gif(update, url, n, args):
 
 		print("Done! Sending...")
 		gifbio.seek(0)
-		update.message.reply_animation(document=gifbio, caption=caption)
+		update.message.reply_animation(animation=gifbio, caption=caption)
 		print("Done! Removing...")
 		remove(filepath + '.mp4')
 		print("Done! Saving gif...")
