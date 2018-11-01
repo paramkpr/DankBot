@@ -1,51 +1,33 @@
 # File IDs - GIFs
-despacito = [
-	'CgADBAADnI4AAmQbZAeIL_dX_O5NcQI'
-]
-hmmm = [
-	'CgADBAADCQAD3nJNU3mhMcoZSIOkAg'
-]
+hmmm = ['CgADBAADCQAD3nJNU3mhMcoZSIOkAg']
 allah_hu_akbar = [
 	'CgADBAADBwMAAsYeZAeGZn_pe_iEqAI',
 	'CgADBQADMgADUJppVrgRXL_PZ0gAAQI'
 ]
-do_it = [
-	'CgADBAADgAMAAi4ZZAfBusW2RQc_0QI'
-]
+do_it = ['CgADBAADgAMAAi4ZZAfBusW2RQc_0QI']
 nein = [
 	'CgADBAADZ6UAAsYeZAfmPwHxL-XldQI',
 	'CgADBAADeQwAAogaZAc8DefijFlP8AI'
 ]
-damnnn = [
-	'CgADBQADaQAD8YDQVg37MDw6_lb_Ag'
-]
+damnnn = ['CgADBQADaQAD8YDQVg37MDw6_lb_Ag']
 
 
 # File IDs - Images
-e = [
-	'AgADBQADSagxG389uVQS7adI6Erza3cx1TIABKmTrdCdaEhPGJcDAAEC'
-]
-hello_there = [
-	'AgADBQADFqgxG64JuVTqFdh3NKxsqzud1jIABGS5QBh2gsTA9BcCAAEC'
-]
-dont_think_so = [
-	'AgADBQADF6gxG64JuVTKqPGuaVo0cJ811TIABLOsd7lIp3ZiLpcDAAEC'
-]
+e = ['AgADBQADSagxG389uVQS7adI6Erza3cx1TIABKmTrdCdaEhPGJcDAAEC']
+hello_there = ['AgADBQADFqgxG64JuVTqFdh3NKxsqzud1jIABGS5QBh2gsTA9BcCAAEC']
+dont_think_so = ['AgADBQADF6gxG64JuVTKqPGuaVo0cJ811TIABLOsd7lIp3ZiLpcDAAEC']
 wut = [
 	'AgADBQADE6gxGyOkIFZ4AQxe44xhTw9m2zIABHSNs_wtRkJAA2UAAgI',
 	'AgADBQADZ6gxG0uLKVZNuaZQ6-xv_G6j1jIABJRPBU5rooV21gwDAAEC',
 	'AgADBQADRqgxG389uVRBkvZew8TrGOVC1jIABJIP9HL4D6o0uI8DAAEC',
 	'AgADBQADFKgxGyOkIFa5OYCdS1c35EJi2zIABLXKY5s3F2UkFWQAAgI'
 ]
-what_the = [
-	'AgADBQADFagxG64JuVRSk8OLhjwrcoxN1TIABPYKfVlX7aFk04oDAAEC'
-]
-miss_me = [
-	'AgADBQADR6gxG389uVRhyTb2UhEuhtoq1TIABPAqFc3ZT5UIw5YDAAEC'
-]
+what_the = ['AgADBQADFagxG64JuVRSk8OLhjwrcoxN1TIABPYKfVlX7aFk04oDAAEC']
+miss_me = ['AgADBQADR6gxG389uVRhyTb2UhEuhtoq1TIABPAqFc3ZT5UIw5YDAAEC']
 
 
 # File IDs - Others
+despacito = ['CgADBAADnI4AAmQbZAeIL_dX_O5NcQI']
 dedpacito = {
 	'normal': 'CQADBQADZwAD8YDQVnpogTAJmkKAAg',
 	'ded': 'CQADBQADaAAD8YDQVnlp5x1L9P7YAg'

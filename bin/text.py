@@ -38,7 +38,7 @@ Fries images, GIFs, or videos.
 This includes increasing saturation & contrast, and adding some noise, emojis, lazer eyes, and bulges.
 To invoke, reply to a message containing an image, GIF, or video using one of the following commands:
 
-	a) Fry: 1 cycle  of frying.
+	a) Fry: 1 cycle of frying.
 	b) Nuke: 3 cycles of frying.
 	c) Allah hu Akbar: 5 cycles of frying.
 	d) Tsar Bomba: 10 cycles of frying.
@@ -55,8 +55,8 @@ To invoke, reply to a message containing an image, GIF, or video using one of th
 	f) Heavy: Extra bulges are added.
 	g) Light: No bulges are added.
 
-Also note that emojis and bulges are disabled by default for GIFs/Videos.
-Use No-/Low-/High- fat and Light/Heavy to enable them as needed.
+Also note that emojis and bulges are disabled by default for GIFs and Videos.
+Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
 
 
 Use */help* to print all commands and */cookbook* for frying help.

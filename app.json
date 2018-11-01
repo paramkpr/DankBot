@@ -1,7 +1,7 @@
 {
 	"name": "DankBot",
 	"description": "Official DankBot on Telegram.",
-	"logo": "https://github.com/Rippr/DankBot/blob/master/branding/Logo.png?raw=true",
+	"logo": "https://github.com/Rippr/DankBot/blob/master/branding/logo.png?raw=true",
 	"website": "https://telegram.me/therealdankbot",
 	"image": "heroku/python",
 	"repository": "https://github.com/Rippr/DankBot.git",
