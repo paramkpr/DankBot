@@ -3,7 +3,7 @@ from telegram.ext.dispatcher import run_async
 from .drake import drake
 from .fryer import fry_image, fry_gif
 from .generator import generate
-from .helpers import gif_reply, image_reply, text_reply, vapourize
+from .helpers import alt, gif_reply, image_reply, text_reply, vapourize
 from .text import commands, cookbook, keys
 
 
@@ -91,6 +91,9 @@ def main_handler(bot, update):
 
 	elif 'vapourize:' in text:
 		vapourize(update, textn[text.find('vapourize:') + 10:])
+
+	elif 'alt:' in text:
+		alt(update, textn[text.find('alt:') + 4:])
 
 	elif gif_reply(update, text):
 		return
