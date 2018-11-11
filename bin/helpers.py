@@ -3,7 +3,11 @@ from random import randint
 from telegram.ext.dispatcher import run_async
 
 from .files import *
-from .text import cons, exbuded, ironic, vapourtext
+from .text import chars, cons, exbuded, ironic, vapourtext
+
+
+def get_random(var):
+	return var[randint(0, len(var) - 1)]
 
 
 @run_async
@@ -17,11 +21,20 @@ def vapourize(update, text):
 	update.message.reply_text("".join(r))
 
 
-def get_random(var):
-	return var[randint(0, len(var) - 1)]
+@run_async
+def alt(update, text):
+	r, u = [], False
+	for i in text:
+		if i.lower() in chars:
+			r.append(i.upper() if u else i.lower())
+			u = not u
+		else:
+			r.append(i)
+	update.message.reply_text("".join(r))
 
 
-def b_ify(text):
+@run_async
+def b_ify(update, text):
 	a = []
 	for x in text.split(' '):
 		if x == 'nigga':
@@ -41,7 +54,7 @@ def b_ify(text):
 			a.append(x[:s] + '🅱️' + x[end:])
 		except IndexError:
 			a.append(x)
-	return ' '.join(a)
+	update.message.reply_text(' '.join(a))
 
 
 def gif_reply(update, text):
@@ -80,7 +93,7 @@ def text_reply(update, text):
 		update.message.reply_text('Profit')
 
 	elif '🅱️' in text:
-		update.message.reply_text(b_ify(text))
+		b_ify(update, text)
 
 	else:
 		return 0

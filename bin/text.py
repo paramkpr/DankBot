@@ -73,6 +73,7 @@ cons = '🅱️bcdfghjklmnpqrstvwxyz'
 exbuded = ['a', 'an', 'and', 'are', 'if', 'the']
 
 # Misc.
+chars = 'abcdefghijklmnopqrstuvwxyz'
 keys = ['shallow', 'deep', 'no-fat', 'low-fat', 'high-fat', 'light', 'heavy']
 ironic = '''
 Did you ever hear the tragedy of Darth Plagueis The Wise?
