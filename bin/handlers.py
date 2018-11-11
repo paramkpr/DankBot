@@ -75,7 +75,7 @@ def reply_handler(bot, update):
 	if fry_handler(bot, update):
 		return
 
-	elif generate_handler(bot, update):
+	if generate_handler(bot, update):
 		return
 
 	main_handler(bot, update)

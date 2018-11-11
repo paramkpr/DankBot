@@ -96,14 +96,13 @@ def __get_image(url):
 	for _ in range(5):
 		try:
 			return 1, Image.open(BytesIO(urlopen(url).read()))
-		except HTTPError or URLError:
+		except (HTTPError, URLError):
 			sleep(1)
-		except OSError or UnboundLocalError:
+		except (OSError, UnboundLocalError):
 			print("OSError while retreiving image")
 			return 0, None
-	else:
-		print("Quitting loop while retreiving image")
-		return 0, None
+	print("Quitting loop while retreiving image")
+	return 0, None
 
 
 def __get_gif_reader(url, filepath):
@@ -111,14 +110,13 @@ def __get_gif_reader(url, filepath):
 		try:
 			urlretrieve(url, filepath + '.mp4')
 			return 1, get_reader(filepath + '.mp4')
-		except HTTPError or URLError:
+		except (HTTPError, URLError):
 			sleep(1)
-		except OSError or UnboundLocalError:
+		except (OSError, UnboundLocalError):
 			print("OSError while retreiving gif")
 			return 0, None
-	else:
-		print("Quitting loop while retreiving gif")
-		return 0, None
+	print("Quitting loop while retreiving gif")
+	return 0, None
 
 
 @jit(fastmath=True)
@@ -183,8 +181,6 @@ def __find_eyes(img):
 		eyes = eye_cascade.detectMultiScale(roi_gray)
 		for (ex, ey, ew, eh) in eyes:
 			coords.append((x + ex + ew / 2, y + ey + eh / 2))
-	if len(coords) == 0:
-		pass
 	return coords
 
 
