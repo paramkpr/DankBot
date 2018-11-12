@@ -37,10 +37,10 @@ def generate(update, url, t: str, b: str):
 				)
 				return
 			return
-		except HTTPError or URLError:
+		except (HTTPError, URLError):
 			sleep(1)
 
-		except OSError or UnboundLocalError or IndexError:
+		except (OSError, UnboundLocalError, IndexError):
 			return
 
 

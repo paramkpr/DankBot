@@ -6,27 +6,33 @@ commands = '''
  3. Do it
  4. Nein
  5. Damnnn
- 6. Ironic
- 7. F / RIP
- 8. ???
- 9. 🅱️
-10. E
-11. Hello there
-12. I don't think so
-13. Wut / Dude what / What even
-14. What the
-15. Miss me with that gay shit
+ 6. E
+ 7. Hello there
+ 8. I don't think so
+ 9. Wut / Dude what / What even
+10. What the
+11. Miss me with that gay shit
+12. Ironic
+13. F / RIP
+14. ???
 
 *Advanced Commands*
 
 1. ABC, not XYZ
 	Generates a meme using either the Robbie Rotten, Babushka, or Drake template in which ABC is chosen over XYZ.
 
-2. Vapourize:
-	Converts text that follows the colon to Vapourwave text and replies to the request.
+2. Alt:
+	Converts text that follows the colon to aLt CaSe.
 
-3. Alexa / Dankbot play Despacito
-	Sends a GIF of the Despacito music video along with an audio file of bass boosted Despacito.
+3. Vapourize:
+	Converts text that follows the colon to Vapourwave text.
+	
+4. 🅱️:
+	Replaces the first consonant group of a word with 🅱️.
+	Doesn't replace those consonants which can (mostly) be pronounced after a b.
+
+5. Alexa / Dankbot play Despacito
+	Sends a GIF of the Despacito music video along with an audio file of Despacito.
 	The audio file has a 10% chance of being extremely bass boosted.
 
 
@@ -35,7 +41,7 @@ Use */help* to print all commands and */cookbook* for frying help.
 cookbook = '''
 *Deep Fryer*
 Fries images, GIFs, or videos.
-This includes increasing saturation & contrast, and adding some noise, emojis, lazer eyes, and bulges.
+This includes increasing saturation & contrast, and adding noise, emojis, lazer eyes, and bulges.
 To invoke, reply to a message containing an image, GIF, or video using one of the following commands:
 
 	a) Fry: 1 cycle of frying.
@@ -69,7 +75,7 @@ vapourtext = {normal[x]: vapour[x] for x in range(len(normal))}
 vapourtext[' '] = '   '
 
 # B-ify
-cons = '🅱️bcdfghjklmnpqrstvwxyz'
+bs = '🅱️bcdfgjkmnpqtvwx'
 exbuded = ['a', 'an', 'and', 'are', 'if', 'the']
 
 # Misc.

@@ -3,7 +3,7 @@ from random import randint
 from telegram.ext.dispatcher import run_async
 
 from .files import *
-from .text import chars, cons, exbuded, ironic, vapourtext
+from .text import bs, chars, exbuded, ironic, vapourtext
 
 
 def get_random(var):
@@ -45,10 +45,10 @@ def b_ify(update, text):
 			continue
 		i = 0
 		try:
-			while x[i] not in cons:
+			while x[i] not in bs:
 				i += 1
 			s, i = i, i + 1
-			while x[i] in cons:
+			while x[i] in bs:
 				i += 1
 			end = i
 			a.append(x[:s] + '🅱️' + x[end:])
@@ -82,24 +82,6 @@ def gif_reply(update, text):
 	return 1
 
 
-def text_reply(update, text):
-	if 'ironic' in text or 'darth plagueis' in text:
-		update.message.reply_text(ironic)
-
-	elif text.startswith('f ') or text.startswith('rip ') or text == 'f' or text == 'rip':
-		update.message.reply_text('F')
-
-	elif text == '???':
-		update.message.reply_text('Profit')
-
-	elif '🅱️' in text:
-		b_ify(update, text)
-
-	else:
-		return 0
-	return 1
-
-
 def image_reply(update, text):
 	if text == 'e':
 		update.message.reply_photo(photo=get_random(e))
@@ -118,6 +100,21 @@ def image_reply(update, text):
 
 	elif 'miss me with that gay shit' in text or 'thats gay' in text or 'that\'s gay' in text:
 		update.message.reply_photo(photo=get_random(miss_me))
+
+	else:
+		return 0
+	return 1
+
+
+def text_reply(update, text):
+	if 'ironic' in text or 'darth plagueis' in text:
+		update.message.reply_text(ironic)
+
+	elif text.startswith('f ') or text.startswith('rip ') or text == 'f' or text == 'rip':
+		update.message.reply_text('F')
+
+	elif text == '???':
+		update.message.reply_text('Profit')
 
 	elif 'thought' in text and 'process' in text:
 		update.message.reply_text('thoughtprocessors.herokuapp.com')
