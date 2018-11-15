@@ -24,7 +24,6 @@ def brain(update, ts):
 	img.save(bio, 'PNG')
 	bio.seek(0)
 	update.message.reply_photo(photo=bio)
-	return
 
 
 @jit(fastmath=True)
