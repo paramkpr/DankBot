@@ -1,5 +1,6 @@
 from telegram.ext.dispatcher import run_async
 
+from .brain import brain
 from .drake import drake
 from .fryer import fry_image, fry_gif
 from .generator import generate
@@ -38,6 +39,7 @@ def generate_handler(bot, update):
 		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
 		b, bc = (text.find('b:'), 1) if 'b:' in text else (text.find('bs:'), 0)
 		url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
+		print("Starting")
 
 		if b > t:
 			generate(
@@ -88,6 +90,9 @@ def main_handler(bot, update):
 
 	if ', not ' in text:
 		drake(update, textn[text.find(', not ') + 6:], textn[:text.find(', not ')])
+
+	if ', not ' in text:
+		brain(update, textn.split(', not'))
 
 	elif 'alt:' in text:
 		alt(update, textn[text.find('alt:') + 4:])

@@ -14,10 +14,11 @@ s1 = ImageFont.truetype(font_path, 1)
 
 @run_async
 def generate(update, url, t: str, b: str):
+	print("In generate")
 	t = t.replace('\n', '')
 	b = b.replace('\n', '')
 	bio = BytesIO()
-	bio.name = 'test.png'
+	bio.name = '%s_%s_%s.png' % (update.message.chat_id, update.message.first_name, update.message.message_id)
 
 	for _ in range(5):
 		try:
@@ -27,7 +28,9 @@ def generate(update, url, t: str, b: str):
 			w900, h20 = 9 * w, h // 5
 			st, lt = __calculate_size(t, w900, h20)
 			sb, lb = __calculate_size(b, w900, h20)
+			print("Calc'ed size")
 			if __draw_top(draw, lt, w, h, st) and __draw_bottom(draw, lb, w, h, sb):
+				print("Done!")
 				img.save(bio, 'PNG')
 				bio.seek(0)
 				update.message.reply_photo(
@@ -38,9 +41,11 @@ def generate(update, url, t: str, b: str):
 				return
 			return
 		except (HTTPError, URLError):
+			print("HTTP/URL error, retrying...")
 			sleep(1)
 
 		except (OSError, UnboundLocalError, IndexError):
+			print("Error")
 			return
 
 
