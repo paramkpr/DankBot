@@ -1,6 +1,5 @@
 from io import BytesIO
 from os.path import abspath, split as path_split
-from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
 from numba import jit
@@ -11,25 +10,21 @@ font = ImageFont.truetype(bin_path + '/Resources/raleway.ttf', 32)
 
 
 @run_async
-def drake(update, a, b):
-	m = (
-		("Drake", 'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
-		("Drake", 'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
-		("Robbie", 'AgADBQADS6gxG389uVT6Q3H5BIllKdWp1jIABDMXCOcwpqnScQ0CAAEC'),
-		("Babushka", 'AgADBQADTKgxG389uVRAb8NE7vNARc2w1jIABGAXUUGUqUG5zRMCAAEC')
-	)[randint(0, 3)]
-
+def brain(update, ts):
 	bio = BytesIO()
 	bio.name = '%s_%s_%s.png' % (update.message.chat_id, update.message.first_name, update.message.message_id)
-	img = Image.open(bin_path + '/Drake/%s.png' % m[0])
+	img = Image.open(bin_path + '/Brain/%s.png' % len(ts))
 	draw = ImageDraw.Draw(img)
 
-	if __draw_text(draw, a, 129) and __draw_text(draw, b, 387):
-		img.save(bio, 'PNG')
-		bio.seek(0)
-		update.message.reply_photo(photo=bio)
-		return
-	update.message.reply_photo(photo=m[1])
+	y = 129
+	for i in ts:
+		__draw_text(draw, i, y)
+		y += 258
+
+	img.save(bio, 'PNG')
+	bio.seek(0)
+	update.message.reply_photo(photo=bio)
+	return
 
 
 @jit(fastmath=True)
