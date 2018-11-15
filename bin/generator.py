@@ -22,10 +22,13 @@ def generate(update, url, t: str, b: str):
 
 	for _ in range(5):
 		try:
+			print("Opening image...")
 			img = Image.open(BytesIO(urlopen(url).read()))
 			draw = ImageDraw.Draw(img)
+			print("Opened")
 			w, h = img.width, img.height
 			w900, h20 = 9 * w, h // 5
+			print("Calc'ing size")
 			st, lt = __calculate_size(t, w900, h20)
 			sb, lb = __calculate_size(b, w900, h20)
 			print("Calc'ed size")
