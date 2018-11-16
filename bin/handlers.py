@@ -39,7 +39,6 @@ def generate_handler(bot, update):
 		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
 		b, bc = (text.find('b:'), 1) if 'b:' in text else (text.find('bs:'), 0)
 		url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
-		print("Starting")
 
 		if b > t:
 			generate(
