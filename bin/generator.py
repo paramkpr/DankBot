@@ -43,7 +43,7 @@ def generate(update, url, t: str, b: str):
 				update.message.reply_photo(
 					update.message.chat_id,
 					photo=bio,
-					caption="Requested by %s" % update.message.from_user.first_name
+					# caption="Requested by %s" % update.message.from_user.first_name
 				)
 				print("Sent!")
 				return
