@@ -37,12 +37,15 @@ def generate(update, url, t: str, b: str):
 			if __draw_top(draw, lt, w, h, st) and __draw_bottom(draw, lb, w, h, sb):
 				print("Done!")
 				img.save(bio, 'PNG')
+				print("Temp saved")
 				bio.seek(0)
+				print("Sending...")
 				update.message.reply_photo(
 					update.message.chat_id,
 					photo=bio,
 					caption="Requested by %s" % update.message.from_user.first_name
 				)
+				print("Sent!")
 				return
 			return
 		except (HTTPError, URLError):
