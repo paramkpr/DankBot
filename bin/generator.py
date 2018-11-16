@@ -18,8 +18,8 @@ def generate(update, url, t: str, b: str):
 	t = t.replace('\n', '')
 	b = b.replace('\n', '')
 	bio = BytesIO()
-	print("Setting name")
-	bio.name = '%s_%s_%s.png' % (update.message.chat_id, update.message.first_name, update.message.message_id)
+	# print("Setting name")
+	# bio.name = '%s_%s_%s.png' % (update.message.chat_id, update.message.first_name, update.message.message_id)
 	print("About to enter l00p.")
 
 	for _ in range(5):
