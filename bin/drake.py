@@ -20,7 +20,6 @@ def drake(update, a, b):
 	)[randint(0, 3)]
 
 	bio = BytesIO()
-	bio.name = '%s_%s_%s.png' % (update.message.chat_id, update.message.first_name, update.message.message_id)
 	img = Image.open(bin_path + '/Drake/%s.png' % m[0])
 	draw = ImageDraw.Draw(img)
 
