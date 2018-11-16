@@ -14,46 +14,28 @@ s1 = ImageFont.truetype(font_path, 1)
 
 @run_async
 def generate(update, url, t: str, b: str):
-	print("In generate")
 	t = t.replace('\n', '')
 	b = b.replace('\n', '')
 	bio = BytesIO()
-	# print("Setting name")
-	# bio.name = '%s_%s_%s.png' % (update.message.chat_id, update.message.first_name, update.message.message_id)
-	print("About to enter l00p.")
 
 	for _ in range(5):
 		try:
-			print("Opening image...")
 			img = Image.open(BytesIO(urlopen(url).read()))
 			draw = ImageDraw.Draw(img)
-			print("Opened")
 			w, h = img.width, img.height
 			w900, h20 = 9 * w, h // 5
-			print("Calc'ing size")
 			st, lt = __calculate_size(t, w900, h20)
 			sb, lb = __calculate_size(b, w900, h20)
-			print("Calc'ed size")
 			if __draw_top(draw, lt, w, h, st) and __draw_bottom(draw, lb, w, h, sb):
-				print("Done!")
 				img.save(bio, 'PNG')
-				print("Temp saved")
 				bio.seek(0)
-				print("Sending...")
-				update.message.reply_photo(
-					update.message.chat_id,
-					photo=bio,
-					# caption="Requested by %s" % update.message.from_user.first_name
-				)
-				print("Sent!")
+				update.message.reply_photo(photo=bio)
 				return
 			return
 		except (HTTPError, URLError):
-			print("HTTP/URL error, retrying...")
 			sleep(1)
 
 		except (OSError, UnboundLocalError, IndexError):
-			print("Error")
 			return
 
 
