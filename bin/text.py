@@ -10,11 +10,12 @@ commands = '''
  7. Hello there
  8. I don't think so
  9. Wut / Dude what / What even
-10. What the
-11. Miss me with that gay shit
-12. Ironic
-13. F / RIP
-14. ???
+10. Wat
+11. What the
+12. Miss me with that gay shit
+13. Ironic
+14. F / RIP
+15. ???
 
 *Advanced Commands*
 

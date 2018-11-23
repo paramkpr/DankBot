@@ -1,59 +1,8 @@
 from telegram.ext.dispatcher import run_async
 
-from .brain import brain
 from .drake import drake
-from .fryer import fry_image, fry_gif
-from .generator import generate
-from .helpers import alt, b_ify, gif_reply, image_reply, text_reply, vapourize
-from .text import commands, cookbook, keys
-
-
-def fry_handler(bot, update):
-	text = update.message.text.lower()
-	n = (10 if 'tsar bomba' in text else
-	     5 if 'allah hu akbar' in text else
-	     3 if 'nuk' in text else
-	     1 if 'fry' in text else 0)
-
-	if n:
-		args = {key: 1 if key in text else 0 for key in keys}
-		if update.message.reply_to_message.document:
-			url = bot.get_file(update.message.reply_to_message.document.file_id).file_path
-			fry_gif(update, url, n, args)
-
-		elif update.message.reply_to_message.video:
-			url = bot.get_file(update.message.reply_to_message.video.file_id).file_path
-			fry_gif(update, url, n, args)
-
-		elif update.message.reply_to_message.photo:
-			url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
-			fry_image(update, url, n, args)
-		return 1
-	return 0
-
-
-def generate_handler(bot, update):
-	textn = update.message.text
-	text = textn.lower()
-	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
-		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
-		b, bc = (text.find('b:'), 1) if 'b:' in text else (text.find('bs:'), 0)
-		url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
-
-		if b > t:
-			generate(
-				update, url,
-				textn[t + 2:b].upper() if tc else textn[t + 3:b],
-				textn[b + 2:].upper() if bc else textn[b + 3:]
-			)
-		else:
-			generate(
-				update, url,
-				textn[t + 2:].upper() if tc else textn[t + 3:],
-				textn[b + 2:t].upper() if bc else textn[b + 3:t]
-			)
-		return 1
-	return 0
+from .helpers import helper_b, helper_gif, helper_image, helper_text, helper_fry, helper_generate
+from .text import commands, cookbook, chars, vapourtext
 
 
 @run_async
@@ -71,12 +20,53 @@ def cookbook_handler(bot, update):
 	update.message.reply_markdown(text=cookbook)
 
 
+# generator_handler = ConversationHandler(
+# 	entry_points=[CommandHandler('generate_meme', meme_handler)],
+#
+# 	states={
+# 		1: [RegexHandler('^(Left|Right|Up|Down)$',
+# 		                        regular_choice,
+# 		                        pass_user_data=True),
+# 		           RegexHandler('^Something else...$',
+# 		                        custom_choice),
+# 		           ]
+# 	},
+#
+# 	fallbacks=[RegexHandler('^Done$', done, pass_user_data=True)]
+# )
+
+
+@run_async
+def alt_handler(bot, update):
+	text = update.message.text[4:].lower()
+	r, u = [], False
+	for i in text:
+		if i.lower() in chars:
+			r.append(i.upper() if u else i.lower())
+			u = not u
+		else:
+			r.append(i)
+	update.message.reply_text("".join(r))
+
+
+@run_async
+def vapourize_handler(bot, update):
+	text = update.message.text[10:].lower()
+	r = []
+	for i in text:
+		if i in vapourtext:
+			r.append(vapourtext[i])
+		else:
+			r.append(i)
+	update.message.reply_text("".join(r))
+
+
 @run_async
 def reply_handler(bot, update):
-	if fry_handler(bot, update):
+	if helper_fry(bot, update):
 		return
 
-	if generate_handler(bot, update):
+	if helper_generate(bot, update):
 		return
 
 	main_handler(bot, update)
@@ -90,25 +80,25 @@ def main_handler(bot, update):
 	if ', not ' in text:
 		drake(update, textn[text.find(', not ') + 6:], textn[:text.find(', not ')])
 
-	if ', not ' in text:
-		brain(update, textn.split(', not'))
+	# if ', not ' in text:
+	# 	brain(update, textn.split(', not'))
 
-	elif 'alt:' in text:
-		alt(update, textn[text.find('alt:') + 4:])
+	# elif 'alt:' in text:
+	# 	alt(update, textn[text.find('alt:') + 4:])
 
-	elif 'vapourize:' in text:
-		vapourize(update, textn[text.find('vapourize:') + 10:])
+	# elif 'vapourize:' in text:
+	# 	vapourize(update, textn[text.find('vapourize:') + 10:])
 
 	elif '🅱️' in text:
-		b_ify(update, text)
+		helper_b(update, text)
 
-	elif gif_reply(update, text):
+	elif helper_gif(update, text):
 		return
 
-	elif image_reply(update, text):
+	elif helper_image(update, text):
 		return
 
-	elif text_reply(update, text):
+	elif helper_text(update, text):
 		return
 
 	else:

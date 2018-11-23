@@ -37,10 +37,9 @@ from os import environ
 
 from dotenv import load_dotenv
 from imageio.plugins import ffmpeg
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, RegexHandler
 
 from bin.handlers import *
-
 
 ffmpeg.download()
 
@@ -58,6 +57,10 @@ dispatcher = updater.dispatcher
 dispatcher.add_handler(CommandHandler('start', start_handler))
 dispatcher.add_handler(CommandHandler('help', help_handler))
 dispatcher.add_handler(CommandHandler('cookbook', cookbook_handler))
+
+dispatcher.add_handler(RegexHandler(r'(?i)(^alt:)', alt_handler))
+dispatcher.add_handler(RegexHandler(r'(?i)(^vapourize:)', vapourize_handler))
+
 dispatcher.add_handler(MessageHandler(Filters.reply, reply_handler))
 dispatcher.add_handler(MessageHandler(Filters.text, main_handler))
 dispatcher.add_handler(MessageHandler(Filters.all, lambda bot, update: print(update.message)))
