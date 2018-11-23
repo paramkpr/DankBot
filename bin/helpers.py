@@ -1,9 +1,12 @@
 from random import randint
 
-from telegram.ext.dispatcher import run_async
+from telegram.ext import run_async
 
 from .files import *
-from .text import bs, chars, exbuded, ironic, vapourtext
+from .fryer import fry_gif, fry_image
+from .generator import generate
+from .text import exbuded, bs, keys
+from .text import ironic
 
 
 def get_random(var):
@@ -11,30 +14,7 @@ def get_random(var):
 
 
 @run_async
-def vapourize(update, text):
-	r = []
-	for i in text:
-		if i in vapourtext:
-			r.append(vapourtext[i])
-		else:
-			r.append(i)
-	update.message.reply_text("".join(r))
-
-
-@run_async
-def alt(update, text):
-	r, u = [], False
-	for i in text:
-		if i.lower() in chars:
-			r.append(i.upper() if u else i.lower())
-			u = not u
-		else:
-			r.append(i)
-	update.message.reply_text("".join(r))
-
-
-@run_async
-def b_ify(update, text):
+def helper_b(update, text):
 	a = []
 	for x in text.split(' '):
 		if x == 'nigga':
@@ -57,7 +37,55 @@ def b_ify(update, text):
 	update.message.reply_text(' '.join(a))
 
 
-def gif_reply(update, text):
+def helper_fry(bot, update):
+	text = update.message.text.lower()
+	n = (10 if 'tsar bomba' in text else
+	     5 if 'allah hu akbar' in text else
+	     3 if 'nuk' in text else
+	     1 if 'fry' in text else 0)
+
+	if n:
+		args = {key: 1 if key in text else 0 for key in keys}
+		if update.message.reply_to_message.document:
+			url = bot.get_file(update.message.reply_to_message.document.file_id).file_path
+			fry_gif(update, url, n, args)
+
+		elif update.message.reply_to_message.video:
+			url = bot.get_file(update.message.reply_to_message.video.file_id).file_path
+			fry_gif(update, url, n, args)
+
+		elif update.message.reply_to_message.photo:
+			url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
+			fry_image(update, url, n, args)
+		return 1
+	return 0
+
+
+def helper_generate(bot, update):
+	textn = update.message.text
+	text = textn.lower()
+	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
+		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
+		b, bc = (text.find('b:'), 1) if 'b:' in text else (text.find('bs:'), 0)
+		url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
+
+		if b > t:
+			generate(
+				update, url,
+				textn[t + 2:b].upper() if tc else textn[t + 3:b],
+				textn[b + 2:].upper() if bc else textn[b + 3:]
+			)
+		else:
+			generate(
+				update, url,
+				textn[t + 2:].upper() if tc else textn[t + 3:],
+				textn[b + 2:t].upper() if bc else textn[b + 3:t]
+			)
+		return 1
+	return 0
+
+
+def helper_gif(update, text):
 	if 'alexa play despacito' in text or 'dankbot play despacito' in text:
 		update.message.reply_animation(animation=despacito[0])
 		update.message.reply_audio(audio=dedpacito['normal' if randint(0, 9) else 'ded'])
@@ -82,7 +110,7 @@ def gif_reply(update, text):
 	return 1
 
 
-def image_reply(update, text):
+def helper_image(update, text):
 	if text == 'e':
 		update.message.reply_photo(photo=get_random(e))
 
@@ -92,7 +120,13 @@ def image_reply(update, text):
 	elif 'i don\'t think so' in text or 'i dont think so' in text:
 		update.message.reply_photo(photo=get_random(dont_think_so))
 
-	elif 'wut' in text or 'dude what' in text or 'what even' in text:
+	elif 'wat' in text:
+		update.message.reply_photo(photo=get_random(wat))
+
+	elif 'dude what' in text:
+		update.message.reply_photo(photo=get_random(dude_what))
+
+	elif 'wut' in text or 'what even' in text:
 		update.message.reply_photo(photo=get_random(wut))
 
 	elif 'what the' in text:
@@ -106,7 +140,7 @@ def image_reply(update, text):
 	return 1
 
 
-def text_reply(update, text):
+def helper_text(update, text):
 	if 'ironic' in text or 'darth plagueis' in text:
 		update.message.reply_text(ironic)
 
