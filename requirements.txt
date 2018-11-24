@@ -2,7 +2,7 @@ imageio==2.4.1
 llvmlite==0.25.0
 numba==0.40.1
 numpy==1.15.4
-opencv-python
+opencv-python==3.4.3.18
 pillow
 pyimgur
 python-dotenv
