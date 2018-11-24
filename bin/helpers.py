@@ -2,11 +2,10 @@ from random import randint
 
 from telegram.ext import run_async
 
-from .files import *
 from .fryer import fry_gif, fry_image
-from .generator import generate
-from .text import exbuded, bs, keys
-from .text import ironic
+from .generator_classic import generate
+from .utils.files import *
+from .utils.text import exbuded, bs, keys, ironic
 
 
 def get_random(var):

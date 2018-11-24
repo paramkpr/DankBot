@@ -1,8 +1,10 @@
+from telegram.ext import ConversationHandler
 from telegram.ext.dispatcher import run_async
 
 from .drake import drake
 from .helpers import helper_b, helper_gif, helper_image, helper_text, helper_fry, helper_generate
-from .text import commands, cookbook, chars, vapourtext
+from .utils.states import *
+from .utils.text import commands, cookbook, chars, vapourtext
 
 
 @run_async
@@ -20,20 +22,71 @@ def cookbook_handler(bot, update):
 	update.message.reply_markdown(text=cookbook)
 
 
-# generator_handler = ConversationHandler(
-# 	entry_points=[CommandHandler('generate_meme', meme_handler)],
-#
-# 	states={
-# 		1: [RegexHandler('^(Left|Right|Up|Down)$',
-# 		                        regular_choice,
-# 		                        pass_user_data=True),
-# 		           RegexHandler('^Something else...$',
-# 		                        custom_choice),
-# 		           ]
-# 	},
-#
-# 	fallbacks=[RegexHandler('^Done$', done, pass_user_data=True)]
-# )
+generator_handler = ConversationHandler(
+	# entry_points=[CommandHandler('generate_meme', meme_handler)],
+
+	states={
+		CHANGE_BOX: [
+			# RegexHandler('^(Change position|Change angle|Change size)$',
+			#              change_box,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_box),
+		],
+		CHANGE_BOX_POSITION: [
+			# RegexHandler('^(Left|Right|Up|Down)$',
+			#              change_box_position,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_box),
+		],
+		CHANGE_BOX_SIZE: [
+			# RegexHandler('^(Smaller|Slightly smaller|Larger|Slightly Larger)$',
+			#              change_box_size,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_box),
+		],
+		CHANGE_BOX_ANGLE: [
+			# RegexHandler('^(Clockwise|Slightly clockwise|Anticlockwise|Slightly anticlockwise)$',
+			#              change_box_angle,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_box),
+		],
+
+		CHANGE_TEXT: [
+			# RegexHandler('^(Change position|Change angle|Change size)$',
+			#              change_box,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_text),
+		],
+		CHANGE_TEXT_POSITION: [
+			# RegexHandler('^(Left|Right|Up|Down)$',
+			#              change_box_position,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_text),
+		],
+		CHANGE_TEXT_SIZE: [
+			# RegexHandler('^(Smaller|Slightly smaller|Larger|Slightly Larger)$',
+			#              change_box_size,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_text),
+		],
+		CHANGE_TEXT_ANGLE: [
+			# RegexHandler('^(Clockwise|Slightly clockwise|Anticlockwise|Slightly anticlockwise)$',
+			#              change_box_angle,
+			#              pass_user_data=True),
+			# RegexHandler('^Done$',
+			#              change_text),
+		],
+	},
+
+	# fallbacks=[RegexHandler('^Done$', done, pass_user_data=True)]
+)
 
 
 @run_async

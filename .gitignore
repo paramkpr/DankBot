@@ -1,10 +1,12 @@
 # Folders to ignore
 Archive/
-Bin/temp/*
+bin/temp/*
+bin/Brain/*
+!bin/Brain/Generated
 
 
 # Files to ignore
-!Bin/temp/humans.txt
+!bin/temp/humans.txt
 
 
 # File types to ignore
