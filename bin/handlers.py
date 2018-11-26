@@ -2,7 +2,7 @@ from telegram.ext.dispatcher import run_async
 
 from .drake import drake
 from .helpers import helper_b, helper_gif, helper_image, helper_text, helper_fry, helper_generate
-from .text import commands, cookbook, chars, vapourtext
+from .utils.text import commands, cookbook, chars, vapourtext
 
 
 @run_async
@@ -18,22 +18,6 @@ def help_handler(bot, update):
 @run_async
 def cookbook_handler(bot, update):
 	update.message.reply_markdown(text=cookbook)
-
-
-# generator_handler = ConversationHandler(
-# 	entry_points=[CommandHandler('generate_meme', meme_handler)],
-#
-# 	states={
-# 		1: [RegexHandler('^(Left|Right|Up|Down)$',
-# 		                        regular_choice,
-# 		                        pass_user_data=True),
-# 		           RegexHandler('^Something else...$',
-# 		                        custom_choice),
-# 		           ]
-# 	},
-#
-# 	fallbacks=[RegexHandler('^Done$', done, pass_user_data=True)]
-# )
 
 
 @run_async

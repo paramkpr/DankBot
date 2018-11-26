@@ -1,4 +1,4 @@
-# File IDs - GIFs
+# GIFs
 hmmm = ['CgADBAADCQAD3nJNU3mhMcoZSIOkAg']
 allah_hu_akbar = [
 	'CgADBAADBwMAAsYeZAeGZn_pe_iEqAI',
@@ -12,11 +12,10 @@ nein = [
 damnnn = ['CgADBQADaQAD8YDQVg37MDw6_lb_Ag']
 
 
-# File IDs - Images
+# Images
 e = ['AgADBQADSagxG389uVQS7adI6Erza3cx1TIABKmTrdCdaEhPGJcDAAEC']
 hello_there = ['AgADBQADFqgxG64JuVTqFdh3NKxsqzud1jIABGS5QBh2gsTA9BcCAAEC']
 dont_think_so = ['AgADBQADF6gxG64JuVTKqPGuaVo0cJ811TIABLOsd7lIp3ZiLpcDAAEC']
-
 wat = ['AgADBQADFKgxGyOkIFa5OYCdS1c35EJi2zIABLXKY5s3F2UkFWQAAgI']
 dude_what = ['AgADBQADZ6gxG0uLKVZNuaZQ6-xv_G6j1jIABJRPBU5rooV21gwDAAEC']
 wut = [
@@ -27,7 +26,7 @@ what_the = ['AgADBQADFagxG64JuVRSk8OLhjwrcoxN1TIABPYKfVlX7aFk04oDAAEC']
 miss_me = ['AgADBQADR6gxG389uVRhyTb2UhEuhtoq1TIABPAqFc3ZT5UIw5YDAAEC']
 
 
-# File IDs - Others
+# Others
 despacito = ['CgADBAADnI4AAmQbZAeIL_dX_O5NcQI']
 dedpacito = {
 	'normal': 'CQADBQADZwAD8YDQVnpogTAJmkKAAg',
