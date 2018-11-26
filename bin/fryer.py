@@ -8,14 +8,14 @@ from urllib.request import urlopen, urlretrieve
 
 from PIL import Image, ImageEnhance, ImageOps
 from cv2 import CHAIN_APPROX_NONE, CascadeClassifier, MORPH_CROSS, RETR_EXTERNAL, THRESH_BINARY, THRESH_BINARY_INV, \
-	bitwise_and, boundingRect, dilate, findContours, getStructuringElement, threshold
-from imageio import imread, get_reader, get_writer
+	bitwise_and, boundingRect, dilate, findContours, getStructuringElement, threshold, VideoWriter_fourcc, VideoWriter, \
+	COLOR_BGR2RGB, cvtColor, COLOR_RGB2BGR, CAP_PROP_FPS
+from imutils.video import FileVideoStream
 from numba import jit
 from numpy import abs, arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
 from telegram.ext.dispatcher import run_async
-
 
 bin_path = path_split(abspath(__file__))[0]
 
@@ -54,42 +54,36 @@ def fry_gif(update, url, n, args):
 	m = 4 if args['deep'] else 1 if args['shallow'] else 2
 	name = update.message.from_user.first_name
 
-	gifbio = BytesIO()
 	filename = '%s_%s_%s' % (update.message.chat_id, name, update.message.message_id)
 	filepath = bin_path + '/temp/' + filename
-	gifbio.name = filename + '.gif'
 	caption = "Requested by %s, %d Cycle(s)" % (name, n)
+	output = bin_path + '/temp/out_' + filename + '.mp4'
 
-	success, reader = __get_gif_reader(url, filepath)
-	if success:
-		fps = reader.get_meta_data()['fps'] if 'fps' in reader.get_meta_data() else 60
-		fs = [__posterize, __sharpen, __increase_contrast, __colorize]
-		shuffle(fs)
+	gifbio = BytesIO()
+	gifbio.name = filename + '.gif'
+	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
+	shuffle(fs)
 
-		with get_writer(gifbio, format='gif', fps=fps) as writer:
-			for i, img in enumerate(reader):
-				img = Image.fromarray(img)
-				img = __fry(img, n, e, b)
+	if __download_gif(url, filepath):
+		fvs = FileVideoStream(filepath + '.mp4').start()
+		frame1 = fvs.read()
+		height, width, channels = frame1.shape
 
-				for _ in range(n):
-					for f in fs:
-						img = f(img, m)
+		fourcc = VideoWriter_fourcc(*'mp4v')
+		try:
+			fps = fvs.get(CAP_PROP_FPS)
+		except:
+			fps = 30
+		out = VideoWriter(output, fourcc, fps, (width, height))
+		out.write(fry_frame(frame1, n, fs, e, b, m))
 
-				bio = BytesIO()
-				bio.name = filename + '.png'
-				img.save(bio, 'PNG')
-				bio.seek(0)
+		while fvs.more():
+			out.write(fry_frame(fvs.read(), n, fs, e, b, m))
 
-				image = imread(bio)
-				writer.append_data(image)
-
-		gifbio.seek(0)
-		update.message.reply_animation(animation=gifbio, caption=caption)
+		out.release()
+		update.message.reply_animation(animation=open(output, 'rb'), caption=caption)
 		remove(filepath + '.mp4')
-		gifbio.seek(0)
-		with open(filepath + '.gif', 'wb') as f:
-			f.write(gifbio.read())
-		__upload_to_imgur(filepath + '.gif', caption)
+		__upload_to_imgur(output, caption)
 
 
 def __get_image(url):
@@ -105,18 +99,27 @@ def __get_image(url):
 	return 0, None
 
 
-def __get_gif_reader(url, filepath):
+def __download_gif(url, filepath):
 	for _ in range(5):
 		try:
 			urlretrieve(url, filepath + '.mp4')
-			return 1, get_reader(filepath + '.mp4')
+			return 1
 		except (HTTPError, URLError):
 			sleep(1)
 		except (OSError, UnboundLocalError):
 			print("OSError while retreiving gif")
-			return 0, None
+			return 0
 	print("Quitting loop while retreiving gif")
-	return 0, None
+	return 0
+
+
+def fry_frame(frame, n, fs, e, b, m):
+	img = Image.fromarray(cvtColor(frame, COLOR_BGR2RGB))
+	img = __fry(img, n, e, b)
+	for _ in range(n):
+		for f in fs:
+			img = f(img, m)
+	return cvtColor(array(img), COLOR_RGB2BGR)
 
 
 @jit(fastmath=True)
