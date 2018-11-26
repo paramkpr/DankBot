@@ -62,7 +62,7 @@ def fry_gif(update, url, n, args):
 
 	success, reader = __get_gif_reader(url, filepath)
 	if success:
-		fps = reader.get_meta_data()['fps'] if 'fps' in reader.get_meta_data() else 30
+		fps = reader.get_meta_data()['fps'] if 'fps' in reader.get_meta_data() else 60
 		fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 		shuffle(fs)
 
