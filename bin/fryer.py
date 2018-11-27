@@ -9,7 +9,7 @@ from urllib.request import urlopen, urlretrieve
 from PIL import Image, ImageEnhance, ImageOps
 from cv2 import CHAIN_APPROX_NONE, CascadeClassifier, MORPH_CROSS, RETR_EXTERNAL, THRESH_BINARY, THRESH_BINARY_INV, \
 	bitwise_and, boundingRect, dilate, findContours, getStructuringElement, threshold, VideoWriter_fourcc, VideoWriter, \
-	COLOR_BGR2RGB, cvtColor, COLOR_RGB2BGR, CAP_PROP_FPS
+	COLOR_BGR2RGB, cvtColor, COLOR_RGB2BGR, CAP_PROP_FPS, destroyAllWindows
 from imutils.video import FileVideoStream
 from numba import jit
 from numpy import abs, arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
@@ -80,8 +80,9 @@ def fry_gif(update, url, n, args):
 		while fvs.more():
 			out.write(fry_frame(fvs.read(), n, fs, e, b, m))
 
+		fvs.stream.release()
 		out.release()
-		update.message.reply_animation(animation=open(output, 'rb'), caption=caption)
+		_ = update.message.reply_animation(animation=open(output, 'rb'), caption=caption)
 		remove(filepath + '.mp4')
 		__upload_to_imgur(output, caption)
 
