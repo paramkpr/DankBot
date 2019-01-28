@@ -9,10 +9,10 @@ from urllib.request import urlopen, urlretrieve
 from PIL import Image, ImageEnhance, ImageOps
 from cv2 import CHAIN_APPROX_NONE, CascadeClassifier, MORPH_CROSS, RETR_EXTERNAL, THRESH_BINARY, THRESH_BINARY_INV, \
 	bitwise_and, boundingRect, dilate, findContours, getStructuringElement, threshold, VideoWriter_fourcc, VideoWriter, \
-	COLOR_BGR2RGB, cvtColor, COLOR_RGB2BGR, CAP_PROP_FPS, destroyAllWindows
+	COLOR_BGR2RGB, cvtColor, COLOR_RGB2BGR, CAP_PROP_FPS
 from imutils.video import FileVideoStream
 from numba import jit
-from numpy import abs, arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
+from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
 from telegram.ext.dispatcher import run_async
@@ -36,7 +36,7 @@ def fry_image(update, url, n, args):
 		img = __fry(img, n, e, b)
 
 		fs = [__posterize, __sharpen, __increase_contrast, __colorize]
-		for i in range(n):
+		for _ in range(n):
 			shuffle(fs)
 			for f in fs:
 				img = f(img, m)
@@ -67,7 +67,7 @@ def fry_gif(update, url, n, args):
 	if __download_gif(url, filepath):
 		fvs = FileVideoStream(filepath + '.mp4').start()
 		frame1 = fvs.read()
-		height, width, channels = frame1.shape
+		height, width, _ = frame1.shape
 
 		fourcc = VideoWriter_fourcc(*'mp4v')
 		try:
@@ -154,12 +154,12 @@ def __fry(img, n, e, b):
 @jit(fastmath=True)
 def __find_chars(img):
 	gray = array(img.convert("L"))
-	ret, mask = threshold(gray, 180, 255, THRESH_BINARY)
+	_, mask = threshold(gray, 180, 255, THRESH_BINARY)
 	image_final = bitwise_and(gray, gray, mask=mask)
-	ret, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
+	_, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
 	kernel = getStructuringElement(MORPH_CROSS, (3, 3))
 	dilated = dilate(new_img, kernel, iterations=1)
-	_, contours, hierarchy = findContours(dilated, RETR_EXTERNAL, CHAIN_APPROX_NONE)
+	_, contours, _ = findContours(dilated, RETR_EXTERNAL, CHAIN_APPROX_NONE)
 
 	coords = []
 	for contour in contours:
