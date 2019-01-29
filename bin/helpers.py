@@ -84,7 +84,7 @@ def helper_generate(bot, update):
 	return 0
 
 
-def helper_gif(update, text):
+def helper_gif(update, text, words):
 	if 'alexa play despacito' in text or 'dankbot play despacito' in text:
 		update.message.reply_animation(animation=despacito[0])
 		update.message.reply_audio(audio=dedpacito['normal' if randint(0, 9) else 'ded'])
@@ -98,7 +98,7 @@ def helper_gif(update, text):
 	elif 'do it' in text:
 		update.message.reply_animation(animation=get_random(do_it))
 
-	elif 'nein' in text:
+	elif 'nein' in words:
 		update.message.reply_animation(animation=get_random(nein))
 
 	elif 'damnnn' in text:
@@ -109,7 +109,7 @@ def helper_gif(update, text):
 	return 1
 
 
-def helper_image(update, text):
+def helper_image(update, text, words):
 	if text == 'e':
 		update.message.reply_photo(photo=get_random(e))
 
@@ -119,13 +119,13 @@ def helper_image(update, text):
 	elif 'i don\'t think so' in text or 'i dont think so' in text:
 		update.message.reply_photo(photo=get_random(dont_think_so))
 
-	elif 'wat' in text:
+	elif 'wat' in words:
 		update.message.reply_photo(photo=get_random(wat))
 
 	elif 'dude what' in text:
 		update.message.reply_photo(photo=get_random(dude_what))
 
-	elif 'wut' in text or 'what even' in text:
+	elif 'wut' in words or 'what even' in text:
 		update.message.reply_photo(photo=get_random(wut))
 
 	elif 'what the' in text:
@@ -139,7 +139,7 @@ def helper_image(update, text):
 	return 1
 
 
-def helper_text(update, text):
+def helper_text(update, text, words):
 	if 'ironic' in text or 'darth plagueis' in text:
 		update.message.reply_text(ironic)
 
@@ -156,7 +156,7 @@ def helper_text(update, text):
 		update.message.reply_text(text.replace('tp', '✝️🅿️'))
 
 	elif 'jainil' in text:
-		update.message.reply_text('ヽ(◉◡◔)ﾉ  i\'M jAiNiL aNd I iS aUtIsTiC. ヽ(◉◡◔)ﾉ')
+		update.message.reply_text('ヽ(◉◡◔)ﾉ  ｉ＇Ｍ  ｊＡｉＮｉＬ  ａＮｄ  ｉ  ｉＳ  ａＵｔＩｓＴｉＣ. ヽ(◉◡◔)ﾉ')
 
 	else:
 		return 0

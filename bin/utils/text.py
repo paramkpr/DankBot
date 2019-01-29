@@ -70,8 +70,8 @@ Use */help* to print all commands and */cookbook* for frying help.
 '''
 
 # Vapourwave Text
-normal = '''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`-=~!@#$%^&*()_+[];'\,./{}:"|<>?'''
-vapour = '''ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９０`－＝~！＠＃＄％^＆＊（）_＋[]；＇\，．／{}："|<>？'''
+normal = '''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890`-=~!@#$%^&*()_+[];',./{}:"|<>?'''
+vapour = '''ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９０`－＝~！＠＃＄％^＆＊（）_＋[]；＇，．／{}："|<>？'''
 vapourtext = {normal[x]: vapour[x] for x in range(len(normal))}
 vapourtext[' '] = '   '
 
