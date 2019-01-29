@@ -146,6 +146,9 @@ def helper_text(update, text, words):
 	elif text.startswith('f ') or text.startswith('rip ') or text == 'f' or text == 'rip':
 		update.message.reply_text('F')
 
+	elif 'oof' in words:
+		update.message.reply_text('oof indeed.')
+
 	elif text == '???':
 		update.message.reply_text('Profit')
 
