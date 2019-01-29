@@ -35,7 +35,7 @@ def alt_handler(bot, update):
 
 @run_async
 def vapourize_handler(bot, update):
-	text = update.message.text[10:].lower()
+	text = update.message.text[10:]
 	r = []
 	for i in text:
 		if i in vapourtext:
@@ -60,29 +60,21 @@ def reply_handler(bot, update):
 def main_handler(bot, update):
 	textn = update.message.text
 	text = textn.lower()
+	words = text.split()
 
 	if ', not ' in text:
 		drake(update, textn[text.find(', not ') + 6:], textn[:text.find(', not ')])
 
-	# if ', not ' in text:
-	# 	brain(update, textn.split(', not'))
-
-	# elif 'alt:' in text:
-	# 	alt(update, textn[text.find('alt:') + 4:])
-
-	# elif 'vapourize:' in text:
-	# 	vapourize(update, textn[text.find('vapourize:') + 10:])
-
 	elif '🅱️' in text:
 		helper_b(update, text)
 
-	elif helper_gif(update, text):
+	elif helper_gif(update, text, words):
 		return
 
-	elif helper_image(update, text):
+	elif helper_image(update, text, words):
 		return
 
-	elif helper_text(update, text):
+	elif helper_text(update, text, words):
 		return
 
 	else:

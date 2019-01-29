@@ -27,8 +27,8 @@ def drake(update, a, b):
 		img.save(bio, 'PNG')
 		bio.seek(0)
 		update.message.reply_photo(photo=bio)
-		return
-	update.message.reply_photo(photo=m[1])
+	else:
+		update.message.reply_photo(photo=m[1])
 
 
 @jit(fastmath=True)

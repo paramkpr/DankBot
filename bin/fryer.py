@@ -2,7 +2,6 @@ from io import BytesIO
 from os import environ, remove
 from os.path import abspath, isfile, split as path_split
 from random import shuffle
-from time import sleep
 from urllib.error import HTTPError, URLError
 from urllib.request import urlopen, urlretrieve
 
@@ -16,6 +15,7 @@ from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
 from telegram.ext.dispatcher import run_async
+from time import sleep
 
 bin_path = path_split(abspath(__file__))[0]
 
@@ -125,14 +125,16 @@ def fry_frame(frame, n, fs, e, b, m):
 
 @jit(fastmath=True)
 def __fry(img, n, e, b):
-	coords = __find_chars(img)
+	# coords = __find_chars(img)
 	# eyecoords = __find_eyes(img)
-	if coords:
-		img = __add_b(img, coords, e / 20)
 
-	img = __add_emojis(img, n * e)
+	# if coords:
+	# 	img = __add_b(img, coords, e / 20)
+
 	# if eyecoords:
 	# 	img = __add_flares(img, eyecoords)
+
+	img = __add_emojis(img, n * e)
 
 	w, h = img.width - 1, img.height - 1
 	for _ in range(n):
@@ -153,12 +155,18 @@ def __fry(img, n, e, b):
 
 @jit(fastmath=True)
 def __find_chars(img):
+	# Convert image to B&W
 	gray = array(img.convert("L"))
+
+	# Convert image to binary
 	_, mask = threshold(gray, 180, 255, THRESH_BINARY)
 	image_final = bitwise_and(gray, gray, mask=mask)
 	_, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
+
+	# Idk
 	kernel = getStructuringElement(MORPH_CROSS, (3, 3))
 	dilated = dilate(new_img, kernel, iterations=1)
+	# FIXME
 	_, contours, _ = findContours(dilated, RETR_EXTERNAL, CHAIN_APPROX_NONE)
 
 	coords = []
