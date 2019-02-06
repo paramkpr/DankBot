@@ -69,16 +69,17 @@ def fry_gif(update, url, n, args):
 		frame1 = fvs.read()
 		height, width, _ = frame1.shape
 
-		fourcc = VideoWriter_fourcc(*'mp4v')
 		try:
 			fps = fvs.get(CAP_PROP_FPS)
 		except:
 			fps = 30
+		fourcc = VideoWriter_fourcc(*'mp4v')
 		out = VideoWriter(output, fourcc, fps, (width, height))
 		out.write(fry_frame(frame1, n, fs, e, b, m))
 
 		while fvs.more():
-			out.write(fry_frame(fvs.read(), n, fs, e, b, m))
+			temp = fry_frame(fvs.read(), n, fs, e, b, m)
+			out.write(temp)
 
 		fvs.stream.release()
 		out.release()
@@ -115,6 +116,7 @@ def __download_gif(url, filepath):
 
 
 def fry_frame(frame, n, fs, e, b, m):
+	# FIXME: Fails on the last frame for some reason.
 	img = Image.fromarray(cvtColor(frame, COLOR_BGR2RGB))
 	img = __fry(img, n, e, b)
 	for _ in range(n):
