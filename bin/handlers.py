@@ -23,26 +23,26 @@ def cookbook_handler(bot, update):
 @run_async
 def alt_handler(bot, update):
 	text = update.message.text[4:].lower()
-	r, u = [], False
+	result, upper = [], False
 	for i in text:
 		if i.lower() in chars:
-			r.append(i.upper() if u else i.lower())
-			u = not u
+			result.append(i.upper() if upper else i.lower())
+			upper = not upper
 		else:
-			r.append(i)
-	update.message.reply_text("".join(r))
+			result.append(i)
+	update.message.reply_text("".join(result))
 
 
 @run_async
 def vapourize_handler(bot, update):
 	text = update.message.text[10:]
-	r = []
+	result = []
 	for i in text:
 		if i in vapourtext:
-			r.append(vapourtext[i])
+			result.append(vapourtext[i])
 		else:
-			r.append(i)
-	update.message.reply_text("".join(r))
+			result.append(i)
+	update.message.reply_text("".join(result))
 
 
 @run_async

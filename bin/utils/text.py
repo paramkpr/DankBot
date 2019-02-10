@@ -81,7 +81,7 @@ exbuded = ['a', 'an', 'and', 'are', 'if', 'the']
 
 # Misc.
 chars = 'abcdefghijklmnopqrstuvwxyz'
-keys = ['shallow', 'deep', 'no-fat', 'low-fat', 'high-fat', 'light', 'heavy']
+keys = ['shallow', 'deep', 'no-fat', 'low-fat', 'high-fat', 'light', 'heavy', 'chilli']
 ironic = '''
 Did you ever hear the tragedy of Darth Plagueis The Wise?
 I thought not. It's not a story the Jedi would tell you.

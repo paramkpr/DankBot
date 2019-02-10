@@ -21,25 +21,26 @@ bin_path = path_split(abspath(__file__))[0]
 
 
 @run_async
-def fry_image(update, url, n, args):
-	e = 3 if args['high-fat'] else 1 if args['low-fat'] else 0 if args['no-fat'] else 2
-	b = 0.75 if args['heavy'] else 0 if args['light'] else 0.45
-	m = 4 if args['deep'] else 1 if args['shallow'] else 2
+def fry_image(update, url, number_of_cycles, args):
+	number_of_emojis = 3 if args['high-fat'] else 1 if args['low-fat'] else 0 if args['no-fat'] else 2
+	bulge_probability = 0.75 if args['heavy'] else 0 if args['light'] else 0.45
+	magnitude = 4 if args['deep'] else 1 if args['shallow'] else 2
 	name = update.message.from_user.first_name
 
 	bio = BytesIO()
 	bio.name = filename = '%s_%s_%s.png' % (update.message.chat_id, name, update.message.message_id)
-	caption = "Requested by %s, %d Cycle(s)" % (name, n)
+	caption = "Requested by %s, %d Cycle(s)" % (name, number_of_cycles)
 
 	success, img = __get_image(url)
 	if success:
-		img = __fry(img, n, e, b)
+		img = __fry(img, number_of_cycles, number_of_emojis, bulge_probability, args['chilli'])
 
 		fs = [__posterize, __sharpen, __increase_contrast, __colorize]
-		for _ in range(n):
+		for _ in range(number_of_cycles):
 			shuffle(fs)
 			for f in fs:
-				img = f(img, m)
+				img = f(img, magnitude)
+
 		img.save(bio, 'PNG')
 		bio.seek(0)
 		update.message.reply_photo(photo=bio, caption=caption)
@@ -49,9 +50,9 @@ def fry_image(update, url, n, args):
 
 @run_async
 def fry_gif(update, url, n, args):
-	e = 1.5 if args['high-fat'] else 1 if args['low-fat'] else 0
-	b = 0.3 if args['heavy'] else 0.15 if args['light'] else 0
-	m = 4 if args['deep'] else 1 if args['shallow'] else 2
+	number_of_emojis = 1.5 if args['high-fat'] else 1 if args['low-fat'] else 0
+	bulge_probability = 0.3 if args['heavy'] else 0.15 if args['light'] else 0
+	magnitude = 4 if args['deep'] else 1 if args['shallow'] else 2
 	name = update.message.from_user.first_name
 
 	filename = '%s_%s_%s' % (update.message.chat_id, name, update.message.message_id)
@@ -69,16 +70,16 @@ def fry_gif(update, url, n, args):
 		frame1 = fvs.read()
 		height, width, _ = frame1.shape
 
-		fourcc = VideoWriter_fourcc(*'mp4v')
 		try:
 			fps = fvs.get(CAP_PROP_FPS)
 		except:
 			fps = 30
-		out = VideoWriter(output, fourcc, fps, (width, height))
-		out.write(fry_frame(frame1, n, fs, e, b, m))
+		out = VideoWriter(output, VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+		out.write(fry_frame(frame1, n, fs, number_of_emojis, bulge_probability, magnitude))
 
 		while fvs.more():
-			out.write(fry_frame(fvs.read(), n, fs, e, b, m))
+			temp = fry_frame(fvs.read(), n, fs, number_of_emojis, bulge_probability, magnitude)
+			out.write(temp)
 
 		fvs.stream.release()
 		out.release()
@@ -115,6 +116,7 @@ def __download_gif(url, filepath):
 
 
 def fry_frame(frame, n, fs, e, b, m):
+	# FIXME: Fails on the last frame for some reason.
 	img = Image.fromarray(cvtColor(frame, COLOR_BGR2RGB))
 	img = __fry(img, n, e, b)
 	for _ in range(n):
@@ -124,21 +126,22 @@ def fry_frame(frame, n, fs, e, b, m):
 
 
 @jit(fastmath=True)
-def __fry(img, n, e, b):
+def __fry(img, number_of_cycles, number_of_emojis, bulge_probability, laser):
+	if laser:
+		eyecoords = __find_eyes(img)
+		if eyecoords:
+			img = __add_flares(img, eyecoords)
+
 	# coords = __find_chars(img)
-	# eyecoords = __find_eyes(img)
 
 	# if coords:
 	# 	img = __add_b(img, coords, e / 20)
 
-	# if eyecoords:
-	# 	img = __add_flares(img, eyecoords)
-
-	img = __add_emojis(img, n * e)
+	img = __add_emojis(img, number_of_cycles * number_of_emojis)
 
 	w, h = img.width - 1, img.height - 1
-	for _ in range(n):
-		if random(1)[0] <= b:
+	for _ in range(number_of_cycles):
+		if random(1)[0] <= bulge_probability:
 			w *= random(1)
 			h *= random(1)
 			r = int(((img.width + img.height) / 10) * (random(1)[0] + 1))

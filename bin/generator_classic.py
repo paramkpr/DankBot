@@ -13,9 +13,9 @@ s1 = ImageFont.truetype(font_path, 1)
 
 
 @run_async
-def generate(update, url, t: str, b: str):
-	t = t.replace('\n', '')
-	b = b.replace('\n', '')
+def generate(update, url, top: str, bottom: str):
+	top = top.replace('\n', '')
+	bottom = bottom.replace('\n', '')
 	bio = BytesIO()
 
 	for _ in range(5):
@@ -24,8 +24,8 @@ def generate(update, url, t: str, b: str):
 			draw = ImageDraw.Draw(img)
 			w, h = img.width, img.height
 			w900, h20 = 9 * w, h // 5
-			st, lt = __calculate_size(t, w900, h20)
-			sb, lb = __calculate_size(b, w900, h20)
+			st, lt = __calculate_size(top, w900, h20)
+			sb, lb = __calculate_size(bottom, w900, h20)
 			if __draw_top(draw, lt, w, h, st) and __draw_bottom(draw, lb, w, h, sb):
 				img.save(bio, 'PNG')
 				bio.seek(0)
