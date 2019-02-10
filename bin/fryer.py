@@ -130,7 +130,7 @@ def __fry(img, number_of_cycles, number_of_emojis, bulge_probability, laser):
 	if laser:
 		eyecoords = __find_eyes(img)
 		if eyecoords:
-			img = __add_flares(img, eyecoords)
+			img = __add_lasers(img, eyecoords)
 
 	# coords = __find_chars(img)
 
@@ -223,12 +223,12 @@ def __colorize(img, p):
 
 
 @jit(fastmath=True)
-def __add_flares(img, coords):
+def __add_lasers(img, coords):
 	tmp = img.copy()
 
-	flare = Image.open(bin_path + '/Frying/lazer.png')
+	laser = Image.open(bin_path + '/Frying/laser1.png')
 	for coord in coords:
-		tmp.paste(flare, (int(coord[0] - flare.size[0] / 2), int(coord[1] - flare.size[1] / 2)), flare)
+		tmp.paste(laser, (int(coord[0] - laser.size[0] / 2), int(coord[1] - laser.size[1] / 2)), laser)
 
 	return tmp
 
