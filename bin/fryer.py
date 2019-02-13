@@ -472,9 +472,7 @@ def __get_caption(name, number_of_cycles, args):
 	if args['chilli']:
 		if args['vitamin-b']:
 			return caption + ', with extra Chilli and added Vitamin-B.'
-		else:
-			return caption + ', with extra Chilli.'
-	else:
-		if args['vitamin-b']:
-			return caption + ', with added Vitamin-B.'
+		return caption + ', with extra Chilli.'
+	if args['vitamin-b']:
+		return caption + ', with added Vitamin-B.'
 	return caption + '.'
