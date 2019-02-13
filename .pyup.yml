@@ -1,0 +1,3 @@
+branch_prefix: pyup/
+schedule: "every week"
+branch: staging
