@@ -26,9 +26,9 @@ def drake(update, a, b):
 	if __draw_text(draw, a, 129) and __draw_text(draw, b, 387):
 		img.save(bio, 'PNG')
 		bio.seek(0)
-		update.message.reply_photo(photo=bio)
+		update.message.reply_photo(bio, quote=True)
 	else:
-		update.message.reply_photo(photo=m[1])
+		update.message.reply_photo(m[1], quote=True)
 
 
 @jit(fastmath=True)
@@ -44,7 +44,10 @@ def __get_lines(t):
 	for i in range(len(t[0]), -1, -1):
 		w, _ = font.getsize("".join(t[:i]))
 		if w <= 320:
-			return ["".join(t[0][:i])] + __get_lines(" ".join(["".join(t[0][i:])] + t[1:]))
+			return (
+				["".join(t[0][:i])] +
+				__get_lines(" ".join(["".join(t[0][i:])] + t[1:]))
+			)
 
 
 def __draw_text(draw, t, y):

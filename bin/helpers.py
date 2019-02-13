@@ -33,7 +33,7 @@ def helper_b(update, text):
 			a.append(x[:s] + '🅱️' + x[end:])
 		except IndexError:
 			a.append(x)
-	update.message.reply_text(' '.join(a))
+	update.message.reply_text(' '.join(a), quote=True)
 
 
 def helper_fry(bot, update):
@@ -46,15 +46,21 @@ def helper_fry(bot, update):
 	if n:
 		args = {key: 1 if key in text else 0 for key in keys}
 		if update.message.reply_to_message.document:
-			url = bot.get_file(update.message.reply_to_message.document.file_id).file_path
+			url = bot.get_file(
+				update.message.reply_to_message.document.file_id
+			).file_path
 			fry_gif(update, url, n, args)
 
 		elif update.message.reply_to_message.video:
-			url = bot.get_file(update.message.reply_to_message.video.file_id).file_path
+			url = bot.get_file(
+				update.message.reply_to_message.video.file_id
+			).file_path
 			fry_gif(update, url, n, args)
 
 		elif update.message.reply_to_message.photo:
-			url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
+			url = bot.get_file(
+				update.message.reply_to_message.photo[::-1][0].file_id
+			).file_path
 			fry_image(update, url, n, args)
 		return 1
 	return 0
@@ -66,7 +72,9 @@ def helper_generate(bot, update):
 	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
 		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
 		b, bc = (text.find('b:'), 1) if 'b:' in text else (text.find('bs:'), 0)
-		url = bot.get_file(update.message.reply_to_message.photo[::-1][0].file_id).file_path
+		url = bot.get_file(
+			update.message.reply_to_message.photo[::-1][0].file_id
+		).file_path
 
 		if b > t:
 			generate(
@@ -86,23 +94,26 @@ def helper_generate(bot, update):
 
 def helper_gif(update, text, words):
 	if 'alexa play despacito' in text or 'dankbot play despacito' in text:
-		update.message.reply_animation(animation=despacito[0])
-		update.message.reply_audio(audio=dedpacito['normal' if randint(0, 9) else 'ded'])
+		update.message.reply_animation(despacito[0], quote=True)
+		update.message.reply_audio(
+			dedpacito['normal' if randint(0, 9) else 'ded'],
+			quote=True
+		)
 
 	elif 'hmmm' in text:
-		update.message.reply_animation(animation=get_random(hmmm))
+		update.message.reply_animation(get_random(hmmm), quote=True)
 
 	elif 'allah hu akbar' in text:
-		update.message.reply_animation(animation=get_random(allah_hu_akbar))
+		update.message.reply_animation(get_random(allah_hu_akbar), quote=True)
 
 	elif 'do it' in text:
-		update.message.reply_animation(animation=get_random(do_it))
+		update.message.reply_animation(get_random(do_it), quote=True)
 
 	elif 'nein' in words:
-		update.message.reply_animation(animation=get_random(nein))
+		update.message.reply_animation(get_random(nein), quote=True)
 
 	elif 'damnnn' in text:
-		update.message.reply_animation(animation=get_random(damnnn))
+		update.message.reply_animation(get_random(damnnn), quote=True)
 
 	else:
 		return 0
@@ -111,28 +122,32 @@ def helper_gif(update, text, words):
 
 def helper_image(update, text, words):
 	if text == 'e':
-		update.message.reply_photo(photo=get_random(e))
+		update.message.reply_photo(get_random(e), quote=True)
 
 	elif 'hello there' in text:
-		update.message.reply_photo(photo=get_random(hello_there))
+		update.message.reply_photo(get_random(hello_there), quote=True)
 
 	elif 'i don\'t think so' in text or 'i dont think so' in text:
-		update.message.reply_photo(photo=get_random(dont_think_so))
+		update.message.reply_photo(get_random(dont_think_so), quote=True)
 
 	elif 'wat' in words:
-		update.message.reply_photo(photo=get_random(wat))
+		update.message.reply_photo(get_random(wat), quote=True)
 
 	elif 'dude what' in text:
-		update.message.reply_photo(photo=get_random(dude_what))
+		update.message.reply_photo(get_random(dude_what), quote=True)
 
 	elif 'wut' in words or 'what even' in text:
-		update.message.reply_photo(photo=get_random(wut))
+		update.message.reply_photo(get_random(wut), quote=True)
 
 	elif 'what the' in text:
-		update.message.reply_photo(photo=get_random(what_the))
+		update.message.reply_photo(get_random(what_the), quote=True)
 
-	elif 'miss me with that gay shit' in text or 'thats gay' in text or 'that\'s gay' in text:
-		update.message.reply_photo(photo=get_random(miss_me))
+	elif (
+		'miss me with that gay shit' in text
+		or 'thats gay' in text
+		or 'that\'s gay' in text
+	):
+		update.message.reply_photo(get_random(miss_me), quote=True)
 
 	else:
 		return 0
@@ -141,25 +156,27 @@ def helper_image(update, text, words):
 
 def helper_text(update, text, words):
 	if 'ironic' in text or 'darth plagueis' in text:
-		update.message.reply_text(ironic)
+		update.message.reply_text(ironic, quote=True)
 
-	elif text.startswith('f ') or text.startswith('rip ') or text == 'f' or text == 'rip':
-		update.message.reply_text('F')
+	elif (
+		text.startswith('f ')
+		or text.startswith('rip ')
+		or text == 'f'
+		or text == 'rip'
+	):
+		update.message.reply_text('F', quote=True)
 
 	elif 'oof' in words:
-		update.message.reply_text('oof indeed.')
+		update.message.reply_text('oof indeed.', quote=True)
 
 	elif text == '???':
-		update.message.reply_text('Profit')
+		update.message.reply_text('Profit', quote=True)
 
 	elif 'thought' in text and 'process' in text:
-		update.message.reply_text('thoughtprocessors.herokuapp.com')
+		update.message.reply_text('thoughtprocessors.herokuapp.com', quote=True)
 
 	elif 'tp' in text:
-		update.message.reply_text(text.replace('tp', '✝️🅿️'))
-
-	elif 'jainil' in text:
-		update.message.reply_text('ヽ(◉◡◔)ﾉ  ｉ＇Ｍ  ｊＡｉＮｉＬ  ａＮｄ  ｉ  ｉＳ  ａＵｔＩｓＴｉＣ. ヽ(◉◡◔)ﾉ')
+		update.message.reply_text(text.replace('tp', '✝️🅿️'), quote=True)
 
 	else:
 		return 0
