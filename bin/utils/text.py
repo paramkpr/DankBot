@@ -66,6 +66,9 @@ using one of the following commands:
 
 	f) Heavy: Extra bulges are added.
 	g) Light: No bulges are added.
+	
+	h) Vitamin-B: (Experimental) Adds the B emoji on text in the image.
+	i) Chilli: (Experimental) Adds laser eyes.
 
 Also note that emojis and bulges are disabled by default for GIFs and Videos.
 Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
