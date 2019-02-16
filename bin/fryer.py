@@ -24,6 +24,7 @@ bin_path = path_split(abspath(__file__))[0]
 
 @run_async
 def fry_image(update, url, number_of_cycles, args):
+	# print(args['vitamin-b'])
 	number_of_emojis = (
 		3 if args['high-fat']
 		else 1 if args['low-fat']
@@ -206,25 +207,36 @@ def __fry(
 def __find_chars(img):
 	# Convert image to B&W
 	gray = array(img.convert("L"))
+	# gray = cvtColor(img, COLOR_BGR2GRAY)
 
 	# Convert image to binary
-	_, mask = threshold(gray, 180, 255, THRESH_BINARY)
+	ret, mask = threshold(gray, 180, 255, THRESH_BINARY)
+	# print("Generating img_final")
 	image_final = bitwise_and(gray, gray, mask=mask)
-	_, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
+	# print("Done")
+	Image.fromarray(image_final).save('image_final.png')
+
+	# print("Generating new_img")
+	ret, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
+	# print("Done")
+	Image.fromarray(new_img).save('new_img.png')
 
 	# Idk
 	kernel = getStructuringElement(MORPH_CROSS, (3, 3))
 	dilated = dilate(new_img, kernel, iterations=1)
+	Image.fromarray(dilated).save('out.png')
+	# print("Everything up to line 220 done.")
 	# FIXME
 	_, contours, _ = findContours(dilated, RETR_EXTERNAL, CHAIN_APPROX_NONE)
+	# print("Line 220 221 done.")
 
 	coords = []
 	for contour in contours:
 		# get rectangle bounding contour
 		[x, y, w, h] = boundingRect(contour)
 		# ignore large chars (probably not chars)
-		if w > 70 and h > 70:
-			continue
+		# if w > 70 and h > 70:
+		# 	continue
 		coords.append((x, y, w, h))
 	return coords
 
@@ -233,9 +245,11 @@ def __find_chars(img):
 def __find_eyes(img):
 	coords = []
 	face_cascade = CascadeClassifier(
-		bin_path + '/Resources/haarcascade_frontalface_default.xml'
+		bin_path + '/Resources/Classifiers/haarcascade_frontalface.xml'
 	)
-	eye_cascade = CascadeClassifier(bin_path + '/Resources/haarcascade_eye.xml')
+	eye_cascade = CascadeClassifier(
+		bin_path + '/Resources/Classifiers/haarcascade_eye.xml'
+	)
 	gray = array(img.convert("L"))
 
 	faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -278,7 +292,7 @@ def __add_lasers(img, coords):
 		return img
 	tmp = img.copy()
 
-	laser = Image.open(bin_path + '/Frying/laser1.png')
+	laser = Image.open(bin_path + '/Resources/Frying/laser1.png')
 	for coord in coords:
 		tmp.paste(
 			laser, (
@@ -294,7 +308,7 @@ def __add_lasers(img, coords):
 def __add_b(img, coords, c):
 	tmp = img.copy()
 
-	b = Image.open(bin_path + '/Frying/B.png')
+	b = Image.open(bin_path + '/Resources/Frying/B.png')
 	for coord in coords:
 		if random(1)[0] < c:
 			resized = b.copy()
@@ -310,7 +324,7 @@ def __add_emojis(img, m):
 	tmp = img.copy()
 
 	for i in emojis:
-		emoji = Image.open(bin_path + '/Frying/%s.png' % i)
+		emoji = Image.open(bin_path + '/Resources/Frying/%s.png' % i)
 		for _ in range(int(random(1)[0] * m)):
 			coord = random(2) * array([img.width, img.height])
 			size = int((img.width / 10) * (random(1)[0] + 1)) + 1
