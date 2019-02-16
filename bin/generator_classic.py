@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 from numba import jit
 from telegram.ext.dispatcher import run_async
 
-font_path = path_split(abspath(__file__))[0] + '/Resources/impact.ttf'
+font_path = path_split(abspath(__file__))[0] + '/Resources/Fonts/impact.ttf'
 s1 = ImageFont.truetype(font_path, 1)
 
 
