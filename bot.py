@@ -61,9 +61,7 @@ dispatcher.add_handler(RegexHandler(r'(?i)(^vapourize:)', vapourize_handler))
 
 dispatcher.add_handler(MessageHandler(Filters.reply, reply_handler))
 dispatcher.add_handler(MessageHandler(Filters.text, main_handler))
-dispatcher.add_handler(
-	MessageHandler(Filters.all, lambda bot, update: print(update.message))
-)
+dispatcher.add_handler(MessageHandler(Filters.all, all_handler))
 
 if environ.get('ENVIRONMENT', None) == 'HEROKU':
 	print("Starting Webhook")

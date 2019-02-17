@@ -96,3 +96,21 @@ def main_handler(bot, update):
 			if update.message.chat.type == 'group' else
 			'%s: %s' % (update.message.from_user.first_name, textn)
 		)
+
+
+@run_async
+def all_handler(bot, update):
+	print(update.message)
+	if update.message.chat.id != 623912829:
+		return
+	
+	update.message.reply_text(
+		update.message.animation.file_id if update.message.animation
+		else update.message.audio.file_id if update.message.audio
+		else update.message.document.file_id if update.message.document
+		else update.message.photo[::-1][0].file_id if update.message.photo
+		else update.message.video.file_id if update.message.video
+		else update.message.video_note.file_id if update.message.video_note
+		else update.message.voice.file_id if update.message.voice
+		else update.message,
+		quote=True)
