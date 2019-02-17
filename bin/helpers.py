@@ -92,28 +92,35 @@ def helper_generate(bot, update):
 	return 0
 
 
-def helper_gif(update, text, words):
-	if 'alexa play despacito' in text or 'dankbot play despacito' in text:
-		update.message.reply_animation(despacito[0], quote=True)
+def helper_despacito(update, text):
+	update.message.reply_animation(despacito[0], quote=True)
+	try:
+		word = text[text.find('play despacito') + 15:].partition(' ')[0]
+		n = int(word)
 		update.message.reply_audio(
-			dedpacito['normal' if randint(0, 9) else 'ded'],
+			dedpacito[min(max(1, n), 11)],
 			quote=True
 		)
+	except (IndexError, ValueError):
+		pass
+	update.message.reply_audio(
+		dedpacito['normal' if randint(0, 9) else 'ded'],
+		quote=True
+	)
 
-	elif 'hmmm' in text:
+
+def helper_gif(update, text, words):
+	if 'hmmm' in text:
 		update.message.reply_animation(get_random(hmmm), quote=True)
 
 	elif 'allah hu akbar' in text:
 		update.message.reply_animation(get_random(allah_hu_akbar), quote=True)
 
-	elif 'do it' in text:
-		update.message.reply_animation(get_random(do_it), quote=True)
+	elif 'just do it' in text:
+		update.message.reply_animation(get_random(just_do_it), quote=True)
 
 	elif 'nein' in words:
 		update.message.reply_animation(get_random(nein), quote=True)
-
-	elif 'damnnn' in text:
-		update.message.reply_animation(get_random(damnnn), quote=True)
 
 	else:
 		return 0
@@ -175,7 +182,7 @@ def helper_text(update, text, words):
 	elif 'thought' in text and 'process' in text:
 		update.message.reply_text('thoughtprocessors.herokuapp.com', quote=True)
 
-	elif 'tp' in text:
+	elif 'tp' in text and 'http' not in text:
 		update.message.reply_text(text.replace('tp', '✝️🅿️'), quote=True)
 
 	else:
