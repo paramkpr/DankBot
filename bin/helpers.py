@@ -102,11 +102,10 @@ def helper_despacito(update, text):
 			quote=True
 		)
 	except (IndexError, ValueError):
-		pass
-	update.message.reply_audio(
-		dedpacito['normal' if randint(0, 9) else 'ded'],
-		quote=True
-	)
+		update.message.reply_audio(
+			dedpacito['normal' if randint(0, 9) else 'ded'],
+			quote=True
+		)
 
 
 def helper_gif(update, text, words):
