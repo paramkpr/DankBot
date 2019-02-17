@@ -17,7 +17,7 @@
 #                                                  #
  ##                                                 ##
 
-Copyright (C) 2018  Ishan Manchanda (@Rippr)
+Copyright (C) 2019  Ishan Manchanda (@Rippr)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,7 +36,8 @@ Copyright (C) 2018  Ishan Manchanda (@Rippr)
 from os import environ
 
 from dotenv import load_dotenv
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, RegexHandler
+from telegram.ext import \
+	Updater, CommandHandler, MessageHandler, Filters, RegexHandler
 
 from bin.handlers import *
 
@@ -60,7 +61,9 @@ dispatcher.add_handler(RegexHandler(r'(?i)(^vapourize:)', vapourize_handler))
 
 dispatcher.add_handler(MessageHandler(Filters.reply, reply_handler))
 dispatcher.add_handler(MessageHandler(Filters.text, main_handler))
-dispatcher.add_handler(MessageHandler(Filters.all, lambda bot, update: print(update.message)))
+dispatcher.add_handler(
+	MessageHandler(Filters.all, lambda bot, update: print(update.message))
+)
 
 if environ.get('ENVIRONMENT', None) == 'HEROKU':
 	print("Starting Webhook")

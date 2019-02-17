@@ -3,19 +3,16 @@ commands = '''
 *Basic Commands*
  1. Hmmm
  2. Allah hu Akbar
- 3. Do it
+ 3. Just do it
  4. Nein
- 5. Damnnn
- 6. E
- 7. Hello there
- 8. I don't think so
- 9. Wut / Dude what / What even
-10. Wat
-11. What the
-12. Miss me with that gay shit
-13. Ironic
-14. F / RIP
-15. ???
+ 5. E
+ 6. Hello there
+ 7. I don't think so
+ 8. Wut / Wat / Dude what / What even / What the
+ 9. Miss me with that gay shit
+10. Ironic
+11. F / RIP
+12. ???
 
 *Advanced Commands*
 
@@ -33,12 +30,14 @@ commands = '''
 	Replaces the first consonant group of a word with 🅱️.
 	Doesn't replace those consonants which can (mostly) be pronounced after a b.
 
-5. Alexa / Dankbot play Despacito
+5. Alexa / Dankbot play Despacito [x]
 	Sends a GIF of the Despacito music video
 	along with an audio file of Despacito.
+	If a number x is given, certain effects are applied to the audio.
 	The audio file has a 10% chance of being extremely bass boosted.
 
 
+Please note, DankBot needs permission to access messages to work properly.
 Use */help* to print all commands and */cookbook* for frying help.
 '''
 cookbook = '''

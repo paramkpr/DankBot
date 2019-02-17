@@ -3,7 +3,7 @@ from telegram.ext.dispatcher import run_async
 from .drake import drake
 from .helpers import \
 	helper_b, helper_gif, helper_image, \
-	helper_text, helper_fry, helper_generate
+	helper_text, helper_fry, helper_generate, helper_despacito
 from .utils.text import commands, cookbook, chars, vapourtext
 
 
@@ -73,6 +73,9 @@ def main_handler(bot, update):
 
 	elif '🅱️' in text:
 		helper_b(update, text)
+
+	elif 'dankbot play despacito' in text or 'alexa play despacito' in text:
+		helper_despacito(update, text)
 
 	elif helper_gif(update, text, words):
 		return
