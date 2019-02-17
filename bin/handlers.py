@@ -1,23 +1,25 @@
 from telegram.ext.dispatcher import run_async
 
 from .drake import drake
-from .helpers import helper_b, helper_gif, helper_image, helper_text, helper_fry, helper_generate
+from .helpers import \
+	helper_b, helper_gif, helper_image, \
+	helper_text, helper_fry, helper_generate, helper_despacito
 from .utils.text import commands, cookbook, chars, vapourtext
 
 
 @run_async
 def start_handler(bot, update):
-	update.message.reply_markdown(text='*This is DankBot!*\n' + commands)
+	update.message.reply_markdown('*This is DankBot!*\n' + commands, quote=True)
 
 
 @run_async
 def help_handler(bot, update):
-	update.message.reply_markdown(text=commands)
+	update.message.reply_markdown(commands, quote=True)
 
 
 @run_async
 def cookbook_handler(bot, update):
-	update.message.reply_markdown(text=cookbook)
+	update.message.reply_markdown(cookbook, quote=True)
 
 
 @run_async
@@ -30,7 +32,7 @@ def alt_handler(bot, update):
 			upper = not upper
 		else:
 			result.append(i)
-	update.message.reply_text("".join(result))
+	update.message.reply_text("".join(result), quote=True)
 
 
 @run_async
@@ -42,7 +44,7 @@ def vapourize_handler(bot, update):
 			result.append(vapourtext[i])
 		else:
 			result.append(i)
-	update.message.reply_text("".join(result))
+	update.message.reply_text("".join(result), quote=True)
 
 
 @run_async
@@ -63,10 +65,17 @@ def main_handler(bot, update):
 	words = text.split()
 
 	if ', not ' in text:
-		drake(update, textn[text.find(', not ') + 6:], textn[:text.find(', not ')])
+		drake(
+			update,
+			textn[text.find(', not ') + 6:],
+			textn[:text.find(', not ')]
+		)
 
 	elif '🅱️' in text:
 		helper_b(update, text)
+
+	elif 'dankbot play despacito' in text or 'alexa play despacito' in text:
+		helper_despacito(update, text)
 
 	elif helper_gif(update, text, words):
 		return
@@ -79,7 +88,29 @@ def main_handler(bot, update):
 
 	else:
 		print(
-			'(%s) %s: %s' % (update.message.chat.title, update.message.from_user.first_name, textn)
+			'(%s) %s: %s' % (
+				update.message.chat.title,
+				update.message.from_user.first_name,
+				textn
+			)
 			if update.message.chat.type == 'group' else
 			'%s: %s' % (update.message.from_user.first_name, textn)
 		)
+
+
+@run_async
+def all_handler(bot, update):
+	print(update.message)
+	if update.message.chat.id != 623912829:
+		return
+	
+	update.message.reply_text(
+		update.message.animation.file_id if update.message.animation
+		else update.message.audio.file_id if update.message.audio
+		else update.message.document.file_id if update.message.document
+		else update.message.photo[::-1][0].file_id if update.message.photo
+		else update.message.video.file_id if update.message.video
+		else update.message.video_note.file_id if update.message.video_note
+		else update.message.voice.file_id if update.message.voice
+		else update.message,
+		quote=True)

@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 from numba import jit
 from telegram.ext.dispatcher import run_async
 
-font_path = path_split(abspath(__file__))[0] + '/Resources/impact.ttf'
+font_path = path_split(abspath(__file__))[0] + '/Resources/Fonts/impact.ttf'
 s1 = ImageFont.truetype(font_path, 1)
 
 
@@ -26,10 +26,13 @@ def generate(update, url, top: str, bottom: str):
 			w900, h20 = 9 * w, h // 5
 			st, lt = __calculate_size(top, w900, h20)
 			sb, lb = __calculate_size(bottom, w900, h20)
-			if __draw_top(draw, lt, w, h, st) and __draw_bottom(draw, lb, w, h, sb):
+			if (
+				__draw_top(draw, lt, w, h, st)
+				and __draw_bottom(draw, lb, w, h, sb)
+			):
 				img.save(bio, 'PNG')
 				bio.seek(0)
-				update.message.reply_photo(photo=bio)
+				update.message.reply_photo(bio, quote=True)
 				return
 			return
 		except (HTTPError, URLError):
@@ -60,7 +63,10 @@ def __calculate_size(t, w900, h20):
 	if fs[0] == 1:
 		return 1, lines
 	if len(lines) > 2:
-		return fs[0] - 1, __get_lines(t, w90, ImageFont.truetype(font_path, fs[0] - 1))
+		return (
+			fs[0] - 1,
+			__get_lines(t, w90, ImageFont.truetype(font_path, fs[0] - 1))
+		)
 	return fs[0], lines
 
 

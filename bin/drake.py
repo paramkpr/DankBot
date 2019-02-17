@@ -7,7 +7,7 @@ from numba import jit
 from telegram.ext.dispatcher import run_async
 
 bin_path = path_split(abspath(__file__))[0]
-font = ImageFont.truetype(bin_path + '/Resources/raleway.ttf', 32)
+font = ImageFont.truetype(bin_path + '/Resources/Fonts/raleway.ttf', 32)
 
 
 @run_async
@@ -20,15 +20,15 @@ def drake(update, a, b):
 	)[randint(0, 3)]
 
 	bio = BytesIO()
-	img = Image.open(bin_path + '/Drake/%s.png' % m[0])
+	img = Image.open(bin_path + '/Resources/Drake/%s.png' % m[0])
 	draw = ImageDraw.Draw(img)
 
 	if __draw_text(draw, a, 129) and __draw_text(draw, b, 387):
 		img.save(bio, 'PNG')
 		bio.seek(0)
-		update.message.reply_photo(photo=bio)
+		update.message.reply_photo(bio, quote=True)
 	else:
-		update.message.reply_photo(photo=m[1])
+		update.message.reply_photo(m[1], quote=True)
 
 
 @jit(fastmath=True)
@@ -44,7 +44,10 @@ def __get_lines(t):
 	for i in range(len(t[0]), -1, -1):
 		w, _ = font.getsize("".join(t[:i]))
 		if w <= 320:
-			return ["".join(t[0][:i])] + __get_lines(" ".join(["".join(t[0][i:])] + t[1:]))
+			return (
+				["".join(t[0][:i])] +
+				__get_lines(" ".join(["".join(t[0][i:])] + t[1:]))
+			)
 
 
 def __draw_text(draw, t, y):
