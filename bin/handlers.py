@@ -25,26 +25,28 @@ def cookbook_handler(bot, update):
 @run_async
 def alt_handler(bot, update):
 	text = update.message.text[4:].lower()
-	result, upper = [], False
+	result, upper = [update.message.from_user.first_name, ':'], False
 	for i in text:
 		if i.lower() in chars:
 			result.append(i.upper() if upper else i.lower())
 			upper = not upper
 		else:
 			result.append(i)
-	update.message.reply_text("".join(result), quote=True)
+	if update.message.reply_text("".join(result), quote=True):
+		update.message.delete()
 
 
 @run_async
 def vapourize_handler(bot, update):
 	text = update.message.text[10:]
-	result = []
+	result = [update.message.from_user.first_name, ': ']
 	for i in text:
 		if i in vapourtext:
 			result.append(vapourtext[i])
 		else:
 			result.append(i)
-	update.message.reply_text("".join(result), quote=True)
+	if update.message.reply_text("".join(result)):
+		update.message.delete()
 
 
 @run_async
@@ -103,7 +105,7 @@ def all_handler(bot, update):
 	print(update.message)
 	if update.message.chat.id != 623912829:
 		return
-	
+
 	update.message.reply_text(
 		update.message.animation.file_id if update.message.animation
 		else update.message.audio.file_id if update.message.audio
