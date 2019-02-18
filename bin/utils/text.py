@@ -22,9 +22,11 @@ commands = '''
 
 2. Alt:
 	Converts text that follows the colon to aLt CaSe.
+	Deletes the trigger message if given admin rights.
 
 3. Vapourize:
 	Converts text that follows the colon to Vapourwave text.
+	Deletes the trigger message if given admin rights.
 	
 4. 🅱️:
 	Replaces the first consonant group of a word with 🅱️.
@@ -38,11 +40,15 @@ commands = '''
 
 
 Please note, DankBot needs permission to access messages to work properly.
-Use */help* to print all commands and */cookbook* for frying help.
+For additional functionality, such as removing certain trigger messages
+after responding, the Bot needs to be an admin on the group.
+Admin rights are optional and may be toggled at your discretion.
+
+Use */help* to print commands and */cookbook* for frying help.
 '''
 cookbook = '''
 *Deep Fryer*
-Fries images, GIFs, or videos.
+Fries images, GIFs (Experimental), or videos (Experimental).
 This includes increasing saturation & contrast,
 and adding noise, emojis, lazer eyes, and bulges.
 
@@ -73,7 +79,7 @@ Also note that emojis and bulges are disabled by default for GIFs and Videos.
 Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
 
 
-Use */help* to print all commands and */cookbook* for frying help.
+Use */help* to print commands and */cookbook* for frying help.
 '''
 
 # Vapourwave Text
