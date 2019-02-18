@@ -39,7 +39,7 @@ def alt_handler(bot, update):
 @run_async
 def vapourize_handler(bot, update):
 	text = update.message.text[10:]
-	result = [update.message.from_user.first_name, ': ']
+	result = [update.message.from_user.first_name, ':']
 	for i in text:
 		if i in vapourtext:
 			result.append(vapourtext[i])
