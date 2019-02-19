@@ -54,6 +54,7 @@ updater = Updater(
 dispatcher = updater.dispatcher
 dispatcher.add_handler(CommandHandler('start', start_handler))
 dispatcher.add_handler(CommandHandler('help', help_handler))
+dispatcher.add_handler(CommandHandler('changes', changes_handler))
 dispatcher.add_handler(CommandHandler('cookbook', cookbook_handler))
 
 dispatcher.add_handler(RegexHandler(r'(?i)(^alt:)', alt_handler))

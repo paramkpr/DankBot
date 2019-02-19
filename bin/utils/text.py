@@ -81,7 +81,17 @@ Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
 
 Use */help* to print commands and */cookbook* for frying help.
 '''
+changes = '''
+19 Feb 2019
 
+- GIF fryer functionality is more or less stable.
+- Added /changes command.
+
+
+18 Feb 2019
+
+- Bot now deletes alt: and vapourize: triggers when granted admin rights.
+'''
 # Vapourwave Text
 normal = '''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890''' \
 	+ '''`-=~!@#$%^&*()_+[];',./{}:"|<>?'''
