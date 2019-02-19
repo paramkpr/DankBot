@@ -94,8 +94,8 @@ def fry_gif(update, url, number_of_cycles, args):
 		return
 
 	fvs = FileVideoStream(filepath + '.mp4').start()
-	frame1 = fvs.read()
-	height, width, _ = frame1.shape
+	frame = fvs.read()
+	height, width, _ = frame.shape
 
 	try:
 		fps = fvs.get(CAP_PROP_FPS)
@@ -103,17 +103,21 @@ def fry_gif(update, url, number_of_cycles, args):
 		fps = 30
 	out = VideoWriter(output, VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 	out.write(fry_frame(
-		frame1, number_of_cycles, fs, number_of_emojis,
+		frame, number_of_cycles, fs, number_of_emojis,
 		bulge_probability, magnitude, args
 	))
 
-	while fvs.more():
-		temp = fry_frame(
-			fvs.read(), number_of_cycles, fs, number_of_emojis,
-			bulge_probability, magnitude, args
-		)
+	while fvs.more() or fvs.more():
+		try:
+			temp = fry_frame(
+				fvs.read(), number_of_cycles, fs, number_of_emojis,
+				bulge_probability, magnitude, args
+			)
+		except Exception as e:
+			break
 		out.write(temp)
 
+	fvs.stop()
 	fvs.stream.release()
 	out.release()
 	update.message.reply_animation(
@@ -121,8 +125,11 @@ def fry_gif(update, url, number_of_cycles, args):
 		caption=caption,
 		quote=True
 	)
+	try:
+		__upload_to_imgur(output, caption)
+	except (Exception, BaseException) as e:
+		print(e)
 	remove(filepath + '.mp4')
-	__upload_to_imgur(output, caption)
 
 
 def __get_image(url):
@@ -156,15 +163,16 @@ def fry_frame(
 	frame, number_of_cycles, fs, number_of_emojis,
 	bulge_probability, magnitude, args
 ):
-	# FIXME: Fails on the last frame for some reason.
 	img = Image.fromarray(cvtColor(frame, COLOR_BGR2RGB))
 	img = __fry(
 		img, number_of_cycles, number_of_emojis,
 		bulge_probability, args['chilli'], args['vitamin-b']
 	)
+
 	for _ in range(number_of_cycles):
 		for f in fs:
 			img = f(img, magnitude)
+
 	return cvtColor(array(img), COLOR_RGB2BGR)
 
 
@@ -440,30 +448,35 @@ def __add_bulge(img: Image.Image, coords, radius, flatness, h, ior):
 
 @run_async
 def __upload_to_imgur(path, caption):
-	client_id = environ.get('IMGUR_CLIENT_ID')
-	client_key = environ.get('IMGUR_CLIENT_KEY')
-	access_token = environ.get('IMGUR_ACCESS_TOKEN')
-	refresh_token = environ.get('IMGUR_REFRESH_TOKEN')
-	im = Imgur(client_id, client_key)
-
 	if not isfile(path):
 		return
+
+	# TODO: Convert to GIF and upload.
+	if path[-3:] == 'mp4':
+		remove(path)
+		return
+
+	im = Imgur(
+		environ.get('IMGUR_CLIENT_ID'),
+		environ.get('IMGUR_CLIENT_KEY'),
+		environ.get('IMGUR_ACCESS_TOKEN'),
+		environ.get('IMGUR_REFRESH_TOKEN')
+	)
 	for _ in range(5):
 		# noinspection PyBroadException
 		try:
-			im.access_token = access_token
-			im.refresh_token = refresh_token
-
 			im.upload_image(
-				abspath(path),
+				path=abspath(path),
 				title=caption,
 				album=environ.get('IMGUR_ALBUM')
 			)
-			remove(path)
-			return
 		except Exception:
 			im.refresh_access_token()
 			sleep(10)
+			continue
+
+		remove(path)
+		return
 
 
 def __get_caption(name, number_of_cycles, args):
