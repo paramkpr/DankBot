@@ -4,7 +4,7 @@ from .drake import drake
 from .helpers import \
 	helper_b, helper_gif, helper_image, \
 	helper_text, helper_fry, helper_generate, helper_despacito
-from .utils.text import commands, cookbook, chars, vapourtext
+from .utils.text import commands, cookbook, changes, chars, vapourtext
 
 
 @run_async
@@ -15,6 +15,11 @@ def start_handler(bot, update):
 @run_async
 def help_handler(bot, update):
 	update.message.reply_markdown(commands, quote=True)
+
+
+@run_async
+def changes_handler(bot, update):
+	update.message.reply_markdown(changes, quote=True)
 
 
 @run_async
