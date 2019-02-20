@@ -24,7 +24,6 @@ bin_path = path_split(abspath(__file__))[0]
 
 @run_async
 def fry_image(update, url, number_of_cycles, args):
-	# print(args['vitamin-b'])
 	number_of_emojis = (
 		3 if args['high-fat']
 		else 1 if args['low-fat']
@@ -215,28 +214,20 @@ def __fry(
 def __find_chars(img):
 	# Convert image to B&W
 	gray = array(img.convert("L"))
-	# gray = cvtColor(img, COLOR_BGR2GRAY)
 
 	# Convert image to binary
 	ret, mask = threshold(gray, 180, 255, THRESH_BINARY)
-	# print("Generating img_final")
 	image_final = bitwise_and(gray, gray, mask=mask)
-	# print("Done")
 	Image.fromarray(image_final).save('image_final.png')
 
-	# print("Generating new_img")
 	ret, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
-	# print("Done")
 	Image.fromarray(new_img).save('new_img.png')
 
 	# Idk
 	kernel = getStructuringElement(MORPH_CROSS, (3, 3))
 	dilated = dilate(new_img, kernel, iterations=1)
 	Image.fromarray(dilated).save('out.png')
-	# print("Everything up to line 220 done.")
-	# FIXME
 	_, contours, _ = findContours(dilated, RETR_EXTERNAL, CHAIN_APPROX_NONE)
-	# print("Line 220 221 done.")
 
 	coords = []
 	for contour in contours:

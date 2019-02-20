@@ -33,7 +33,11 @@ def helper_b(update, text):
 			a.append(x[:s] + '🅱️' + x[end:])
 		except IndexError:
 			a.append(x)
-	update.message.reply_text(' '.join(a), quote=True)
+
+	out = ' '.join(a)
+	if out == text:
+		return
+	update.message.reply_text(out, quote=True)
 
 
 def helper_fry(bot, update):

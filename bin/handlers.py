@@ -93,21 +93,21 @@ def main_handler(bot, update):
 	elif helper_text(update, text, words):
 		return
 
-	else:
-		print(
-			'(%s) %s: %s' % (
-				update.message.chat.title,
-				update.message.from_user.first_name,
-				textn
-			)
-			if update.message.chat.type == 'group' else
-			'%s: %s' % (update.message.from_user.first_name, textn)
-		)
+	# else:
+	# 	print(
+	# 		'(%s) %s: %s' % (
+	# 			update.message.chat.title,
+	# 			update.message.from_user.first_name,
+	# 			textn
+	# 		)
+	# 		if update.message.chat.type == 'group' else
+	# 		'%s: %s' % (update.message.from_user.first_name, textn)
+	# 	)
 
 
 @run_async
 def all_handler(bot, update):
-	print(update.message)
+	# print(update.message)
 	if update.message.chat.id != 623912829:
 		return
 
