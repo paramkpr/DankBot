@@ -28,15 +28,21 @@ commands = '''
 	Converts text that follows the colon to Vapourwave text.
 	Deletes the trigger message if given admin rights.
 	
-4. 🅱️:
+4. 🅱️
 	Replaces the first consonant group of a word with 🅱️.
 	Doesn't replace those consonants which can (mostly) be pronounced after a b.
 
-5. Alexa / Dankbot play Despacito [x]
+5. Alexa / Dankbot play Despacito {x}
 	Sends a GIF of the Despacito music video
 	along with an audio file of Despacito.
 	If a number x is given, certain effects are applied to the audio.
-	The audio file has a 10% chance of being extremely bass boosted.
+	If not, the audio file has a 10% chance of being extremely bass boosted.
+	
+6. T: ABC B: XYZ
+	Reply to an image to create a meme.
+	ABC is the top-text and XYZ is the bottom-text.
+	By default, the captions are converted to upper case.
+	Replace T with Ts and B with Bs to keep case as it is.
 
 
 Please note, DankBot needs permission to access messages to work properly.
@@ -48,7 +54,7 @@ Use */help* to print commands and */cookbook* for frying help.
 '''
 cookbook = '''
 *Deep Fryer*
-Fries images, GIFs (Experimental), or videos (Experimental).
+Fries images, GIFs, or videos (Experimental).
 This includes increasing saturation & contrast,
 and adding noise, emojis, lazer eyes, and bulges.
 
