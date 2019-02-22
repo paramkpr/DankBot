@@ -116,7 +116,7 @@ def helper_gif(update, text, words):
 	if 'hmmm' in text:
 		update.message.reply_animation(get_random(hmmm), quote=True)
 
-	elif 'allah hu akbar' in text:
+	elif 'boom son' in text:
 		update.message.reply_animation(get_random(allah_hu_akbar), quote=True)
 
 	elif 'just do it' in text:

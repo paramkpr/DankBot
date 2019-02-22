@@ -1,9 +1,8 @@
-from io import BytesIO
 from os.path import abspath, split as path_split
 from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
-from numba import jit
+from io import BytesIO
 from telegram.ext.dispatcher import run_async
 
 bin_path = path_split(abspath(__file__))[0]

@@ -2,7 +2,7 @@
 commands = '''
 *Basic Commands*
  1. Hmmm
- 2. Allah hu Akbar
+ 2. Boom son
  3. Just do it
  4. Nein
  5. E
