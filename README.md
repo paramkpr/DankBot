@@ -19,12 +19,15 @@ The idea itself started off as a joke - My friends and I would often reference m
 - Python 3.7
 - PIL (Pillow)
 - OpenCV
+- Numba
 - Python Telegram Bot
 
 ### Things I've Learnt
 - Building stateless, event-driven bots
 - Manipulating images with PIL
+- Uploading images to Imgur
 - Using OpenCV to find eyes and characters in an image
+- Extracting frames from a video and making videos from a series of frames using OpenCV + imutils.
 - Using Numba JIT and asynchronous processing for improving performance
 - Applying binary search on discrete functions (Used to calculating optimum text size in the meme generator)
 
@@ -58,8 +61,8 @@ Converts text that follows the colon to aLt CaSe. It deletes the trigger message
 ### Vapourize: ABC
 Converts text that follows the colon to Vapourwave text. It deletes the trigger message if bot has admin rights.
 
-### A🅱C
-Replaces the first consonant group of a word with 🅱. <br>
+### 🅱
+Replaces the first consonant group of each word with a 🅱. <br>
 It doesn't replace those consonants which can (mostly) be pronounced after a B.
 
 ### Alexa / Dankbot play Despacito \[x\]
