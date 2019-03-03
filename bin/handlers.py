@@ -5,26 +5,31 @@ from .helpers import \
 	helper_b, helper_gif, helper_image, \
 	helper_text, helper_fry, helper_generate, helper_despacito
 from .utils.text import commands, cookbook, changes, chars, vapourtext
+from .utils.logs import log_message, log_command
 
 
 @run_async
 def start_handler(bot, update):
 	update.message.reply_markdown('*This is DankBot!*\n' + commands, quote=True)
+	log_command(update, 'START')
 
 
 @run_async
 def help_handler(bot, update):
 	update.message.reply_markdown(commands, quote=True)
+	log_command(update, 'HELP')
 
 
 @run_async
 def changes_handler(bot, update):
 	update.message.reply_markdown(changes, quote=True)
+	log_command(update, 'CHANGES')
 
 
 @run_async
 def cookbook_handler(bot, update):
 	update.message.reply_markdown(cookbook, quote=True)
+	log_command(update, 'COOKBOOK')
 
 
 @run_async
@@ -39,6 +44,7 @@ def alt_handler(bot, update):
 			result.append(i)
 	if update.message.reply_text("".join(result), quote=True):
 		update.message.delete()
+	log_command(update, 'ALT')
 
 
 @run_async
@@ -52,6 +58,7 @@ def vapourize_handler(bot, update):
 			result.append(i)
 	if update.message.reply_text("".join(result)):
 		update.message.delete()
+	log_command(update, 'VAPOURIZE')
 
 
 @run_async
@@ -93,20 +100,13 @@ def main_handler(bot, update):
 	elif helper_text(update, text, words):
 		return
 
-	# else:
-	# 	print(
-	# 		'(%s) %s: %s' % (
-	# 			update.message.chat.title,
-	# 			update.message.from_user.first_name,
-	# 			textn
-	# 		)
-	# 		if update.message.chat.type == 'group' else
-	# 		'%s: %s' % (update.message.from_user.first_name, textn)
-	# 	)
+	else:
+		log_message(update)
 
 
 @run_async
 def all_handler(bot, update):
+	log_message(update)
 	# print(update.message)
 	if update.message.chat.id != 623912829:
 		return
@@ -120,4 +120,5 @@ def all_handler(bot, update):
 		else update.message.video_note.file_id if update.message.video_note
 		else update.message.voice.file_id if update.message.voice
 		else update.message,
-		quote=True)
+		quote=True
+	)

@@ -4,6 +4,7 @@ from random import randint
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 from telegram.ext.dispatcher import run_async
+from .utils.logs import log_command
 
 bin_path = path_split(abspath(__file__))[0]
 font = ImageFont.truetype(bin_path + '/Resources/Fonts/raleway.ttf', 32)
@@ -28,6 +29,7 @@ def drake(update, a, b):
 	img.save(bio, 'PNG')
 	bio.seek(0)
 	update.message.reply_photo(bio, quote=True)
+	log_command(update, 'DRAKE')
 
 
 # @jit(fastmath=True)
