@@ -44,13 +44,15 @@ def __get_lines(t):
 			return [" ".join(t[:i])] + __get_lines(" ".join(t[i:]))
 
 	raise ValueError
-	# for i in range(len(t[0]), -1, -1):
-	# 	w, _ = font.getsize("".join(t[:i]))
-	# 	if w <= 320:
-	# 		return (
-	# 			["".join(t[0][:i])] +
-	# 			__get_lines(" ".join(["".join(t[0][i:])] + t[1:]))
-	# 		)
+
+
+# for i in range(len(t[0]), -1, -1):
+# 	w, _ = font.getsize("".join(t[:i]))
+# 	if w <= 320:
+# 		return (
+# 			["".join(t[0][:i])] +
+# 			__get_lines(" ".join(["".join(t[0][i:])] + t[1:]))
+# 		)
 
 
 def __draw_text(draw, t, y):
