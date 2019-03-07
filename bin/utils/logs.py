@@ -46,9 +46,9 @@ def generate_log_message(update):
 			update.message.chat.id,
 			update.message.from_user.first_name,
 			update.message.from_user.id,
-			update.message.text
+			update.message.text if update.message.text else '<media file>'
 		)
-		if update.message.chat.type == 'group' else
+		if update.message.chat.type != 'private' else
 		'%s[%s]: %s' % (
 			update.message.from_user.first_name,
 			update.message.from_user.id,

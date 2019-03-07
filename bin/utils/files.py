@@ -21,7 +21,6 @@ nein = [
 	'CgADBQADWAADYj5QVx0RbyA-8GUaAg'
 ]
 
-
 # Images
 e = ['AgADBQADSagxG389uVQS7adI6Erza3cx1TIABKmTrdCdaEhPGJcDAAEC']
 hello_there = ['AgADBQADFqgxG64JuVTqFdh3NKxsqzud1jIABGS5QBh2gsTA9BcCAAEC']
@@ -38,7 +37,6 @@ what_the = [
 	'BQADBQADVQADtbBQV_d14-rpA_bvAg'
 ]
 miss_me = ['AgADBQADR6gxG389uVRhyTb2UhEuhtoq1TIABPAqFc3ZT5UIw5YDAAEC']
-
 
 # Others
 despacito = ['CgADBAADnI4AAmQbZAeIL_dX_O5NcQI']

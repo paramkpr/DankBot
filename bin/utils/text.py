@@ -27,7 +27,7 @@ commands = '''
 3. Vapourize:
 	Converts text that follows the colon to Vapourwave text.
 	Deletes the trigger message if given admin rights.
-	
+
 4. 🅱️
 	Replaces the first consonant group of a word with 🅱️.
 	Doesn't replace those consonants which can (mostly) be pronounced after a b.
@@ -37,7 +37,7 @@ commands = '''
 	along with an audio file of Despacito.
 	If a number x is given, certain effects are applied to the audio.
 	If not, the audio file has a 10% chance of being extremely bass boosted.
-	
+
 6. T: ABC B: XYZ
 	Reply to an image to create a meme.
 	ABC is the top-text and XYZ is the bottom-text.
@@ -77,7 +77,7 @@ using one of the following commands:
 
 	f) Heavy: Extra bulges are added.
 	g) Light: No bulges are added.
-	
+
 	h) Vitamin-B: (Experimental) Adds the B emoji on text in the image.
 	i) Chilli: (Experimental) Adds laser eyes.
 
@@ -99,11 +99,13 @@ changes = '''
 - Bot now deletes alt: and vapourize: triggers when granted admin rights.
 '''
 # Vapourwave Text
-normal = '''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890''' \
-	+ '''`-=~!@#$%^&*()_+[];',./{}:"|<>?'''
-vapour = '''ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ''' \
-	+ '''ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９０''' \
-	+ '''''''`－＝~！＠＃＄％^＆＊（）_＋[]；＇，．／{}："|<>？'''
+normal = \
+	'''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890''' + \
+	'''`-=~!@#$%^&*()_+[];',./{}:"|<>?'''
+vapour = \
+	'''ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ''' + \
+	'''ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９０''' + \
+	'''`－＝~！＠＃＄％^＆＊（）_＋[]；＇，．／{}："|<>？'''
 vapourtext = {normal[x]: vapour[x] for x in range(len(normal))}
 vapourtext[' '] = '   '
 
