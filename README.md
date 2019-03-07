@@ -21,15 +21,18 @@ The idea itself started off as a joke - My friends and I would often reference m
 - OpenCV
 - Numba
 - Python Telegram Bot
+- Papertrail
 
 ### Things I've Learnt
 - Building stateless, event-driven bots
 - Manipulating images with PIL
-- Uploading images to Imgur
-- Using OpenCV to find eyes and characters in an image
+- Uploading images to Imgur with PyImgur
+- Detecting characters and eyes in images using OpenCV
 - Extracting frames from a video and making videos from a series of frames using OpenCV + imutils.
-- Using Numba JIT and asynchronous processing for improving performance
+- Using Numba JIT and asynchronous execution to improve performance
 - Applying binary search on discrete functions (Used to calculating optimum text size in the meme generator)
+- Using papertrail for centralized logging
+- Static log analysis (DankBot Stats)
 
 # Using DankBot
 
