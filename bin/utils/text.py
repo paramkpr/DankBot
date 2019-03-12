@@ -88,15 +88,18 @@ Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
 Use */help* to print commands and */cookbook* for frying help.
 '''
 changes = '''
-19 Feb 2019
+12 Mar 2019
 
-- GIF fryer functionality is more or less stable.
-- Added /changes command.
+- Added /about.
+'''
+about = '''
+DankBot is a project started and currently maintained by Ishan Manchanda (Rippr)
+The code is hosted on Github here: https://github.com/Rippr/DankBot
 
+If you wish to contribute to DankBot, feel free to fork the repo and send a PR
+my way.
 
-18 Feb 2019
-
-- Bot now deletes alt: and vapourize: triggers when granted admin rights.
+Audio (Despacito) by J Shelly.
 '''
 # Vapourwave Text
 normal = \

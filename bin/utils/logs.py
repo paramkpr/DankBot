@@ -1,7 +1,8 @@
 from datetime import datetime
 from inspect import currentframe, getframeinfo
-from pytz import timezone
 from sys import stdout
+
+from pytz import timezone
 
 
 def log_debug(message):

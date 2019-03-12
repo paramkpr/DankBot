@@ -5,8 +5,8 @@ from telegram.ext import run_async
 from .fryer import fry_gif, fry_image
 from .generator_classic import generate
 from .utils.files import *
-from .utils.text import exbuded, bs, keys, ironic
-from .utils.logs import log_message, log_command
+from .utils.logs import log_command
+from .utils.text import bs, exbuded, ironic, keys
 
 
 def get_random(var):
@@ -27,11 +27,11 @@ def helper_b(update, text):
 		try:
 			while x[i] not in bs:
 				i += 1
-			s, i = i, i + 1
+			start, i = i, i + 1
 			while x[i] in bs:
 				i += 1
 			end = i
-			a.append(x[:s] + '🅱️' + x[end:])
+			a.append(x[:start] + '🅱️' + x[end:])
 		except IndexError:
 			a.append(x)
 

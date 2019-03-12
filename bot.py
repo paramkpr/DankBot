@@ -36,8 +36,8 @@ Copyright (C) 2019  Ishan Manchanda (@Rippr)
 from os import environ
 
 from dotenv import load_dotenv
-from telegram.ext import \
-	Updater, CommandHandler, MessageHandler, Filters, RegexHandler
+from telegram.ext import CommandHandler, Filters, MessageHandler, RegexHandler, \
+	Updater
 
 from bin.handlers import *
 
@@ -54,6 +54,7 @@ updater = Updater(
 dispatcher = updater.dispatcher
 dispatcher.add_handler(CommandHandler('start', start_handler))
 dispatcher.add_handler(CommandHandler('help', help_handler))
+dispatcher.add_handler(CommandHandler('about', about_handler))
 dispatcher.add_handler(CommandHandler('changes', changes_handler))
 dispatcher.add_handler(CommandHandler('cookbook', cookbook_handler))
 

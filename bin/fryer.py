@@ -1,4 +1,3 @@
-from io import BytesIO
 from os import environ, remove
 from os.path import abspath, isfile, split as path_split
 from random import shuffle
@@ -6,12 +5,13 @@ from urllib.error import HTTPError, URLError
 from urllib.request import urlopen, urlretrieve
 
 from PIL import Image, ImageEnhance, ImageOps
-from cv2 import \
-	CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, threshold, \
+from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
 	CascadeClassifier, MORPH_CROSS, RETR_EXTERNAL, THRESH_BINARY, \
 	THRESH_BINARY_INV, VideoWriter, VideoWriter_fourcc, bitwise_and, \
-	boundingRect, cvtColor, dilate, findContours, getStructuringElement
+	boundingRect, cvtColor, dilate, findContours, getStructuringElement, \
+	threshold
 from imutils.video import FileVideoStream
+from io import BytesIO
 from numba import jit
 from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
