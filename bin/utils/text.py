@@ -98,6 +98,7 @@ changes = '''
 
 - Bot now deletes alt: and vapourize: triggers when granted admin rights.
 '''
+
 # Vapourwave Text
 normal = \
 	'''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890''' + \

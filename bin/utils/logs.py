@@ -10,14 +10,12 @@ def log_debug(message):
 	line = cf.f_back.f_lineno
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
 
-	stdout.write('DEBUG %s <line %s, %s>: %s\n' % (
-		timestamp, line, file, message
-	))
+	stdout.write(f'DEBUG {timestamp} <line {line}, {file}>: {message}\n')
 
 
 def log_info(message):
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
-	stdout.write('INFO %s: %s\n' % (timestamp, message))
+	stdout.write(f'INFO {timestamp}: {message}\n')
 
 
 def log_warn(message):
@@ -26,13 +24,11 @@ def log_warn(message):
 	line = cf.f_back.f_lineno
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
 
-	stdout.write('WARN %s <line %s, %s>: %s\n' % (
-		timestamp, line, file, message
-	))
+	stdout.write(f'WARN {timestamp} <line {line}, {file}>: {message}\n')
 
 
 def log_command(update, command):
-	log_info('{%s} %s' % (command, generate_log_message(update)))
+	log_info(f'{{{command}}} {{{generate_log_message(update)}}}')
 
 
 def log_message(update):

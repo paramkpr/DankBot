@@ -5,8 +5,8 @@ from telegram.ext import run_async
 from .fryer import fry_gif, fry_image
 from .generator_classic import generate
 from .utils.files import *
-from .utils.text import exbuded, bs, keys, ironic
-from .utils.logs import log_message, log_command
+from .utils.logs import log_command
+from .utils.text import bs, exbuded, ironic, keys
 
 
 def get_random(var):
@@ -44,10 +44,12 @@ def helper_b(update, text):
 
 def helper_fry(bot, update):
 	text = update.message.text.lower()
-	n = (10 if 'tsar bomba' in text else
-	     5 if 'allah hu akbar' in text else
-	     3 if 'nuk' in text else
-	     1 if 'fry' in text else 0)
+	n = (
+		10 if 'tsar bomba' in text else
+		5 if 'allah hu akbar' in text else
+		3 if 'nuk' in text else
+		1 if 'fry' in text else 0
+	)
 
 	if n:
 		args = {key: 1 if key in text else 0 for key in keys}

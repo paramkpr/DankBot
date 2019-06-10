@@ -44,6 +44,8 @@ def fry_image(update, url, number_of_cycles, args):
 		name,
 		update.message.message_id
 	)
+
+	filepath = f'{bin_path}/temp/{filename}'
 	caption = __get_caption(name, number_of_cycles, args)
 
 	success, img = __get_image(url)
@@ -64,8 +66,9 @@ def fry_image(update, url, number_of_cycles, args):
 	img.save(bio, 'PNG')
 	bio.seek(0)
 	update.message.reply_photo(bio, caption=caption, quote=True)
-	img.save(bin_path + '/temp/' + filename, 'PNG')
-	__upload_to_imgur(bin_path + '/temp/' + filename, caption)
+
+	img.save(filepath, 'PNG')
+	__upload_to_imgur(filepath, caption)
 
 
 @run_async
@@ -80,19 +83,19 @@ def fry_gif(update, url, number_of_cycles, args):
 		name,
 		update.message.message_id
 	)
-	filepath = bin_path + '/temp/' + filename
+	filepath = f'{bin_path}/temp/{filename}'
 	caption = __get_caption(name, number_of_cycles, args)
-	output = bin_path + '/temp/out_' + filename + '.mp4'
+	output = f'{bin_path}/temp/out_{filename}.mp4'
 
 	gifbio = BytesIO()
-	gifbio.name = filename + '.gif'
+	gifbio.name = f'{filename}.gif'
 	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 	shuffle(fs)
 
 	if not __download_gif(url, filepath):
 		return
 
-	fvs = FileVideoStream(filepath + '.mp4').start()
+	fvs = FileVideoStream(f'{filepath}.mp4').start()
 	frame = fvs.read()
 	height, width, _ = frame.shape
 
@@ -128,7 +131,7 @@ def fry_gif(update, url, number_of_cycles, args):
 		__upload_to_imgur(output, caption)
 	except (Exception, BaseException) as e:
 		print(e)
-	remove(filepath + '.mp4')
+	remove(f'{filepath}.mp4')
 
 
 def __get_image(url):
@@ -138,23 +141,23 @@ def __get_image(url):
 		except (HTTPError, URLError):
 			sleep(1)
 		except (OSError, UnboundLocalError):
-			print("OSError while retreiving image")
+			print("OSError while retrieving image")
 			return 0, None
-	print("Quitting loop while retreiving image")
+	print("Quitting loop while retrieving image")
 	return 0, None
 
 
 def __download_gif(url, filepath):
 	for _ in range(5):
 		try:
-			urlretrieve(url, filepath + '.mp4')
+			urlretrieve(url, f'{filepath}.mp4')
 			return 1
 		except (HTTPError, URLError):
 			sleep(1)
 		except (OSError, UnboundLocalError):
-			print("OSError while retreiving gif")
+			print("OSError while retrieving gif")
 			return 0
-	print("Quitting loop while retreiving gif")
+	print("Quitting loop while retrieving gif")
 	return 0
 
 
@@ -244,10 +247,10 @@ def __find_chars(img):
 def __find_eyes(img):
 	coords = []
 	face_cascade = CascadeClassifier(
-		bin_path + '/Resources/Classifiers/haarcascade_frontalface.xml'
+		f'{bin_path}/Resources/Classifiers/haarcascade_frontalface.xml'
 	)
 	eye_cascade = CascadeClassifier(
-		bin_path + '/Resources/Classifiers/haarcascade_eye.xml'
+		f'{bin_path}/Resources/Classifiers/haarcascade_eye.xml'
 	)
 	gray = array(img.convert("L"))
 
@@ -291,7 +294,7 @@ def __add_lasers(img, coords):
 		return img
 	tmp = img.copy()
 
-	laser = Image.open(bin_path + '/Resources/Frying/laser1.png')
+	laser = Image.open(f'{bin_path}/Resources/Frying/laser1.png')
 	for coord in coords:
 		tmp.paste(
 			laser, (
@@ -307,7 +310,7 @@ def __add_lasers(img, coords):
 def __add_b(img, coords, c):
 	tmp = img.copy()
 
-	b = Image.open(bin_path + '/Resources/Frying/B.png')
+	b = Image.open(f'{bin_path}/Resources/Frying/B.png')
 	for coord in coords:
 		if random(1)[0] < c:
 			resized = b.copy()
@@ -323,7 +326,7 @@ def __add_emojis(img, m):
 	tmp = img.copy()
 
 	for i in emojis:
-		emoji = Image.open(bin_path + '/Resources/Frying/%s.png' % i)
+		emoji = Image.open(f'{bin_path}/Resources/Frying/%s.png' % i)
 		for _ in range(int(random(1)[0] * m)):
 			coord = random(2) * array([img.width, img.height])
 			size = int((img.width / 10) * (random(1)[0] + 1)) + 1
@@ -489,8 +492,10 @@ def __get_caption(name, number_of_cycles, args):
 	)
 	if args['chilli']:
 		if args['vitamin-b']:
-			return caption + ', with extra Chilli and added Vitamin-B.'
-		return caption + ', with extra Chilli.'
+			return f'{caption}, with extra Chilli and added Vitamin-B.'
+
+		return f'{caption}, with extra Chilli.'
+
 	if args['vitamin-b']:
-		return caption + ', with added Vitamin-B.'
-	return caption + '.'
+		return f'{caption}, with added Vitamin-B.'
+	return f'{caption}.'

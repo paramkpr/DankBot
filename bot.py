@@ -36,8 +36,8 @@ Copyright (C) 2019  Ishan Manchanda (@Rippr)
 from os import environ
 
 from dotenv import load_dotenv
-from telegram.ext import \
-	Updater, CommandHandler, MessageHandler, Filters, RegexHandler
+from telegram.ext import CommandHandler, Filters, MessageHandler, RegexHandler, \
+	Updater
 
 from bin.handlers import *
 

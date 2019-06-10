@@ -1,16 +1,15 @@
 from telegram.ext.dispatcher import run_async
 
 from .drake import drake
-from .helpers import \
-	helper_b, helper_gif, helper_image, \
-	helper_text, helper_fry, helper_generate, helper_despacito
-from .utils.text import commands, cookbook, changes, chars, vapourtext
-from .utils.logs import log_message, log_command
+from .helpers import helper_b, helper_despacito, helper_fry, helper_generate, \
+	helper_gif, helper_image, helper_text
+from .utils.logs import log_command, log_message
+from .utils.text import changes, chars, commands, cookbook, vapourtext
 
 
 @run_async
 def start_handler(bot, update):
-	update.message.reply_markdown('*This is DankBot!*\n' + commands, quote=True)
+	update.message.reply_markdown(f'*This is DankBot!*\n{commands}', quote=True)
 	log_command(update, 'START')
 
 
