@@ -9,7 +9,8 @@ from .utils.text import changes, chars, commands, cookbook, vapourtext
 
 @run_async
 def start_handler(bot, update):
-	update.message.reply_markdown(f'*This is DankBot!*\n{commands}', quote=True)
+	update.message.reply_markdown(f'*This is DankBot!*\n{commands}',
+		quote=True)
 	log_command(update, 'START')
 
 

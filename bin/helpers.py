@@ -206,7 +206,8 @@ def helper_text(update, text, words):
 		log_command(update, 'PROFIT')
 
 	elif 'thought' in text and 'process' in text:
-		update.message.reply_text('thoughtprocessors.herokuapp.com', quote=True)
+		update.message.reply_text('thoughtprocessors.herokuapp.com',
+			quote=True)
 		log_command(update, 'THOUGHTPROCESSORS')
 
 	elif 'tp' in text and 'http' not in text:

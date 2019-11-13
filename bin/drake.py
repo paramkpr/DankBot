@@ -1,8 +1,8 @@
+from io import BytesIO
 from os.path import abspath, split as path_split
 from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
-from io import BytesIO
 from telegram.ext.dispatcher import run_async
 
 from .utils.logs import log_command
@@ -14,10 +14,13 @@ font = ImageFont.truetype(f'{bin_path}/Resources/Fonts/raleway.ttf', 32)
 @run_async
 def drake(update, a, b):
 	m = (
-		('Drake', 'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
-		('Drake', 'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
+		('Drake',
+		'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
+		('Drake',
+		'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
 		('Robbie', 'AgADBQADS6gxG389uVT6Q3H5BIllKdWp1jIABDMXCOcwpqnScQ0CAAEC'),
-		('Babushka', 'AgADBQADTKgxG389uVRAb8NE7vNARc2w1jIABGAXUUGUqUG5zRMCAAEC')
+		('Babushka',
+		'AgADBQADTKgxG389uVRAb8NE7vNARc2w1jIABGAXUUGUqUG5zRMCAAEC')
 	)[randint(0, 3)]
 
 	bio = BytesIO()
