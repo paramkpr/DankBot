@@ -17,7 +17,7 @@
 #                                                  #
  ##                                                 ##
 
-Copyright (C) 2019  Ishan Manchanda (@Rippr)
+Copyright (C) 2019  Ishan Manchanda (@IshanManchanda)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,8 +36,8 @@ Copyright (C) 2019  Ishan Manchanda (@Rippr)
 from os import environ
 
 from dotenv import load_dotenv
-from telegram.ext import CommandHandler, Filters, MessageHandler, RegexHandler, \
-	Updater
+from telegram.ext import CommandHandler, Filters, MessageHandler, \
+	RegexHandler, Updater
 
 from bin.handlers import *
 
@@ -46,8 +46,7 @@ if 'TELEGRAM_TOKEN' not in environ:
 TOKEN = environ.get('TELEGRAM_TOKEN')
 
 updater = Updater(
-	TOKEN,
-	workers=32,
+	TOKEN, workers=32, use_context=True,
 	request_kwargs={'read_timeout': 60, 'connect_timeout': 60}
 )
 
@@ -58,7 +57,7 @@ dispatcher.add_handler(CommandHandler('changes', changes_handler))
 dispatcher.add_handler(CommandHandler('cookbook', cookbook_handler))
 
 dispatcher.add_handler(RegexHandler(r'(?i)(^alt:)', alt_handler))
-dispatcher.add_handler(RegexHandler(r'(?i)(^vapourize:)', vapourize_handler))
+dispatcher.add_handler(RegexHandler(r'(?i)(^vapourize:)', vaporize_handler))
 
 dispatcher.add_handler(MessageHandler(Filters.reply, reply_handler))
 dispatcher.add_handler(MessageHandler(Filters.text, main_handler))
