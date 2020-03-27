@@ -104,7 +104,7 @@ def __draw(draw, t, x, y, font):
 	draw.text((x, y), t, (255, 255, 255), font=font)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __get_lines(t, mw, f):
 	t.strip()
 	w, _ = f.getsize(t)

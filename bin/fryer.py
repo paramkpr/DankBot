@@ -179,7 +179,7 @@ def fry_frame(
 	return cvtColor(array(img), COLOR_RGB2BGR)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __fry(
 	img, number_of_cycles, number_of_emojis,
 	bulge_probability, laser, vitamin_b
@@ -214,7 +214,7 @@ def __fry(
 	return img
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __find_chars(img):
 	# Convert image to B&W
 	gray = array(img.convert("L"))
@@ -244,7 +244,7 @@ def __find_chars(img):
 	return coords
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __find_eyes(img):
 	coords = []
 	face_cascade = CascadeClassifier(
@@ -264,7 +264,7 @@ def __find_eyes(img):
 	return coords
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __posterize(img, p):
 	return ImageOps.posterize(
 		img,
@@ -272,24 +272,24 @@ def __posterize(img, p):
 	)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __sharpen(img, p):
 	return ImageEnhance.Sharpness(img).enhance(
 		(img.width * img.height * p / 3200) ** 0.4
 	)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __increase_contrast(img, p):
 	return ImageEnhance.Contrast(img).enhance(normal(1.8, 0.8) * p / 2)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __colorize(img, p):
 	return ImageEnhance.Color(img).enhance(normal(2.5, 1) * p / 2)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_lasers(img, coords):
 	if not coords:
 		return img
@@ -307,7 +307,7 @@ def __add_lasers(img, coords):
 	return tmp
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_b(img, coords, c):
 	tmp = img.copy()
 
@@ -321,7 +321,7 @@ def __add_b(img, coords, c):
 	return tmp
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_emojis(img, m):
 	emojis = ['100', 'OK', 'laugh', 'fire', 'think']
 	tmp = img.copy()
@@ -341,7 +341,7 @@ def __add_emojis(img, m):
 	return tmp
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_bulge(img: Image.Image, coords, radius, flatness, h, ior):
 	"""
 	Creates a bulge like distortion to the image

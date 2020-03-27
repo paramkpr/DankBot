@@ -7,6 +7,7 @@ bin/Brain/*
 
 # Files to ignore
 !bin/temp/humans.txt
+error.txt
 
 
 # File types to ignore
