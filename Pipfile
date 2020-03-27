@@ -6,13 +6,6 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-asn1crypto = "*"
-certifi = "*"
-cffi = "*"
-chardet = "*"
-cryptography = "*"
-future = "*"
-idna = "*"
 imageio-ffmpeg = "*"
 imutils = "*"
 llvmlite = "*"
@@ -20,14 +13,11 @@ numba = "*"
 numpy = "*"
 opencv-python = "*"
 pillow = "*"
-pycparser = "*"
 pyimgur = "*"
 python-dotenv = "*"
 python-telegram-bot = "*"
 pytz = "*"
 requests = "*"
-six = "*"
-urllib3 = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.8.2"
