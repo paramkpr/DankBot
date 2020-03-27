@@ -1,19 +1,32 @@
 """
       ##### ##                             /            ##### ##
    /#####  /##                           #/          ######  /##
- //    /  / ###                          ##         /#   /  / ##                  #
-/     /  /   ###                         ##        /    /  /  ##                 ##
-     /  /     ###                        ##            /  /   /                  ##
-    ## ##      ##    /###   ###  /###    ##  /##      ## ##  /        /###     ########
-    ## ##      ##   / ###  / ###/ #### / ## / ###     ## ## /        / ###  / ########
-    ## ##      ##  /   ###/   ##   ###/  ##/   /      ## ##/        /   ###/     ##
-    ## ##      ## ##    ##    ##    ##   ##   /       ## ## ###    ##    ##      ##
-    ## ##      ## ##    ##    ##    ##   ##  /        ## ##   ###  ##    ##      ##
-    #  ##      ## ##    ##    ##    ##   ## ##        #  ##     ## ##    ##      ##
-       /       /  ##    ##    ##    ##   ######          /      ## ##    ##      ##
-  /###/       /   ##    /#    ##    ##   ##  ###     /##/     ###  ##    ##      ##
- /   ########/     ####/ ##   ###   ###  ##   ### / /  ########     ######       ##
-/       ####        ###   ##   ###   ###  ##   ##/ /     ####        ####         ##
+ //    /  / ###                          ##         /#   /  / ##
+     #
+/     /  /   ###                         ##        /    /  /  ##
+   ##
+     /  /     ###                        ##            /  /   /
+        ##
+    ## ##      ##    /###   ###  /###    ##  /##      ## ##  /        /###
+     ########
+    ## ##      ##   / ###  / ###/ #### / ## / ###     ## ## /        / ###  /
+    ########
+    ## ##      ##  /   ###/   ##   ###/  ##/   /      ## ##/        /   ###/
+       ##
+    ## ##      ## ##    ##    ##    ##   ##   /       ## ## ###    ##    ##
+       ##
+    ## ##      ## ##    ##    ##    ##   ##  /        ## ##   ###  ##    ##
+       ##
+    #  ##      ## ##    ##    ##    ##   ## ##        #  ##     ## ##    ##
+       ##
+       /       /  ##    ##    ##    ##   ######          /      ## ##    ##
+          ##
+  /###/       /   ##    /#    ##    ##   ##  ###     /##/     ###  ##    ##
+     ##
+ /   ########/     ####/ ##   ###   ###  ##   ### / /  ########     ######
+    ##
+/       ####        ###   ##   ###   ###  ##   ##/ /     ####        ####
+    ##
 #                                                  #
  ##                                                 ##
 
@@ -36,8 +49,7 @@ Copyright (C) 2019  Ishan Manchanda (@IshanManchanda)
 from os import environ
 
 from dotenv import load_dotenv
-from telegram.ext import CommandHandler, Filters, MessageHandler, \
-	RegexHandler, Updater
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
 from bin.handlers import *
 
@@ -50,18 +62,24 @@ updater = Updater(
 	request_kwargs={'read_timeout': 60, 'connect_timeout': 60}
 )
 
+handlers = [
+	CommandHandler('start', start_handler),
+	CommandHandler('help', help_handler),
+	CommandHandler('changes', changes_handler),
+	CommandHandler('cookbook', cookbook_handler),
+
+	MessageHandler(Filters.regex('(?i)(^alt:)'), alt_handler),
+	MessageHandler(Filters.regex('(?i)(^vaporize:)'), vaporize_handler),
+
+	MessageHandler(Filters.reply, reply_handler),
+	MessageHandler(Filters.text, main_handler),
+	MessageHandler(Filters.all, all_handler),
+
+]
+
 dispatcher = updater.dispatcher
-dispatcher.add_handler(CommandHandler('start', start_handler))
-dispatcher.add_handler(CommandHandler('help', help_handler))
-dispatcher.add_handler(CommandHandler('changes', changes_handler))
-dispatcher.add_handler(CommandHandler('cookbook', cookbook_handler))
-
-dispatcher.add_handler(RegexHandler(r'(?i)(^alt:)', alt_handler))
-dispatcher.add_handler(RegexHandler(r'(?i)(^vapourize:)', vaporize_handler))
-
-dispatcher.add_handler(MessageHandler(Filters.reply, reply_handler))
-dispatcher.add_handler(MessageHandler(Filters.text, main_handler))
-dispatcher.add_handler(MessageHandler(Filters.all, all_handler))
+for handler in handlers:
+	dispatcher.add_handler(handler)
 
 if environ.get('ENVIRONMENT', None) == 'HEROKU':
 	print("Starting Webhook")
