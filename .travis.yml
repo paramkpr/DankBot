@@ -21,9 +21,9 @@ install:
     - pipenv --python 3.8.2
     - pipenv install --dev
 
-before_script:
-    - pass
+#before_script:
+#    - pass
 
-script:
-    - pass
+#script:
+#    - pass
 #    - pytest
