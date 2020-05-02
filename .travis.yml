@@ -16,6 +16,7 @@ addons:
         update: true
 
 install:
+    - sudo apt install -y libsm6 libxrender1 libfontconfig1 libice6
     - pip install -U pip pipenv
     - pipenv --python 3.8.2
     - pipenv install --dev
