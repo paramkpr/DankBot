@@ -6,18 +6,18 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-imageio-ffmpeg = "*"
-imutils = "*"
-llvmlite = "*"
-numba = "*"
-numpy = "*"
-opencv-python = "*"
-pillow = "*"
-pyimgur = "*"
-python-dotenv = "*"
-python-telegram-bot = "*"
-pytz = "*"
-requests = "*"
+imageio-ffmpeg = "==0.4.1"
+imutils = "==0.5.3"
+llvmlite = "==0.32.0"
+numba = "==0.49.0"
+numpy = "==1.18.3"
+opencv-python = "==4.2.0.34"
+pillow = "==7.1.2"
+pyimgur = "==0.6.0"
+python-dotenv = "==0.13.0"
+python-telegram-bot = "==12.7"
+pytz = "==2020.1"
+requests = "==2.23.0"
 
 [requires]
 python_version = "3.8.2"
