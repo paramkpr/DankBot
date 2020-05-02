@@ -24,6 +24,6 @@ install:
 #before_script:
 #    - pass
 
-#script:
-#    - pass
-#    - pytest
+script:
+    - pipenv check
+#    - python bot.py
