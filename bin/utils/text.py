@@ -88,19 +88,12 @@ Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
 Use */help* to print commands and */cookbook* for frying help.
 '''
 changes = '''
-12 Mar 2019
+27 Mar 2020
 
-- Added /about.
+- Renamed vapourize to vaporize
+- Working on getting most of the features back up
 '''
-about = '''
-DankBot is a project started and currently maintained by Ishan Manchanda (Rippr)
-The code is hosted on Github here: https://github.com/Rippr/DankBot
 
-If you wish to contribute to DankBot, feel free to fork the repo and send a PR
-my way.
-
-Audio (Despacito) by J Shelly.
-'''
 # Vapourwave Text
 normal = \
 	'''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890''' + \

@@ -44,10 +44,12 @@ def helper_b(update, text):
 
 def helper_fry(bot, update):
 	text = update.message.text.lower()
-	n = (10 if 'tsar bomba' in text else
-	     5 if 'allah hu akbar' in text else
-	     3 if 'nuk' in text else
-	     1 if 'fry' in text else 0)
+	n = (
+		10 if 'tsar bomba' in text else
+		5 if 'allah hu akbar' in text else
+		3 if 'nuk' in text else
+		1 if 'fry' in text else 0
+	)
 
 	if n:
 		args = {key: 1 if key in text else 0 for key in keys}
@@ -204,7 +206,8 @@ def helper_text(update, text, words):
 		log_command(update, 'PROFIT')
 
 	elif 'thought' in text and 'process' in text:
-		update.message.reply_text('thoughtprocessors.herokuapp.com', quote=True)
+		update.message.reply_text('thoughtprocessors.herokuapp.com',
+			quote=True)
 		log_command(update, 'THOUGHTPROCESSORS')
 
 	elif 'tp' in text and 'http' not in text:

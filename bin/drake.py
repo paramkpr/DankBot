@@ -8,20 +8,23 @@ from telegram.ext.dispatcher import run_async
 from .utils.logs import log_command
 
 bin_path = path_split(abspath(__file__))[0]
-font = ImageFont.truetype(bin_path + '/Resources/Fonts/raleway.ttf', 32)
+font = ImageFont.truetype(f'{bin_path}/Resources/Fonts/raleway.ttf', 32)
 
 
 @run_async
 def drake(update, a, b):
 	m = (
-		('Drake', 'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
-		('Drake', 'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
+		('Drake',
+		'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
+		('Drake',
+		'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
 		('Robbie', 'AgADBQADS6gxG389uVT6Q3H5BIllKdWp1jIABDMXCOcwpqnScQ0CAAEC'),
-		('Babushka', 'AgADBQADTKgxG389uVRAb8NE7vNARc2w1jIABGAXUUGUqUG5zRMCAAEC')
+		('Babushka',
+		'AgADBQADTKgxG389uVRAb8NE7vNARc2w1jIABGAXUUGUqUG5zRMCAAEC')
 	)[randint(0, 3)]
 
 	bio = BytesIO()
-	img = Image.open(bin_path + '/Resources/Drake/%s.png' % m[0])
+	img = Image.open(f'{bin_path}/Resources/Drake/%s.png' % m[0])
 	draw = ImageDraw.Draw(img)
 
 	if not __draw_text(draw, a, 129) or not __draw_text(draw, b, 387):

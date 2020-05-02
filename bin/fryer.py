@@ -1,8 +1,6 @@
 from os import environ, remove
 from os.path import abspath, isfile, split as path_split
 from random import shuffle
-from urllib.error import HTTPError, URLError
-from urllib.request import urlopen, urlretrieve
 
 from PIL import Image, ImageEnhance, ImageOps
 from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
@@ -12,12 +10,13 @@ from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
 	threshold
 from imutils.video import FileVideoStream
 from io import BytesIO
-from numba import jit
 from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
 from telegram.ext.dispatcher import run_async
 from time import sleep
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen, urlretrieve
 
 bin_path = path_split(abspath(__file__))[0]
 
@@ -44,6 +43,8 @@ def fry_image(update, url, number_of_cycles, args):
 		name,
 		update.message.message_id
 	)
+
+	filepath = f'{bin_path}/temp/{filename}'
 	caption = __get_caption(name, number_of_cycles, args)
 
 	success, img = __get_image(url)
@@ -64,8 +65,9 @@ def fry_image(update, url, number_of_cycles, args):
 	img.save(bio, 'PNG')
 	bio.seek(0)
 	update.message.reply_photo(bio, caption=caption, quote=True)
-	img.save(bin_path + '/temp/' + filename, 'PNG')
-	__upload_to_imgur(bin_path + '/temp/' + filename, caption)
+
+	img.save(filepath, 'PNG')
+	__upload_to_imgur(filepath, caption)
 
 
 @run_async
@@ -80,19 +82,19 @@ def fry_gif(update, url, number_of_cycles, args):
 		name,
 		update.message.message_id
 	)
-	filepath = bin_path + '/temp/' + filename
+	filepath = f'{bin_path}/temp/{filename}'
 	caption = __get_caption(name, number_of_cycles, args)
-	output = bin_path + '/temp/out_' + filename + '.mp4'
+	output = f'{bin_path}/temp/out_{filename}.mp4'
 
 	gifbio = BytesIO()
-	gifbio.name = filename + '.gif'
+	gifbio.name = f'{filename}.gif'
 	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 	shuffle(fs)
 
 	if not __download_gif(url, filepath):
 		return
 
-	fvs = FileVideoStream(filepath + '.mp4').start()
+	fvs = FileVideoStream(f'{filepath}.mp4').start()
 	frame = fvs.read()
 	height, width, _ = frame.shape
 
@@ -100,7 +102,8 @@ def fry_gif(update, url, number_of_cycles, args):
 		fps = fvs.get(CAP_PROP_FPS)
 	except:
 		fps = 30
-	out = VideoWriter(output, VideoWriter_fourcc(*'mp4v'), fps, (width, height))
+	out = VideoWriter(output, VideoWriter_fourcc(*'mp4v'), fps, (width,
+	height))
 	out.write(fry_frame(
 		frame, number_of_cycles, fs, number_of_emojis,
 		bulge_probability, magnitude, args
@@ -128,7 +131,7 @@ def fry_gif(update, url, number_of_cycles, args):
 		__upload_to_imgur(output, caption)
 	except (Exception, BaseException) as e:
 		print(e)
-	remove(filepath + '.mp4')
+	remove(f'{filepath}.mp4')
 
 
 def __get_image(url):
@@ -138,23 +141,23 @@ def __get_image(url):
 		except (HTTPError, URLError):
 			sleep(1)
 		except (OSError, UnboundLocalError):
-			print("OSError while retreiving image")
+			print("OSError while retrieving image")
 			return 0, None
-	print("Quitting loop while retreiving image")
+	print("Quitting loop while retrieving image")
 	return 0, None
 
 
 def __download_gif(url, filepath):
 	for _ in range(5):
 		try:
-			urlretrieve(url, filepath + '.mp4')
+			urlretrieve(url, f'{filepath}.mp4')
 			return 1
 		except (HTTPError, URLError):
 			sleep(1)
 		except (OSError, UnboundLocalError):
-			print("OSError while retreiving gif")
+			print("OSError while retrieving gif")
 			return 0
-	print("Quitting loop while retreiving gif")
+	print("Quitting loop while retrieving gif")
 	return 0
 
 
@@ -175,7 +178,7 @@ def fry_frame(
 	return cvtColor(array(img), COLOR_RGB2BGR)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __fry(
 	img, number_of_cycles, number_of_emojis,
 	bulge_probability, laser, vitamin_b
@@ -210,7 +213,7 @@ def __fry(
 	return img
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __find_chars(img):
 	# Convert image to B&W
 	gray = array(img.convert("L"))
@@ -240,14 +243,14 @@ def __find_chars(img):
 	return coords
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __find_eyes(img):
 	coords = []
 	face_cascade = CascadeClassifier(
-		bin_path + '/Resources/Classifiers/haarcascade_frontalface.xml'
+		f'{bin_path}/Resources/Classifiers/haarcascade_frontalface.xml'
 	)
 	eye_cascade = CascadeClassifier(
-		bin_path + '/Resources/Classifiers/haarcascade_eye.xml'
+		f'{bin_path}/Resources/Classifiers/haarcascade_eye.xml'
 	)
 	gray = array(img.convert("L"))
 
@@ -260,7 +263,7 @@ def __find_eyes(img):
 	return coords
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __posterize(img, p):
 	return ImageOps.posterize(
 		img,
@@ -268,30 +271,30 @@ def __posterize(img, p):
 	)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __sharpen(img, p):
 	return ImageEnhance.Sharpness(img).enhance(
 		(img.width * img.height * p / 3200) ** 0.4
 	)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __increase_contrast(img, p):
 	return ImageEnhance.Contrast(img).enhance(normal(1.8, 0.8) * p / 2)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __colorize(img, p):
 	return ImageEnhance.Color(img).enhance(normal(2.5, 1) * p / 2)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_lasers(img, coords):
 	if not coords:
 		return img
 	tmp = img.copy()
 
-	laser = Image.open(bin_path + '/Resources/Frying/laser1.png')
+	laser = Image.open(f'{bin_path}/Resources/Frying/laser1.png')
 	for coord in coords:
 		tmp.paste(
 			laser, (
@@ -303,11 +306,11 @@ def __add_lasers(img, coords):
 	return tmp
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_b(img, coords, c):
 	tmp = img.copy()
 
-	b = Image.open(bin_path + '/Resources/Frying/B.png')
+	b = Image.open(f'{bin_path}/Resources/Frying/B.png')
 	for coord in coords:
 		if random(1)[0] < c:
 			resized = b.copy()
@@ -317,13 +320,13 @@ def __add_b(img, coords, c):
 	return tmp
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_emojis(img, m):
 	emojis = ['100', 'OK', 'laugh', 'fire', 'think']
 	tmp = img.copy()
 
 	for i in emojis:
-		emoji = Image.open(bin_path + '/Resources/Frying/%s.png' % i)
+		emoji = Image.open(f'{bin_path}/Resources/Frying/%s.png' % i)
 		for _ in range(int(random(1)[0] * m)):
 			coord = random(2) * array([img.width, img.height])
 			size = int((img.width / 10) * (random(1)[0] + 1)) + 1
@@ -337,7 +340,7 @@ def __add_emojis(img, m):
 	return tmp
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __add_bulge(img: Image.Image, coords, radius, flatness, h, ior):
 	"""
 	Creates a bulge like distortion to the image
@@ -489,8 +492,10 @@ def __get_caption(name, number_of_cycles, args):
 	)
 	if args['chilli']:
 		if args['vitamin-b']:
-			return caption + ', with extra Chilli and added Vitamin-B.'
-		return caption + ', with extra Chilli.'
+			return f'{caption}, with extra Chilli and added Vitamin-B.'
+
+		return f'{caption}, with extra Chilli.'
+
 	if args['vitamin-b']:
-		return caption + ', with added Vitamin-B.'
-	return caption + '.'
+		return f'{caption}, with added Vitamin-B.'
+	return f'{caption}.'

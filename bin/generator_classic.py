@@ -1,14 +1,13 @@
 from os.path import abspath, split as path_split
-from urllib.error import HTTPError, URLError
-from urllib.request import urlopen
 
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
-from numba import jit
 from telegram.ext.dispatcher import run_async
 from time import sleep
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen
 
-font_path = path_split(abspath(__file__))[0] + '/Resources/Fonts/impact.ttf'
+font_path = f'{path_split(abspath(__file__))[0]}/Resources/Fonts/impact.ttf'
 s1 = ImageFont.truetype(font_path, 1)
 
 
@@ -104,7 +103,7 @@ def __draw(draw, t, x, y, font):
 	draw.text((x, y), t, (255, 255, 255), font=font)
 
 
-@jit(fastmath=True)
+# @jit(fastmath=True)
 def __get_lines(t, mw, f):
 	t.strip()
 	w, _ = f.getsize(t)
