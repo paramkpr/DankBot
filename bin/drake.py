@@ -1,8 +1,8 @@
-from io import BytesIO
 from os.path import abspath, split as path_split
 from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
+from io import BytesIO
 from telegram.ext.dispatcher import run_async
 
 from .utils.logs import log_command
