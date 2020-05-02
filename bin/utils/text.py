@@ -30,8 +30,7 @@ commands = '''
 
 4. 🅱️
 	Replaces the first consonant group of a word with 🅱️.
-	Doesn't replace those consonants which can (mostly) be pronounced after 
-	a b.
+	Doesn't replace those consonants which can (mostly) be pronounced after a b.
 
 5. Alexa / Dankbot play Despacito {x}
 	Sends a GIF of the Despacito music video

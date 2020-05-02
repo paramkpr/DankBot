@@ -27,11 +27,11 @@ def helper_b(update, text):
 		try:
 			while x[i] not in bs:
 				i += 1
-			s, i = i, i + 1
+			start, i = i, i + 1
 			while x[i] in bs:
 				i += 1
 			end = i
-			a.append(x[:s] + '🅱️' + x[end:])
+			a.append(x[:start] + '🅱️' + x[end:])
 		except IndexError:
 			a.append(x)
 
