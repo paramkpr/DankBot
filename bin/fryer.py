@@ -1,10 +1,6 @@
-from io import BytesIO
 from os import environ, remove
 from os.path import abspath, isfile, split as path_split
 from random import shuffle
-from time import sleep
-from urllib.error import HTTPError, URLError
-from urllib.request import urlopen, urlretrieve
 
 from PIL import Image, ImageEnhance, ImageOps
 from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
@@ -13,11 +9,14 @@ from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
 	boundingRect, cvtColor, dilate, findContours, getStructuringElement, \
 	threshold
 from imutils.video import FileVideoStream
-from numba import jit
+from io import BytesIO
 from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
 from telegram.ext.dispatcher import run_async
+from time import sleep
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen, urlretrieve
 
 bin_path = path_split(abspath(__file__))[0]
 
