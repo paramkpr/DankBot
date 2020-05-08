@@ -18,11 +18,14 @@ from time import sleep
 from urllib.error import HTTPError, URLError
 from urllib.request import urlopen, urlretrieve
 
+from bin.utils.logs import log_error, log_info, log_warn
+
 bin_path = path_split(abspath(__file__))[0]
 
 
 @run_async
 def fry_image(update, url, number_of_cycles, args):
+	log_info('Starting Image Fry')
 	number_of_emojis = (
 		3 if args['high-fat']
 		else 1 if args['low-fat']
@@ -49,25 +52,32 @@ def fry_image(update, url, number_of_cycles, args):
 
 	success, img = __get_image(url)
 	if not success:
+		log_error('Image download failed')
 		return
+	log_info('Image successfully downloaded')
 
 	img = __fry(
 		img, number_of_cycles, number_of_emojis,
 		bulge_probability, args['chilli'], args['vitamin-b']
 	)
-	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 
+	log_info('Frying effects starting')
+	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 	for _ in range(number_of_cycles):
 		shuffle(fs)
 		for f in fs:
 			img = f(img, magnitude)
+	log_info('Frying effects applied')
 
 	img.save(bio, 'PNG')
 	bio.seek(0)
 	update.message.reply_photo(bio, caption=caption, quote=True)
 
+	log_info('Image saved and replied')
+
 	img.save(filepath, 'PNG')
 	__upload_to_imgur(filepath, caption)
+	log_info('Image frying process completed')
 
 
 @run_async
@@ -86,8 +96,8 @@ def fry_gif(update, url, number_of_cycles, args):
 	caption = __get_caption(name, number_of_cycles, args)
 	output = f'{bin_path}/temp/out_{filename}.mp4'
 
-	gifbio = BytesIO()
-	gifbio.name = f'{filename}.gif'
+	gif_bio = BytesIO()
+	gif_bio.name = f'{filename}.gif'
 	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 	shuffle(fs)
 
@@ -102,8 +112,9 @@ def fry_gif(update, url, number_of_cycles, args):
 		fps = fvs.get(CAP_PROP_FPS)
 	except:
 		fps = 30
-	out = VideoWriter(output, VideoWriter_fourcc(*'mp4v'), fps, (width,
-	height))
+	out = VideoWriter(
+		output, VideoWriter_fourcc(*'mp4v'), fps, (width, height)
+	)
 	out.write(fry_frame(
 		frame, number_of_cycles, fs, number_of_emojis,
 		bulge_probability, magnitude, args
@@ -115,7 +126,7 @@ def fry_gif(update, url, number_of_cycles, args):
 				fvs.read(), number_of_cycles, fs, number_of_emojis,
 				bulge_probability, magnitude, args
 			)
-		except Exception as e:
+		except Exception:
 			break
 		out.write(temp)
 
@@ -141,9 +152,9 @@ def __get_image(url):
 		except (HTTPError, URLError):
 			sleep(1)
 		except (OSError, UnboundLocalError):
-			print("OSError while retrieving image")
+			log_error('OSError while retrieving image')
 			return 0, None
-	print("Quitting loop while retrieving image")
+	log_warn('Quitting loop while retrieving image')
 	return 0, None
 
 
@@ -183,16 +194,26 @@ def __fry(
 	img, number_of_cycles, number_of_emojis,
 	bulge_probability, laser, vitamin_b
 ):
+	log_info('__fry starting')
 	if laser:
-		eyecoords = __find_eyes(img)
-		img = __add_lasers(img, eyecoords)
+		log_info('Finding eye coordinates')
+		eye_coords = __find_eyes(img)
+		log_info('Eye coordinates found')
+		img = __add_lasers(img, eye_coords)
+		log_info('Laser eyes added')
 
 	if vitamin_b:
+		log_info('Finding char coordinates')
 		coords = __find_chars(img)
+		log_info('Char coordinates found')
 		img = __add_b(img, coords, number_of_emojis / 20)
+		log_info('"B"s added')
 
+	log_info('Starting emoji adding')
 	img = __add_emojis(img, number_of_cycles * number_of_emojis)
+	log_info('emojis added')
 
+	log_info('Starting bulge adding')
 	w, h = img.width - 1, img.height - 1
 	for _ in range(number_of_cycles):
 		if random(1)[0] > bulge_probability:
@@ -210,11 +231,13 @@ def __fry(
 			6 + random(2)[0],
 			1.2 + random(2)[0]
 		)
+	log_info('Bulges added, __fry completed')
 	return img
 
 
 # @jit(fastmath=True)
 def __find_chars(img):
+	log_info('__find_chars called')
 	# Convert image to B&W
 	gray = array(img.convert("L"))
 
@@ -240,11 +263,14 @@ def __find_chars(img):
 		# if w > 70 and h > 70:
 		# 	continue
 		coords.append((x, y, w, h))
+
+	log_info('__find_chars completed')
 	return coords
 
 
 # @jit(fastmath=True)
 def __find_eyes(img):
+	log_info('__find_eyes starting')
 	coords = []
 	face_cascade = CascadeClassifier(
 		f'{bin_path}/Resources/Classifiers/haarcascade_frontalface.xml'
@@ -260,6 +286,8 @@ def __find_eyes(img):
 		eyes = eye_cascade.detectMultiScale(roi_gray)
 		for (ex, ey, ew, eh) in eyes:
 			coords.append((x + ex + ew / 2, y + ey + eh / 2))
+
+	log_info('__find_eyes completed')
 	return coords
 
 
@@ -290,6 +318,7 @@ def __colorize(img, p):
 
 # @jit(fastmath=True)
 def __add_lasers(img, coords):
+	log_info('__add_lasers started')
 	if not coords:
 		return img
 	tmp = img.copy()
@@ -303,11 +332,13 @@ def __add_lasers(img, coords):
 			), laser
 		)
 
+	log_info('__add_lasers completed')
 	return tmp
 
 
 # @jit(fastmath=True)
 def __add_b(img, coords, c):
+	log_info('__add_b started')
 	tmp = img.copy()
 
 	b = Image.open(f'{bin_path}/Resources/Frying/B.png')
@@ -317,11 +348,13 @@ def __add_b(img, coords, c):
 			resized.thumbnail((coord[2], coord[3]), Image.ANTIALIAS)
 			tmp.paste(resized, (int(coord[0]), int(coord[1])), resized)
 
+	log_info('__add_b completed')
 	return tmp
 
 
 # @jit(fastmath=True)
 def __add_emojis(img, m):
+	log_info('__add_emojis started')
 	emojis = ['100', 'OK', 'laugh', 'fire', 'think']
 	tmp = img.copy()
 
@@ -337,6 +370,7 @@ def __add_emojis(img, m):
 			resized.thumbnail((size, size), Image.ANTIALIAS)
 			tmp.paste(resized, (int(coord[0]), int(coord[1])), resized)
 
+	log_info('__add_emojis completed')
 	return tmp
 
 
@@ -360,6 +394,7 @@ def __add_bulge(img: Image.Image, coords, radius, flatness, h, ior):
 	:return: The Bulged Image
 	:rtype: PIL.Image
 	"""
+	log_info('__add_bulge started')
 
 	width = img.width
 	height = img.height
@@ -437,19 +472,25 @@ def __add_bulge(img: Image.Image, coords, radius, flatness, h, ior):
 				# No light reaching the pixel
 				bulged[y][x] = [0, 0, 0]
 	img = Image.fromarray(bulged)
+
+	log_info('__add_bulge completed')
 	return img
 
 
 @run_async
 def __upload_to_imgur(path, caption):
+	log_info('__upload started')
 	if not isfile(path):
+		log_warn('File to be uploaded not found')
 		return
 
 	# TODO: Convert to GIF and upload.
 	if path[-3:] == 'mp4':
 		remove(path)
+		log_warn('Skipping mp4 upload')
 		return
 
+	log_info('Authorizing imgur client')
 	im = Imgur(
 		environ.get('IMGUR_CLIENT_ID'),
 		environ.get('IMGUR_CLIENT_KEY'),
@@ -465,12 +506,13 @@ def __upload_to_imgur(path, caption):
 				album=environ.get('IMGUR_ALBUM')
 			)
 		except Exception:
+			log_warn('Upload failed, refreshing token')
 			im.refresh_access_token()
 			sleep(10)
 			continue
-
-		remove(path)
-		return
+	log_info('Deleting file')
+	remove(path)
+	return
 
 
 def __get_caption(name, number_of_cycles, args):

@@ -28,6 +28,15 @@ def log_warn(message):
 	stdout.write(f'WARN {timestamp} <line {line}, {file}>: {message}\n')
 
 
+def log_error(message):
+	cf = currentframe()
+	file = getframeinfo(cf).filename
+	line = cf.f_back.f_lineno
+	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
+
+	stdout.write(f'WARN {timestamp} <line {line}, {file}>: {message}\n')
+
+
 def log_command(update, command):
 	log_info(f'{{{command}}} {{{generate_log_message(update)}}}')
 
