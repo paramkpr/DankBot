@@ -5,7 +5,7 @@ from telegram.ext import run_async
 from .fryer import fry_gif, fry_image
 from .generator_classic import generate
 from .utils.files import *
-from .utils.logs import log_command
+from .utils.logs import log_command, log_info
 from .utils.text import bs, exbuded, ironic, keys
 
 
@@ -43,6 +43,7 @@ def helper_b(update, text):
 
 
 def helper_fry(bot, update):
+	log_info('helper_fry called')
 	text = update.message.text.lower()
 	n = (
 		10 if 'tsar bomba' in text else
@@ -52,6 +53,7 @@ def helper_fry(bot, update):
 	)
 
 	if n:
+		log_info('Fry keyword detected')
 		args = {key: 1 if key in text else 0 for key in keys}
 		if update.message.reply_to_message.document:
 			url = bot.get_file(
@@ -66,6 +68,7 @@ def helper_fry(bot, update):
 			fry_gif(update, url, n, args)
 
 		elif update.message.reply_to_message.photo:
+			log_info('helper_fry found photo')
 			url = bot.get_file(
 				update.message.reply_to_message.photo[::-1][0].file_id
 			).file_path
