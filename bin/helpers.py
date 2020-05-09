@@ -52,6 +52,8 @@ def helper_fry(update: Update, context: CallbackContext):
 		log_info(f'Frying requested with command: {text}')
 		args = {key: 1 if key in text else 0 for key in keys}
 		log_info(f'Parsed frying args: {args}')
+
+		# FIXME: GIF Fryer
 		if update.message.reply_to_message.document:
 			log_info('document')
 			url = context.bot.get_file(

@@ -1,34 +1,31 @@
-from os.path import abspath, split as path_split
+from os import path
 from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 from telegram.ext.dispatcher import run_async
 
-from .utils.logs import log_command
+from .utils.files import Files
+from .utils.logs import log_command, log_error
 
-bin_path = path_split(abspath(__file__))[0]
+bin_path = path.split(path.abspath(__file__))[0]
 font = ImageFont.truetype(f'{bin_path}/Resources/Fonts/raleway.ttf', 32)
 
 
 @run_async
-def drake(update, a, b):
-	m = (
-		('Drake',
-		'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
-		('Drake',
-		'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'),
-		('Robbie', 'AgADBQADS6gxG389uVT6Q3H5BIllKdWp1jIABDMXCOcwpqnScQ0CAAEC'),
-		('Babushka',
-		'AgADBQADTKgxG389uVRAb8NE7vNARc2w1jIABGAXUUGUqUG5zRMCAAEC')
-	)[randint(0, 3)]
+def drake(update, top, bottom):
+	meme_format = ('Drake', 'Drake', 'Robbie', 'Babushka')[randint(0, 3)]
 
 	bio = BytesIO()
-	img = Image.open(f'{bin_path}/Resources/Drake/%s.png' % m[0])
+	img = Image.open(f'{bin_path}/Resources/Drake/{meme_format}.png')
 	draw = ImageDraw.Draw(img)
 
-	if not __draw_text(draw, a, 129) or not __draw_text(draw, b, 387):
-		update.message.reply_photo(m[1], quote=True)
+	# Top, bottom y coordinates
+	y1, y2 = 129, 387
+	if not (__draw_text(draw, top, y1) and __draw_text(draw, bottom, y2)):
+		log_error('Drake meme generation failed!')
+		update.message.reply_photo(Files.drake, quote=True)
+		return
 
 	img.save(bio, 'PNG')
 	bio.seek(0)
@@ -37,29 +34,32 @@ def drake(update, a, b):
 
 
 # @jit(fastmath=True)
-def __get_lines(t):
-	w, _ = font.getsize(t)
+def __get_lines(text):
+	w = font.getsize(text)[0]
+	# Check if the entire block fits in a single line
 	if w <= 320:
-		return [t]
-	t = t.split()
-	for i in range(len(t), -1, -1):
-		w, _ = font.getsize(' '.join(t[:i]))
-		if w <= 320:
-			return [" ".join(t[:i])] + __get_lines(" ".join(t[i:]))
+		return [text]
 
+	text = text.split()
+	# Iterate over words in reverse to find the largest block of text
+	# that will fit in a single line.
+	# After finding that, recurse to find the next line(s).
+	for i in range(len(text), -1, -1):
+		segment = ' '.join(text[:i])
+		w = font.getsize(segment)[0]
+
+		if w <= 320:
+			remainder = ' '.join(text[i:])
+			return [segment] + __get_lines(remainder)
+
+	# If even a single word doesn't fit, we give up and raise a ValueError
+	# TODO: Ideally should keep trying with smaller fonts
+	#  until we reach a practical readability limit
 	raise ValueError
 
 
-# for i in range(len(t[0]), -1, -1):
-# 	w, _ = font.getsize("".join(t[:i]))
-# 	if w <= 320:
-# 		return (
-# 			["".join(t[0][:i])] +
-# 			__get_lines(" ".join(["".join(t[0][i:])] + t[1:]))
-# 		)
-
-
 def __draw_text(draw, t, y):
+	# TODO: Make readable, fix param names
 	t = t.strip()
 	w, h = font.getsize(t)
 

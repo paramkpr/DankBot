@@ -1,3 +1,5 @@
+# For future use
+"""
 CHANGE_BOX, \
 	CHANGE_BOX_POSITION, \
 	CHANGE_BOX_ANGLE, \
@@ -6,3 +8,4 @@ CHANGE_BOX, \
 	CHANGE_TEXT_POSITION, \
 	CHANGE_TEXT_ANGLE, \
 	CHANGE_TEXT_SIZE = range(8)
+"""

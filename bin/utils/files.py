@@ -1,6 +1,7 @@
 # noinspection SpellCheckingInspection
 class Files:
 	# GIFs
+	# TODO: Add more meme gifs
 	hmmm = [
 		'CgADBAADCQAD3nJNU3mhMcoZSIOkAg',
 		'CgADBQADVAADYj5QVwqH1jVMp7vQAg',
@@ -17,9 +18,10 @@ class Files:
 		'CgADBQADUgADYj5QV03Oj8u2qNijAg',
 		'CgADBQADUwADYj5QV2H6LmW8DdavAg'
 	]
-	# TODO: Add more meme gifs
 
 	# Images
+	# TODO: Replace with stickers
+	# TODO: Add more meme images
 	e = ['AgADBQADSagxG389uVQS7adI6Erza3cx1TIABKmTrdCdaEhPGJcDAAEC']
 	hello_there = ['AgADBQADFqgxG64JuVTqFdh3NKxsqzud1jIABGS5QBh2gsTA9BcCAAEC']
 	dont_think_so = ['AgADBQADF6gxG64JuVTKqPGuaVo0cJ811TIABLOsd7lIp3ZiLpcDAAEC']
@@ -34,10 +36,9 @@ class Files:
 		'BQADBQADWQADYj5QVwABa-8B7XPf-wI',
 		'BQADBQADVQADtbBQV_d14-rpA_bvAg'
 	]
-	# TODO: Replace with stickers
-	# TODO: Add more meme images
 
 	# Audio
+	# TODO: Add crab rave, rick roll, etc.
 	despacito = ['CgADBAADnI4AAmQbZAeIL_dX_O5NcQI']
 	dedpacito = {
 		'normal': 'CQADBQADZwAD8YDQVnpogTAJmkKAAg',
@@ -54,4 +55,6 @@ class Files:
 		10: 'CQADBQADWwADtbBQV-42LyLnUAP8Ag',
 		11: 'CQADBQADXAADtbBQV1ubILnc5vdGAg'
 	}
-	# TODO: Add crab rave, rick roll, etc.
+
+	# Others
+	drake = 'AgADBQADSqgxG389uVR-bHcoBwTVCS6b1jIABJJj5XBpGQAB92oPAgABAg'
