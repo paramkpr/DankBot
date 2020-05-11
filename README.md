@@ -43,12 +43,10 @@ For most commands, there are multiple responses from which one is randomly picke
 - Hmmm
 - Boom son
 - Just do it
-- Nein
 - E
 - Hello there
 - I don't think so
 - Wut / Wat / Dude what / What even / What the
-- Miss me with that gay shit
 - Ironic
 - F / RIP
 - ???
@@ -81,14 +79,13 @@ Replacing T with Ts and B with Bs prevents auto-capitalization.
 
 ## Deep Fryer
 The Deep Fryer fries images, GIFs, or videos (Experimental).
-Frying includes increasing saturation & contrast, and adding noise, emojis, lazer eyes, and bulges.
+Frying includes increasing saturation & contrast, and adding noise, emojis, laser eyes, and bulges.
 
 The action is triggered by replying to a message containing a media file with one of the following commands:
 
 - Fry: 1 cycle of frying.
 - Nuke: 3 cycles of frying.
-- Allah hu Akbar: 5 cycles of frying.
-- Tsar Bomba: 10 cycles of frying.
+- Tsar Bomba: 5 cycles of frying.
 
 #### Additional parameters
 

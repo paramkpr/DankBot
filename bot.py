@@ -43,21 +43,21 @@ handlers = [
 	MessageHandler(Filters.reply, reply_handler),
 	MessageHandler(Filters.text, main_handler),
 	MessageHandler(Filters.all, all_handler),
-
 ]
 
 dispatcher = updater.dispatcher
+dispatcher.add_error_handler(error_handler)
 for handler in handlers:
 	dispatcher.add_handler(handler)
 
 if environ.get('ENVIRONMENT', None) == 'HEROKU':
-	print("Starting Webhook")
+	print('Starting Webhook')
 	updater.start_webhook(
-		listen="0.0.0.0",
+		listen='0.0.0.0',
 		port=int(environ.get('PORT')),
 		url_path=TOKEN
 	)
-	updater.bot.setWebhook("https://dankbot-tg.herokuapp.com/" + TOKEN)
+	updater.bot.setWebhook('https://dankbot-tg.herokuapp.com/' + TOKEN)
 	updater.idle()
 else:
 	print("Starting Polling")

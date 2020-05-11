@@ -5,8 +5,13 @@ from telegram.ext.dispatcher import run_async
 from .drake import drake
 from .helpers import helper_b, helper_despacito, helper_fry, helper_generate, \
 	helper_gif, helper_image, helper_text
-from .utils.logs import log_command, log_message
+from .utils.logs import log_command, log_error, log_message
 from .utils.text import changes, chars, commands, cookbook, vapourtext
+
+
+@run_async
+def error_handler(update: Update, context: CallbackContext):
+	log_error(f'Update "{update}" caused error "{context.error}"')
 
 
 @run_async
