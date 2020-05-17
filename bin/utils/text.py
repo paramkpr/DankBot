@@ -4,12 +4,10 @@ commands = '''
  1. Hmmm
  2. Boom son
  3. Just do it
- 4. Nein
  5. E
  6. Hello there
  7. I don't think so
  8. Wut / Wat / Dude what / What even / What the
- 9. Miss me with that gay shit
 10. Ironic
 11. F / RIP
 12. ???
@@ -56,7 +54,7 @@ cookbook = '''
 *Deep Fryer*
 Fries images, GIFs, or videos (Experimental).
 This includes increasing saturation & contrast,
-and adding noise, emojis, lazer eyes, and bulges.
+and adding noise, emojis, laser eyes, and bulges.
 
 To invoke, reply to a message containing an image, GIF, or video
 using one of the following commands:
@@ -88,26 +86,25 @@ Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
 Use */help* to print commands and */cookbook* for frying help.
 '''
 changes = '''
-27 Mar 2020
+17 May 2020
 
-- Renamed vapourize to vaporize
-- Working on getting most of the features back up
+- Fryer has been fixed, but still not fully stable
 '''
 
-# Vapourwave Text
+# Vaporwave Text
 normal = \
 	'''abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890''' + \
 	'''`-=~!@#$%^&*()_+[];',./{}:"|<>?'''
-vapour = \
+vapor = \
 	'''ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ''' + \
 	'''ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ１２３４５６７８９０''' + \
 	'''`－＝~！＠＃＄％^＆＊（）_＋[]；＇，．／{}："|<>？'''
-vapourtext = {normal[x]: vapour[x] for x in range(len(normal))}
-vapourtext[' '] = '   '
+vaportext = {normal[x]: vapor[x] for x in range(len(normal))}
+vaportext[' '] = '   '
 
 # B-ify
 bs = '🅱️bcdfgjkmnpqtvwx'
-exbuded = ['a', 'an', 'and', 'are', 'if', 'the']
+excluded = ['a', 'an', 'and', 'are', 'if', 'the']
 
 # Misc.
 chars = 'abcdefghijklmnopqrstuvwxyz'

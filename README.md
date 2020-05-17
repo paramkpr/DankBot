@@ -59,8 +59,8 @@ Generates a meme using either the Robbie Rotten, Babushka, or Drake template in 
 ### Alt: ABC
 Converts text that follows the colon to aLt CaSe. It deletes the trigger message if bot has admin rights.
 
-### Vapourize: ABC
-Converts text that follows the colon to Vapourwave text. It deletes the trigger message if bot has admin rights.
+### Vaporize: ABC
+Converts text that follows the colon to Vaporwave text. It deletes the trigger message if bot has admin rights.
 
 ### 🅱
 Replaces the first consonant group of each word with a 🅱. <br>

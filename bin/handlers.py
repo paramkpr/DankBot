@@ -6,7 +6,7 @@ from .drake import drake
 from .helpers import helper_b, helper_despacito, helper_fry, helper_generate, \
 	helper_gif, helper_image, helper_text
 from .utils.logs import log_command, log_error, log_message
-from .utils.text import changes, chars, commands, cookbook, vapourtext
+from .utils.text import changes, chars, commands, cookbook, vaportext
 
 
 @run_async
@@ -58,8 +58,8 @@ def vaporize_handler(update: Update, context: CallbackContext):
 	text = update.message.text[10:]
 	result = [update.message.from_user.first_name, ':']
 	for i in text:
-		if i in vapourtext:
-			result.append(vapourtext[i])
+		if i in vaportext:
+			result.append(vaportext[i])
 		else:
 			result.append(i)
 	if update.message.reply_text("".join(result)):
