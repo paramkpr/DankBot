@@ -7,7 +7,7 @@ from .fryer import fry_gif, fry_image
 from .generator_classic import generate
 from .utils.files import Files
 from .utils.logs import log_command, log_info
-from .utils.text import bs, exbuded, ironic, keys
+from .utils.text import bs, excluded, ironic, keys
 
 
 def get_random(var):
@@ -18,7 +18,7 @@ def get_random(var):
 def helper_b(update, text):
 	a = []
 	for x in text.split(' '):
-		if x in exbuded:
+		if x in excluded:
 			a.append(x)
 			continue
 		i = 0
