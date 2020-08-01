@@ -9,7 +9,7 @@
 [![Say Thanks!](https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg?style=flat-square)](https://saythanks.io/to/Rippr)
 
 
-DankBot is a simple Telegram Bot which sends, generates, and deep fries memes.
+DankBot - A Telegram Bot which sends, generates, and **deep fries** memes.
 
 # Why DankBot?
 DankBot has been an extremely fun project to work on. <br><br>
