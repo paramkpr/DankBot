@@ -3,7 +3,7 @@ dist: bionic
 
 language: python
 python:
-    - "3.8.2"
+    - "3.8.6"
 
 branches:
     only:
@@ -16,9 +16,9 @@ addons:
         update: true
 
 install:
-    - sudo apt install -y libsm6 libxrender1 libfontconfig1 libice6
+    - sudo apt install -y libsm6 libxrender1 libfontconfig1 libice6 libgl1-mesa-glx
     - pip install -U pip pipenv
-    - pipenv --python 3.8.2
+    - pipenv --python 3.8.6
 #    - pipenv install --dev
 
 #before_script:
