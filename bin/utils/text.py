@@ -1,16 +1,16 @@
 # Help Responses
 commands = '''
 *Basic Commands*
- 1. Hmmm
- 2. Boom son
- 3. Just do it
- 5. E
- 6. Hello there
- 7. I don't think so
- 8. Wut / Wat / Dude what / What even / What the
-10. Ironic
-11. F / RIP
-12. ???
+1. Hmmm
+2. Boom son
+3. Just do it
+4. E
+5. Hello there
+6. I don't think so
+7. Wut / Wat / Dude what / What even / What the
+8. Ironic
+9. F / RIP
+10. ???
 
 *Advanced Commands*
 
@@ -27,10 +27,10 @@ commands = '''
 	Deletes the trigger message if given admin rights.
 
 4. 🅱️
-	Replaces the first consonant group of a word with 🅱️.
-	Doesn't replace those consonants which can (mostly) be pronounced after a b.
+	Replaces the first consonant group of each word with 🅱️.
+	Doesn't replace those consonants which can (mostly) be pronounced after a B.
 
-5. Alexa / Dankbot play Despacito {x}
+5. Alexa / Dankbot play Despacito [x]
 	Sends a GIF of the Despacito music video
 	along with an audio file of Despacito.
 	If a number x is given, certain effects are applied to the audio.
@@ -61,8 +61,7 @@ using one of the following commands:
 
 	a) Fry: 1 cycle of frying.
 	b) Nuke: 3 cycles of frying.
-	c) Allah hu Akbar: 5 cycles of frying.
-	d) Tsar Bomba: 10 cycles of frying.
+	d) Tsar Bomba: 5 cycles of frying.
 
 	Additional parameters (Include in the same message):
 
@@ -80,15 +79,15 @@ using one of the following commands:
 	i) Chilli: (Experimental) Adds laser eyes.
 
 Also note that emojis and bulges are disabled by default for GIFs and Videos.
-Use No-fat, Low-fat, or High-fat and Light / Heavy to enable them as needed.
+Use High-fat and Heavy to enable them as needed.
 
 
 Use */help* to print commands and */cookbook* for frying help.
 '''
 changes = '''
-17 May 2020
+16 Nov 2020
 
-- Fryer has been fixed, but still not fully stable
+- Some housekeeping, general maintenance
 '''
 
 # Vaporwave Text
