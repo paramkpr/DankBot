@@ -1,5 +1,5 @@
 # DankBot
-[![Heroku](https://heroku-badge.herokuapp.com/?app=dankbot-tg&style=flat)](https://telegram.me/TheRealDankBot)
+[![Build Status](https://travis-ci.com/IshanManchanda/Dankbot.svg?branch=master)](https://travis-ci.com/IshanManchanda/Dankbot)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
 [![Codacy Badge](https://img.shields.io/codacy/grade/bae5054274c7463f98206a684c9e58b5.svg?style=flat-square)](https://www.codacy.com/app/Rippr/DankBot)
 [![CodeFactor](https://www.codefactor.io/repository/github/ishanmanchanda/dankbot/badge)](https://www.codefactor.io/repository/github/ishanmanchanda/dankbot)
