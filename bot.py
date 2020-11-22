@@ -26,39 +26,45 @@ if 'TELEGRAM_TOKEN' not in environ:
 	load_dotenv()
 TOKEN = environ.get('TELEGRAM_TOKEN')
 
-updater = Updater(
-	TOKEN, workers=32, use_context=True,
-	request_kwargs={'read_timeout': 60, 'connect_timeout': 60}
-)
 
-handlers = [
-	CommandHandler('start', start_handler),
-	CommandHandler('help', help_handler),
-	CommandHandler('changes', changes_handler),
-	CommandHandler('cookbook', cookbook_handler),
-
-	MessageHandler(Filters.regex('(?i)(^alt:)'), alt_handler),
-	MessageHandler(Filters.regex('(?i)(^vaporize:)'), vaporize_handler),
-
-	MessageHandler(Filters.reply, reply_handler),
-	MessageHandler(Filters.text, main_handler),
-	MessageHandler(Filters.all, all_handler),
-]
-
-dispatcher = updater.dispatcher
-dispatcher.add_error_handler(error_handler)
-for handler in handlers:
-	dispatcher.add_handler(handler)
-
-if environ.get('ENVIRONMENT', None) == 'HEROKU':
-	print('Starting Webhook')
-	updater.start_webhook(
-		listen='0.0.0.0',
-		port=int(environ.get('PORT')),
-		url_path=TOKEN
+def main():
+	updater = Updater(
+		TOKEN, workers=32, use_context=True,
+		request_kwargs={'read_timeout': 60, 'connect_timeout': 60}
 	)
-	updater.bot.setWebhook('https://dankbot-tg.herokuapp.com/' + TOKEN)
-	updater.idle()
-else:
-	print("Starting Polling")
-	updater.start_polling()
+
+	handlers = [
+		CommandHandler('start', start_handler),
+		CommandHandler('help', help_handler),
+		CommandHandler('changes', changes_handler),
+		CommandHandler('cookbook', cookbook_handler),
+
+		MessageHandler(Filters.regex('(?i)(^alt:)'), alt_handler),
+		MessageHandler(Filters.regex('(?i)(^vaporize:)'), vaporize_handler),
+
+		MessageHandler(Filters.reply, reply_handler),
+		MessageHandler(Filters.text, main_handler),
+		MessageHandler(Filters.all, all_handler),
+	]
+
+	dispatcher = updater.dispatcher
+	dispatcher.add_error_handler(error_handler)
+	for handler in handlers:
+		dispatcher.add_handler(handler)
+
+	if environ.get('ENVIRONMENT', None) == 'HEROKU':
+		print('Starting Webhook')
+		updater.start_webhook(
+			listen='0.0.0.0',
+			port=int(environ.get('PORT')),
+			url_path=TOKEN
+		)
+		updater.bot.setWebhook('https://dankbot-tg.herokuapp.com/' + TOKEN)
+		updater.idle()
+	else:
+		print("Starting Polling")
+		updater.start_polling()
+
+
+if __name__ == '__main__':
+	main()
