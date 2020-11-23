@@ -1,6 +1,9 @@
+from io import BytesIO
 from os import environ, remove
 from os.path import abspath, isfile, split as path_split
 from random import shuffle
+from urllib.error import HTTPError, URLError
+from urllib.request import urlopen, urlretrieve
 
 from PIL import Image, ImageEnhance, ImageOps
 from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
@@ -9,14 +12,11 @@ from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
 	boundingRect, cvtColor, dilate, findContours, getStructuringElement, \
 	threshold
 from imutils.video import FileVideoStream
-from io import BytesIO
 from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
 from telegram.ext.dispatcher import run_async
 from time import sleep
-from urllib.error import HTTPError, URLError
-from urllib.request import urlopen, urlretrieve
 
 from bin.utils.logs import log_error, log_info, log_warn
 
@@ -219,7 +219,7 @@ def __fry(
 		if random(1)[0] > bulge_probability:
 			continue
 
-		# __add_bulge(img, coords, radius, flatness, h, ior)
+		# (img, coords, radius, flatness, h, ior)
 		img = __add_bulge(
 			img,
 			array([
