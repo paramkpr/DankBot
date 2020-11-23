@@ -1,23 +1,24 @@
-from os import path
+from io import BytesIO
+from os.path import abspath, join as path_join, split as path_split
 from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
-from io import BytesIO
 from telegram.ext.dispatcher import run_async
 
 from .utils.files import Files
 from .utils.logs import log_command, log_error
 
-bin_path = path.split(path.abspath(__file__))[0]
-font = ImageFont.truetype(f'{bin_path}/Resources/Fonts/raleway.ttf', 32)
+bin_path = path_split(abspath(__file__))[0]
+font_path = path_join(bin_path, '/resources/fonts/raleway.ttf')
+font = ImageFont.truetype(font_path, 32)
 
 
 @run_async
 def drake(update, top, bottom):
-	meme_format = ('Drake', 'Drake', 'Robbie', 'Babushka')[randint(0, 3)]
+	meme_format = ('drake', 'drake', 'robbie', 'babushka')[randint(0, 3)]
 
 	bio = BytesIO()
-	img = Image.open(f'{bin_path}/Resources/Drake/{meme_format}.png')
+	img = Image.open(f'{bin_path}/resources/drake/{meme_format}.png')
 	draw = ImageDraw.Draw(img)
 
 	# Top, bottom y coordinates
