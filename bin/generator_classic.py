@@ -4,7 +4,6 @@ from urllib.error import HTTPError, URLError
 from urllib.request import urlopen
 
 from PIL import Image, ImageDraw, ImageFont
-from telegram.ext.dispatcher import run_async
 from time import sleep
 
 bin_path = path_split(abspath(__file__))[0]
