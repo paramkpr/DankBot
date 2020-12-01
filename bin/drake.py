@@ -3,7 +3,6 @@ from os.path import abspath, join as path_join, split as path_split
 from random import randint
 
 from PIL import Image, ImageDraw, ImageFont
-from telegram.ext.dispatcher import run_async
 
 from bin.utils.files import Files
 from bin.utils.logs import log_command, log_error
@@ -13,7 +12,6 @@ font_path = path_join(bin_path, 'resources/fonts/raleway.ttf')
 font = ImageFont.truetype(font_path, 32)
 
 
-@run_async
 def drake(update, top, bottom):
 	meme_format = ('drake', 'drake', 'robbie', 'babushka')[randint(0, 3)]
 	img_path = path_join(bin_path, 'resources/drake/', f'{meme_format}.png')
@@ -35,7 +33,6 @@ def drake(update, top, bottom):
 	log_command(update, 'DRAKE')
 
 
-# @jit(fastmath=True)
 def __get_lines(text):
 	w = font.getsize(text)[0]
 	# Check if the entire block fits in a single line

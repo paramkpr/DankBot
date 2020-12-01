@@ -16,7 +16,6 @@ from numba import njit
 from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
-from telegram.ext.dispatcher import run_async
 from time import sleep
 
 from bin.utils.logs import log_error, log_info, log_warn
@@ -24,7 +23,6 @@ from bin.utils.logs import log_error, log_info, log_warn
 bin_path = path_split(abspath(__file__))[0]
 
 
-@run_async
 def fry_image(update, url, number_of_cycles, args):
 	log_info('Starting Image Fry')
 	number_of_emojis = (
@@ -81,7 +79,6 @@ def fry_image(update, url, number_of_cycles, args):
 	log_info('Image frying process completed')
 
 
-@run_async
 def fry_gif(update, url, number_of_cycles, args):
 	number_of_emojis = 1.5 if args['high-fat'] else 1 if args['low-fat'] else 0
 	bulge_probability = 0.3 if args['heavy'] else 0.15 if args['light'] else 0
@@ -449,7 +446,6 @@ def __add_bulges(img_data, size, coords, radius, flatness, h, ior):
 	return bulged
 
 
-@run_async
 def __upload_to_imgur(path, caption):
 	log_info('__upload started')
 	if not isfile(path):

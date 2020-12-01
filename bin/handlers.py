@@ -1,6 +1,5 @@
 from telegram import Update
 from telegram.ext import CallbackContext
-from telegram.ext.dispatcher import run_async
 
 from .drake import drake
 from .helpers import helper_b, helper_despacito, helper_fry, helper_generate, \
@@ -9,36 +8,30 @@ from .utils.logs import log_command, log_error, log_message
 from .utils.text import changes, chars, commands, cookbook, vaportext
 
 
-@run_async
 def error_handler(update: Update, context: CallbackContext):
 	log_error(f'Update "{update}" caused error "{context.error}"')
 
 
-@run_async
 def start_handler(update: Update, context: CallbackContext):
 	update.message.reply_markdown(f'*This is DankBot!*\n{commands}', quote=True)
 	log_command(update, 'START')
 
 
-@run_async
 def help_handler(update: Update, context: CallbackContext):
 	update.message.reply_markdown(commands, quote=True)
 	log_command(update, 'HELP')
 
 
-@run_async
 def changes_handler(update: Update, context: CallbackContext):
 	update.message.reply_markdown(changes, quote=True)
 	log_command(update, 'CHANGES')
 
 
-@run_async
 def cookbook_handler(update: Update, context: CallbackContext):
 	update.message.reply_markdown(cookbook, quote=True)
 	log_command(update, 'COOKBOOK')
 
 
-@run_async
 def alt_handler(update: Update, context: CallbackContext):
 	text = update.message.text[4:].lower()
 	result, upper = [update.message.from_user.first_name, ':'], False
@@ -53,7 +46,6 @@ def alt_handler(update: Update, context: CallbackContext):
 	log_command(update, 'ALT')
 
 
-@run_async
 def vaporize_handler(update: Update, context: CallbackContext):
 	text = update.message.text[10:]
 	result = [update.message.from_user.first_name, ':']
@@ -67,7 +59,6 @@ def vaporize_handler(update: Update, context: CallbackContext):
 	log_command(update, 'VAPORIZE')
 
 
-@run_async
 def reply_handler(update: Update, context: CallbackContext):
 	if helper_fry(update, context):
 		return
@@ -78,7 +69,6 @@ def reply_handler(update: Update, context: CallbackContext):
 	main_handler(update, context)
 
 
-@run_async
 def main_handler(update: Update, context: CallbackContext):
 	textn = update.message.text
 	text = textn.lower()
@@ -110,7 +100,6 @@ def main_handler(update: Update, context: CallbackContext):
 		log_message(update)
 
 
-@run_async
 def all_handler(update: Update, context: CallbackContext):
 	log_message(update)
 	# print(update.message)
