@@ -1,7 +1,7 @@
 from random import randint
 
 from telegram import Update
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import CallbackContext
 
 from .fryer import fry_gif, fry_image
 from .generator_classic import generate
@@ -14,7 +14,6 @@ def get_random(var):
 	return var[randint(0, len(var) - 1)]
 
 
-@run_async
 def helper_b(update, text):
 	a = []
 	for x in text.split(' '):

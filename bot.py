@@ -34,17 +34,23 @@ def main():
 	)
 
 	handlers = [
-		CommandHandler('start', start_handler),
-		CommandHandler('help', help_handler),
-		CommandHandler('changes', changes_handler),
-		CommandHandler('cookbook', cookbook_handler),
+		CommandHandler('start', start_handler, run_async=True),
+		CommandHandler('help', help_handler, run_async=True),
+		CommandHandler('changes', changes_handler, run_async=True),
+		CommandHandler('cookbook', cookbook_handler, run_async=True),
 
-		MessageHandler(Filters.regex('(?i)(^alt:)'), alt_handler),
-		MessageHandler(Filters.regex('(?i)(^vaporize:)'), vaporize_handler),
+		MessageHandler(
+			Filters.regex('(?i)(^alt:)'),
+			alt_handler, run_async=True
+		),
+		MessageHandler(
+			Filters.regex('(?i)(^vaporize:)'),
+			vaporize_handler, run_async=True
+		),
 
-		MessageHandler(Filters.reply, reply_handler),
-		MessageHandler(Filters.text, main_handler),
-		MessageHandler(Filters.all, all_handler),
+		MessageHandler(Filters.reply, reply_handler, run_async=True),
+		MessageHandler(Filters.text, main_handler, run_async=True),
+		MessageHandler(Filters.all, all_handler, run_async=True),
 	]
 
 	dispatcher = updater.dispatcher

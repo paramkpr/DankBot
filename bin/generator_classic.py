@@ -13,7 +13,6 @@ font = ImageFont.truetype(font_path, 32)
 s1 = ImageFont.truetype(font_path, 1)
 
 
-@run_async
 def generate(update, url, top: str, bottom: str):
 	top = top.replace('\n', '')
 	bottom = bottom.replace('\n', '')
@@ -105,7 +104,6 @@ def __draw(draw, t, x, y, font):
 	draw.text((x, y), t, (255, 255, 255), font=font)
 
 
-# @jit(fastmath=True)
 def __get_lines(t, mw, f):
 	t.strip()
 	w, _ = f.getsize(t)
