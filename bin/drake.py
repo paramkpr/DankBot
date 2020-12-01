@@ -8,7 +8,6 @@ from telegram.ext.dispatcher import run_async
 from bin.utils.files import Files
 from bin.utils.logs import log_command, log_error
 
-
 bin_path = path_split(abspath(__file__))[0]
 font_path = path_join(bin_path, 'resources/fonts/raleway.ttf')
 font = ImageFont.truetype(font_path, 32)
