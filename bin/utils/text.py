@@ -85,9 +85,13 @@ Use High-fat and Heavy to enable them as needed.
 Use */help* to print commands and */cookbook* for frying help.
 '''
 changes = '''
-16 Nov 2020
+1 Dec 2020
 
-- Some housekeeping, general maintenance
+- Several improvements to frying system
+- Bulge adding greatly optimized, expect to see faster fries
+(especially when number of cycles is higher)
+- Minor refactoring, some bug fixes
+
 '''
 
 # Vaporwave Text
