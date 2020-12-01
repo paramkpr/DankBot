@@ -174,8 +174,8 @@ def __download_gif(url, filepath):
 
 
 def fry_frame(
-	frame, number_of_cycles, fs, number_of_emojis,
-	bulge_probability, magnitude, args
+		frame, number_of_cycles, fs, number_of_emojis,
+		bulge_probability, magnitude, args
 ):
 	img = Image.fromarray(cvtColor(frame, COLOR_BGR2RGB))
 	img = __fry(
@@ -191,8 +191,8 @@ def fry_frame(
 
 
 def __fry(
-	img, number_of_cycles, number_of_emojis,
-	bulge_probability, laser, vitamin_b
+		img, number_of_cycles, number_of_emojis,
+		bulge_probability, laser, vitamin_b
 ):
 	log_info('__fry starting')
 	if laser:

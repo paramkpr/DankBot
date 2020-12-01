@@ -1,13 +1,15 @@
-from os.path import abspath, split as path_split
-
-from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
-from telegram.ext.dispatcher import run_async
-from time import sleep
+from os.path import abspath, join as path_join, split as path_split
 from urllib.error import HTTPError, URLError
 from urllib.request import urlopen
 
-font_path = f'{path_split(abspath(__file__))[0]}/Resources/Fonts/impact.ttf'
+from PIL import Image, ImageDraw, ImageFont
+from telegram.ext.dispatcher import run_async
+from time import sleep
+
+bin_path = path_split(abspath(__file__))[0]
+font_path = path_join(bin_path, 'resources/fonts/impact.ttf')
+font = ImageFont.truetype(font_path, 32)
 s1 = ImageFont.truetype(font_path, 1)
 
 
@@ -26,8 +28,8 @@ def generate(update, url, top: str, bottom: str):
 			st, lt = __calculate_size(top, w900, h20)
 			sb, lb = __calculate_size(bottom, w900, h20)
 			if (
-				__draw_top(draw, lt, w, h, st)
-				and __draw_bottom(draw, lb, w, h, sb)
+					__draw_top(draw, lt, w, h, st)
+					and __draw_bottom(draw, lb, w, h, sb)
 			):
 				img.save(bio, 'PNG')
 				bio.seek(0)

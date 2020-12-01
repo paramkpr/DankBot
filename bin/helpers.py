@@ -183,10 +183,10 @@ def helper_text(update, text, words):
 		log_command(update, 'IRONIC')
 
 	elif (
-		text.startswith('f ')
-		or text.startswith('rip ')
-		or text == 'f'
-		or text == 'rip'
+			text.startswith('f ')
+			or text.startswith('rip ')
+			or text == 'f'
+			or text == 'rip'
 	):
 		update.message.reply_text('F', quote=True)
 		log_command(update, 'F')
