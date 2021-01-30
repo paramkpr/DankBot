@@ -13,25 +13,31 @@ DankBot - A Telegram Bot that sends, generates, and **deep fries** memes.
 
 # Why DankBot?
 DankBot has been an extremely fun project to work on. <br><br>
-The idea itself started off as a joke - My friends and I would often reference memes in our conversations and wishfully discuss about a tool that would share memes in response to certain triggers. While the idea of making a bot had occurred to me, the fact that Whatsapp, our primary communications app, didn't have a public API was discouraging. After a lot of deliberation, I began this project on the fourth of September, 2018.
+The idea itself started off as a joke - My friends and I would often reference memes
+in our conversations and wishfully discuss a tool that would share memes in response 
+to certain triggers. While the idea of making a bot had occurred to me, the fact
+that Whatsapp, our primary communications app, didn't have a public API was discouraging.
+<br><br>
+Later, when I found out about Telegram's rich bot culture, I was thrilled
+and began this project on the 4th of September 2018.
 
 ### Major Technologies Used
-- Python 3.7
-- PIL (Pillow)
-- OpenCV
+- Python 3
+- Pillow (Python Imaging Library)
+- OpenCV-Python (Python bindings for the Open Computer Vision library)
 - Numba
-- Python Telegram Bot
-- Papertrail
+- Python Telegram Bot (Wrapper over the Telegram API)
+- Papertrail API
 
 ### Things I've Learnt
 - Building stateless, event-driven bots
+- Detecting text and eyes in images using OpenCV
 - Manipulating images with PIL
-- Uploading images to Imgur with PyImgur
-- Detecting characters and eyes in images using OpenCV
 - Extracting frames from a video and making videos from a series of frames using OpenCV + imutils.
 - Using Numba JIT and asynchronous execution to improve performance
 - Applying binary search on discrete functions (Used to calculating optimum text size in the meme generator)
-- Using papertrail for centralized logging
+- Uploading images to Imgur with PyImgur
+- Using papertrail API for centralized logging
 - Static log analysis (DankBot Stats)
 
 # Using DankBot
