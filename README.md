@@ -78,7 +78,8 @@ If a number x is given, certain effects are applied to the audio. <br>
 If not, the audio file has a 10% chance of being extremely bass boosted. <br>
 
 ### T: ABC B: XYZ
-Creates a meme with the provided captions: ABC as the top-text and XYZ as the bottom-text.
+Creates a meme with the provided captions when the message is a reply to an image.
+ABC is the top-text and XYZ is the bottom-text.
 By default, the captions are converted to upper case.
 Replacing T with Ts and B with Bs prevents auto-capitalization.
 
