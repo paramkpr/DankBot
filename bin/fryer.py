@@ -359,6 +359,7 @@ def __add_bulges_helper(img, number_of_cycles, bulge_probability):
 			6 + random(2)[0],
 			1.2 + random(2)[0]
 		)
+		log_info('Bulge generated')
 
 	return Image.fromarray(img_data)
 
