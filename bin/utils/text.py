@@ -85,11 +85,9 @@ Use High-fat and Heavy to enable them as needed.
 Use */help* to print commands and */cookbook* for frying help.
 '''
 changes = '''
-1 Dec 2020
+11 Feb 2021
 
-- Several improvements to frying system
-- Bulge adding greatly optimized, expect to see faster fries
-(especially when number of cycles is higher)
+- Laser eyes are now enabled by default
 - Minor refactoring, some bug fixes
 
 '''
