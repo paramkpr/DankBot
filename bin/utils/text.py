@@ -88,6 +88,7 @@ changes = '''
 11 Feb 2021
 
 - Laser eyes are now enabled by default
+- Fixed a bug in bulge generation, bulges are now lighting fast
 - Minor refactoring, some bug fixes
 
 '''
