@@ -46,36 +46,36 @@ def helper_fry(update: Update, context: CallbackContext):
 		3 if 'nuke' in text or 'nuking' in text else
 		1 if 'fry' in text else 0
 	)
+	if not n:
+		return 0
 
-	if n:
-		log_info(f'Frying requested with command: {text}')
-		args = {key: 1 if key in text else 0 for key in keys}
-		log_info(f'Parsed frying args: {args}')
+	log_info(f'Frying requested with command: {text}')
+	args = {key: 1 if key in text else 0 for key in keys}
+	log_info(f'Parsed frying args: {args}')
 
-		# FIXME: GIF Fryer
-		if update.message.reply_to_message.document:
-			log_info('document')
-			url = context.bot.get_file(
-				update.message.reply_to_message.document.file_id
-			).file_path
-			fry_gif(update, url, n, args)
+	# FIXME: GIF Fryer
+	if update.message.reply_to_message.document:
+		log_info('document')
+		url = context.bot.get_file(
+			update.message.reply_to_message.document.file_id
+		).file_path
+		fry_gif(update, url, n, args)
 
-		elif update.message.reply_to_message.video:
-			log_info('video')
-			url = context.bot.get_file(
-				update.message.reply_to_message.video.file_id
-			).file_path
-			fry_gif(update, url, n, args)
+	elif update.message.reply_to_message.video:
+		log_info('video')
+		url = context.bot.get_file(
+			update.message.reply_to_message.video.file_id
+		).file_path
+		fry_gif(update, url, n, args)
 
-		elif update.message.reply_to_message.photo:
-			log_info('helper_fry found photo')
-			url = context.bot.get_file(
-				update.message.reply_to_message.photo[::-1][0].file_id
-			).file_path
-			fry_image(update, url, n, args)
-		log_command(update, 'FRY')
-		return 1
-	return 0
+	elif update.message.reply_to_message.photo:
+		log_info('helper_fry found photo')
+		url = context.bot.get_file(
+			update.message.reply_to_message.photo[::-1][0].file_id
+		).file_path
+		fry_image(update, url, n, args)
+	log_command(update, 'FRY')
+	return 1
 
 
 def helper_generate(update: Update, context: CallbackContext):
