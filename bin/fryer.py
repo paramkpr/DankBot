@@ -57,7 +57,7 @@ def fry_image(update, url, number_of_cycles, args):
 
 	img = __fry(
 		img, number_of_cycles, number_of_emojis,
-		bulge_probability, args['chilli'], args['vitamin-b']
+		bulge_probability, not args['no-chilli'], args['vitamin-b']
 	)
 
 	log_info('Frying effects starting')
@@ -229,10 +229,8 @@ def __find_chars(img):
 	# Convert image to binary
 	ret, mask = threshold(gray, 180, 255, THRESH_BINARY)
 	image_final = bitwise_and(gray, gray, mask=mask)
-	# Image.fromarray(image_final).save('image_final.png')
 
 	ret, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
-	# Image.fromarray(new_img).save('new_img.png')
 
 	# Idk
 	kernel = getStructuringElement(MORPH_CROSS, (3, 3))

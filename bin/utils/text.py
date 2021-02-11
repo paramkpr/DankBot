@@ -115,7 +115,7 @@ keys = [
 	'shallow', 'deep',
 	'no-fat', 'low-fat', 'high-fat',
 	'light', 'heavy',
-	'chilli',
+	'no-chilli',
 	'vitamin-b'
 ]
 
