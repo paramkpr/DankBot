@@ -503,11 +503,11 @@ def __get_caption(name, number_of_cycles, args):
 			else 'Classic'
 		)
 	)
-	if args['chilli']:
+	if args['no-chilli']:
 		if args['vitamin-b']:
-			return f'{caption}, with extra Chilli and added Vitamin-B.'
+			return f'{caption}, with added Vitamin-B and no Chilli.'
 
-		return f'{caption}, with extra Chilli.'
+		return f'{caption}, without Chilli.'
 
 	if args['vitamin-b']:
 		return f'{caption}, with added Vitamin-B.'
