@@ -3,7 +3,8 @@ from random import randint
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from .fryer import fry_gif, fry_image
+from .fryer_gif import fry_gif
+from .fryer_image import fry_image
 from .generator_classic import generate
 from .utils.files import Files
 from .utils.logs import log_command, log_info
@@ -40,6 +41,9 @@ def helper_b(update, text):
 
 
 def helper_fry(update: Update, context: CallbackContext):
+	if not update.message or not update.message.text:
+		return 0
+
 	text = update.message.text.lower()
 	n = (
 		5 if 'tsar bomba' in text else
@@ -79,10 +83,12 @@ def helper_fry(update: Update, context: CallbackContext):
 
 
 def helper_generate(update: Update, context: CallbackContext):
+	if not update.message or not update.message.text:
+		return 0
+
 	text_cased = update.message.text
 	text = text_cased.lower()
 
-	# TODO: Fix this godforsaken crap
 	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
 		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
 		b, bc = (text.find('b:'), 1) if 'b:' in text else (text.find('bs:'), 0)
@@ -197,10 +203,6 @@ def helper_text(update, text, words):
 	elif text == '???':
 		update.message.reply_text('Profit', quote=True)
 		log_command(update, 'PROFIT')
-
-	elif 'thought' in text and 'process' in text:
-		update.message.reply_text('processors.ml', quote=True)
-		log_command(update, 'THOUGHTPROCESSORS')
 
 	elif 'tp' in text and 'http' not in text:
 		update.message.reply_text(text.replace('tp', '✝️🅿️'), quote=True)

@@ -34,11 +34,11 @@ def log_error(message):
 	line = cf.f_back.f_lineno
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
 
-	stdout.write(f'WARN {timestamp} <line {line}, {file}>: {message}\n')
+	stdout.write(f'ERROR {timestamp} <line {line}, {file}>: {message}\n')
 
 
 def log_command(update, command):
-	log_info(f'{{{command}}} {{{generate_log_message(update)}}}')
+	log_info(f'{{{command}}} {generate_log_message(update)}')
 
 
 def log_message(update):
@@ -52,13 +52,13 @@ def generate_log_message(update):
 			update.message.chat.id,
 			update.message.from_user.first_name,
 			update.message.from_user.id,
-			update.message.text if update.message.text else '<media file>'
+			'TEXT' if update.message.text else 'MEDIA'
 		)
 		if update.message.chat.type != 'private' else
 		'%s[%s]: %s' % (
 			update.message.from_user.first_name,
 			update.message.from_user.id,
-			update.message.text
+			'TEXT' if update.message.text else 'MEDIA'
 		)
 	)
 
