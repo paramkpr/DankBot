@@ -8,7 +8,6 @@ from time import sleep
 
 bin_path = path_split(abspath(__file__))[0]
 font_path = path_join(bin_path, 'resources/fonts/impact.ttf')
-font = ImageFont.truetype(font_path, 32)
 s1 = ImageFont.truetype(font_path, 1)
 
 

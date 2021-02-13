@@ -34,7 +34,7 @@ def log_error(message):
 	line = cf.f_back.f_lineno
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
 
-	stdout.write(f'WARN {timestamp} <line {line}, {file}>: {message}\n')
+	stdout.write(f'ERROR {timestamp} <line {line}, {file}>: {message}\n')
 
 
 def log_command(update, command):

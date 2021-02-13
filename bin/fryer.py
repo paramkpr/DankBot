@@ -1,190 +1,17 @@
-from io import BytesIO
 from os import environ, remove
 from os.path import abspath, isfile, join as path_join, split as path_split
-from random import shuffle
-from urllib.error import HTTPError, URLError
-from urllib.request import urlopen, urlretrieve
 
 from PIL import Image, ImageEnhance, ImageOps
-from cv2 import CAP_PROP_FPS, CHAIN_APPROX_NONE, COLOR_BGR2RGB, COLOR_RGB2BGR, \
-	CascadeClassifier, MORPH_CROSS, RETR_EXTERNAL, THRESH_BINARY, \
-	THRESH_BINARY_INV, VideoWriter, VideoWriter_fourcc, bitwise_and, \
-	boundingRect, cvtColor, dilate, findContours, getStructuringElement, \
-	threshold
-from imutils.video import FileVideoStream
 from numba import njit
 from numpy import arcsin, arctan, array, copy, pi, sin, sqrt, square, sum
 from numpy.random import normal, random
 from pyimgur import Imgur
 from time import sleep
 
+from bin.cv import find_chars, find_eyes
 from bin.utils.logs import log_error, log_info, log_warn
 
 bin_path = path_split(abspath(__file__))[0]
-
-
-def fry_image(update, url, number_of_cycles, args):
-	log_info('Starting Image Fry')
-	number_of_emojis = (
-		3 if args['high-fat']
-		else 1 if args['low-fat']
-		else 0 if args['no-fat']
-		else 2
-	)
-	bulge_probability = (
-		0.75 if args['heavy']
-		else 0 if args['light']
-		else 0.45
-	)
-	magnitude = 4 if args['deep'] else 1 if args['shallow'] else 2
-
-	bio = BytesIO()
-	name = update.message.from_user.first_name
-	bio.name = filename = '%s_%s_%s.png' % (
-		update.message.chat_id,
-		name,
-		update.message.message_id
-	)
-
-	filepath = f'{bin_path}/temp/{filename}'
-	caption = __get_caption(name, number_of_cycles, args)
-
-	success, img = __get_image(url)
-	if not success:
-		log_error('Image download failed')
-		return
-	log_info('Image successfully downloaded')
-
-	img = __fry(
-		img, number_of_cycles, number_of_emojis,
-		bulge_probability, not args['no-chilli'], args['vitamin-b']
-	)
-
-	log_info('Frying effects starting')
-	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
-	for _ in range(number_of_cycles):
-		shuffle(fs)
-		for f in fs:
-			img = f(img, magnitude)
-	log_info('Frying effects applied')
-
-	img.save(bio, 'PNG')
-	bio.seek(0)
-	update.message.reply_photo(bio, caption=caption, quote=True)
-
-	log_info('Image saved and replied')
-
-	img.save(filepath, 'PNG')
-	__upload_to_imgur(filepath, caption)
-	log_info('Image frying process completed')
-
-
-def fry_gif(update, url, number_of_cycles, args):
-	number_of_emojis = 1.5 if args['high-fat'] else 1 if args['low-fat'] else 0
-	bulge_probability = 0.3 if args['heavy'] else 0.15 if args['light'] else 0
-	magnitude = 4 if args['deep'] else 1 if args['shallow'] else 2
-
-	name = update.message.from_user.first_name
-	filename = '%s_%s_%s' % (
-		update.message.chat_id,
-		name,
-		update.message.message_id
-	)
-	filepath = f'{bin_path}/temp/{filename}'
-	caption = __get_caption(name, number_of_cycles, args)
-	output = f'{bin_path}/temp/out_{filename}.mp4'
-
-	gif_bio = BytesIO()
-	gif_bio.name = f'{filename}.gif'
-	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
-	shuffle(fs)
-
-	if not __download_gif(url, filepath):
-		return
-
-	fvs = FileVideoStream(f'{filepath}.mp4').start()
-	frame = fvs.read()
-	height, width, _ = frame.shape
-
-	try:
-		fps = fvs.get(CAP_PROP_FPS)
-	except:
-		fps = 30
-	out = VideoWriter(
-		output, VideoWriter_fourcc(*'mp4v'), fps, (width, height)
-	)
-	out.write(fry_frame(
-		frame, number_of_cycles, fs, number_of_emojis,
-		bulge_probability, magnitude, args
-	))
-
-	while fvs.more() or fvs.more():
-		try:
-			temp = fry_frame(
-				fvs.read(), number_of_cycles, fs, number_of_emojis,
-				bulge_probability, magnitude, args
-			)
-		except Exception:
-			break
-		out.write(temp)
-
-	fvs.stop()
-	fvs.stream.release()
-	out.release()
-	update.message.reply_animation(
-		open(output, 'rb'),
-		caption=caption,
-		quote=True
-	)
-	try:
-		__upload_to_imgur(output, caption)
-	except (Exception, BaseException) as e:
-		print(e)
-	remove(f'{filepath}.mp4')
-
-
-def __get_image(url):
-	for _ in range(5):
-		try:
-			return 1, Image.open(BytesIO(urlopen(url).read()))
-		except (HTTPError, URLError):
-			sleep(1)
-		except (OSError, UnboundLocalError):
-			log_error('OSError while retrieving image')
-			return 0, None
-	log_warn('Quitting loop while retrieving image')
-	return 0, None
-
-
-def __download_gif(url, filepath):
-	for _ in range(5):
-		try:
-			urlretrieve(url, f'{filepath}.mp4')
-			return 1
-		except (HTTPError, URLError):
-			sleep(1)
-		except (OSError, UnboundLocalError):
-			print("OSError while retrieving gif")
-			return 0
-	print("Quitting loop while retrieving gif")
-	return 0
-
-
-def fry_frame(
-		frame, number_of_cycles, fs, number_of_emojis,
-		bulge_probability, magnitude, args
-):
-	img = Image.fromarray(cvtColor(frame, COLOR_BGR2RGB))
-	img = __fry(
-		img, number_of_cycles, number_of_emojis,
-		bulge_probability, args['chilli'], args['vitamin-b']
-	)
-
-	for _ in range(number_of_cycles):
-		for f in fs:
-			img = f(img, magnitude)
-
-	return cvtColor(array(img), COLOR_RGB2BGR)
 
 
 def __fry(
@@ -194,7 +21,7 @@ def __fry(
 	log_info('__fry starting')
 	if laser:
 		log_info('Finding eye coordinates')
-		coords = __find_eyes(img)
+		coords = find_eyes(img)
 		if coords:
 			log_info('Eye coordinates found')
 			img = __add_lasers(img, coords)
@@ -204,7 +31,7 @@ def __fry(
 
 	if vitamin_b:
 		log_info('Finding char coordinates')
-		coords = __find_chars(img)
+		coords = find_chars(img)
 		if coords:
 			log_info('Char coordinates found')
 			img = __add_b(img, coords, number_of_emojis / 20)
@@ -220,51 +47,6 @@ def __fry(
 	img = __add_bulges_helper(img, number_of_cycles, bulge_probability)
 	log_info('Bulges added, __fry completed')
 	return img
-
-
-def __find_chars(img):
-	# Convert image to B&W
-	gray = array(img.convert("L"))
-
-	# Convert image to binary
-	ret, mask = threshold(gray, 180, 255, THRESH_BINARY)
-	image_final = bitwise_and(gray, gray, mask=mask)
-
-	ret, new_img = threshold(image_final, 180, 255, THRESH_BINARY_INV)
-
-	# Idk
-	kernel = getStructuringElement(MORPH_CROSS, (3, 3))
-	dilated = dilate(new_img, kernel, iterations=1)
-	contours, _ = findContours(dilated, RETR_EXTERNAL, CHAIN_APPROX_NONE)
-
-	coords = []
-	for contour in contours:
-		# get rectangle bounding contour
-		[x, y, w, h] = boundingRect(contour)
-		# ignore large chars (probably not chars)
-		# if w > 70 and h > 70:
-		# 	continue
-		coords.append((x, y, w, h))
-	return coords
-
-
-def __find_eyes(img):
-	coords = []
-	face_cascade = CascadeClassifier(
-		path_join(bin_path, 'resources/classifiers/haarcascade_frontalface.xml')
-	)
-	eye_cascade = CascadeClassifier(
-		path_join(bin_path, 'resources/classifiers/haarcascade_eye.xml')
-	)
-	gray = array(img.convert("L"))
-
-	faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-	for (x, y, w, h) in faces:
-		roi_gray = gray[y:y + h, x:x + w]
-		eyes = eye_cascade.detectMultiScale(roi_gray)
-		for (ex, ey, ew, eh) in eyes:
-			coords.append((x + ex + ew / 2, y + ey + eh / 2))
-	return coords
 
 
 def __posterize(img, p):

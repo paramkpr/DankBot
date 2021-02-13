@@ -82,7 +82,6 @@ def helper_generate(update: Update, context: CallbackContext):
 	text_cased = update.message.text
 	text = text_cased.lower()
 
-	# TODO: Fix this godforsaken crap
 	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
 		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
 		b, bc = (text.find('b:'), 1) if 'b:' in text else (text.find('bs:'), 0)
@@ -197,10 +196,6 @@ def helper_text(update, text, words):
 	elif text == '???':
 		update.message.reply_text('Profit', quote=True)
 		log_command(update, 'PROFIT')
-
-	elif 'thought' in text and 'process' in text:
-		update.message.reply_text('processors.ml', quote=True)
-		log_command(update, 'THOUGHTPROCESSORS')
 
 	elif 'tp' in text and 'http' not in text:
 		update.message.reply_text(text.replace('tp', '✝️🅿️'), quote=True)
