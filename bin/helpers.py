@@ -3,7 +3,8 @@ from random import randint
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from .fryer import fry_gif, fry_image
+from .fryer_gif import fry_gif
+from .fryer_image import fry_image
 from .generator_classic import generate
 from .utils.files import Files
 from .utils.logs import log_command, log_info
@@ -40,6 +41,9 @@ def helper_b(update, text):
 
 
 def helper_fry(update: Update, context: CallbackContext):
+	if not update.message.text:
+		return 0
+
 	text = update.message.text.lower()
 	n = (
 		5 if 'tsar bomba' in text else
@@ -80,6 +84,8 @@ def helper_fry(update: Update, context: CallbackContext):
 
 def helper_generate(update: Update, context: CallbackContext):
 	text_cased = update.message.text
+	if not text_cased:
+		return 0
 	text = text_cased.lower()
 
 	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
