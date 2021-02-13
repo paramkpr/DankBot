@@ -70,15 +70,18 @@ def reply_handler(update: Update, context: CallbackContext):
 
 
 def main_handler(update: Update, context: CallbackContext):
-	textn = update.message.text
-	text = textn.lower()
+	if not update.message or not update.message.text:
+		return
+
+	text_c = update.message.text
+	text = text_c.lower()
 	words = text.split()
 
 	if ', not ' in text:
 		drake(
 			update,
-			textn[text.find(', not ') + 6:],
-			textn[:text.find(', not ')]
+			text_c[text.find(', not ') + 6:],
+			text_c[:text.find(', not ')]
 		)
 
 	elif '🅱️' in text:
@@ -101,8 +104,10 @@ def main_handler(update: Update, context: CallbackContext):
 
 
 def all_handler(update: Update, context: CallbackContext):
+	if not update.message:
+		return
+
 	log_message(update)
-	# print(update.message)
 	if update.message.chat.id != 623912829:
 		return
 

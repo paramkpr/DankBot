@@ -86,8 +86,8 @@ def helper_generate(update: Update, context: CallbackContext):
 	if not update.message or not update.message.text:
 		return 0
 
-	text_cased = update.message.text
-	text = text_cased.lower()
+	text_c = update.message.text
+	text = text_c.lower()
 
 	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
 		t, tc = (text.find('t:'), 1) if 't:' in text else (text.find('ts:'), 0)
@@ -99,14 +99,14 @@ def helper_generate(update: Update, context: CallbackContext):
 		if b > t:
 			generate(
 				update, url,
-				text_cased[t + 2:b].upper() if tc else text_cased[t + 3:b],
-				text_cased[b + 2:].upper() if bc else text_cased[b + 3:]
+				text_c[t + 2:b].upper() if tc else text_c[t + 3:b],
+				text_c[b + 2:].upper() if bc else text_c[b + 3:]
 			)
 		else:
 			generate(
 				update, url,
-				text_cased[t + 2:].upper() if tc else text_cased[t + 3:],
-				text_cased[b + 2:t].upper() if bc else text_cased[b + 3:t]
+				text_c[t + 2:].upper() if tc else text_c[t + 3:],
+				text_c[b + 2:t].upper() if bc else text_c[b + 3:t]
 			)
 		log_command(update, 'GEN')
 		return 1
