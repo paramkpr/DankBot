@@ -41,7 +41,7 @@ def helper_b(update, text):
 
 
 def helper_fry(update: Update, context: CallbackContext):
-	if not update.message.text:
+	if not update.message or not update.message.text:
 		return 0
 
 	text = update.message.text.lower()
@@ -83,9 +83,10 @@ def helper_fry(update: Update, context: CallbackContext):
 
 
 def helper_generate(update: Update, context: CallbackContext):
-	text_cased = update.message.text
-	if not text_cased:
+	if not update.message or not update.message.text:
 		return 0
+
+	text_cased = update.message.text
 	text = text_cased.lower()
 
 	if ('t:' in text or 'ts:' in text) and ('b:' in text or 'bs:' in text):
