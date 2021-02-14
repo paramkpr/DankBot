@@ -89,7 +89,7 @@ def fry_frame(
 	img = Image.fromarray(cvtColor(frame, COLOR_BGR2RGB))
 	img = __fry(
 		img, number_of_cycles, number_of_emojis,
-		bulge_probability, args['chilli'], args['vitamin-b']
+		bulge_probability, not args['not-chilli'], args['vitamin-b']
 	)
 
 	for _ in range(number_of_cycles):
