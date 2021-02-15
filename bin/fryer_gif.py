@@ -14,14 +14,28 @@ from time import sleep
 
 from bin.fryer import __colorize, __fry, __get_caption, __increase_contrast, \
 	__posterize, __sharpen, __upload_to_imgur
+from bin.utils.logs import log_debug, log_error, log_warn
 
 bin_path = path_split(abspath(__file__))[0]
 
 
 def fry_gif(update, url, number_of_cycles, args):
-	number_of_emojis = 1.5 if args['high-fat'] else 1 if args['low-fat'] else 0
-	bulge_probability = 0.3 if args['heavy'] else 0.15 if args['light'] else 0
-	magnitude = 4 if args['deep'] else 1 if args['shallow'] else 2
+	log_debug('Starting GIF Fry')
+	number_of_emojis = (
+		1.5 if args['high-fat']
+		else 1 if args['low-fat']
+		else 0
+	)
+	bulge_probability = (
+		0.3 if args['heavy']
+		else 0.15 if args['light']
+		else 0
+	)
+	magnitude = (
+		4 if args['deep']
+		else 1 if args['shallow']
+		else 2
+	)
 
 	name = update.message.from_user.first_name
 	filename = '%s_%s_%s' % (
@@ -35,11 +49,11 @@ def fry_gif(update, url, number_of_cycles, args):
 
 	gif_bio = BytesIO()
 	gif_bio.name = f'{filename}.gif'
-	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
-	shuffle(fs)
 
 	if not __download_gif(url, filepath):
+		log_error('GIF download failed')
 		return
+	log_debug('GIF successfully downloaded')
 
 	fvs = FileVideoStream(f'{filepath}.mp4').start()
 	frame = fvs.read()
@@ -47,26 +61,38 @@ def fry_gif(update, url, number_of_cycles, args):
 
 	try:
 		fps = fvs.get(CAP_PROP_FPS)
+		log_debug(f'Detected FPS: {fps}')
 	except:
+		log_warn('FPS Detection failed, defaulting to 30.')
 		fps = 30
 	out = VideoWriter(
 		output, VideoWriter_fourcc(*'mp4v'), fps, (width, height)
 	)
+
+	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
+	shuffle(fs)
+	log_debug(f'Frying first frame')
 	out.write(fry_frame(
 		frame, number_of_cycles, fs, number_of_emojis,
 		bulge_probability, magnitude, args
 	))
 
+	i = 2
 	while fvs.more() or fvs.more():
 		try:
+			log_debug(f'Frying frame {i}')
 			temp = fry_frame(
 				fvs.read(), number_of_cycles, fs, number_of_emojis,
 				bulge_probability, magnitude, args
 			)
+			out.write(temp)
+			log_debug(f'Frame {i} fried successfully')
+			i += 1
 		except Exception:
+			log_error(f'Encountered error while frying frame {i}')
 			break
-		out.write(temp)
 
+	log_debug(f'All frames fried.')
 	fvs.stop()
 	fvs.stream.release()
 	out.release()
@@ -75,11 +101,18 @@ def fry_gif(update, url, number_of_cycles, args):
 		caption=caption,
 		quote=True
 	)
+
+	log_debug(f'GIF saved and replied')
+
 	try:
 		__upload_to_imgur(output, caption)
 	except (Exception, BaseException) as e:
 		print(e)
-	remove(f'{filepath}.mp4')
+		try:
+			remove(f'{filepath}.mp4')
+		except:
+			pass
+	log_debug('Image frying process completed')
 
 
 def fry_frame(
@@ -107,7 +140,7 @@ def __download_gif(url, filepath):
 		except (HTTPError, URLError):
 			sleep(1)
 		except (OSError, UnboundLocalError):
-			print("OSError while retrieving gif")
+			log_error("OSError while retrieving gif")
 			return 0
-	print("Quitting loop while retrieving gif")
+	log_warn("Quitting loop while retrieving gif")
 	return 0
