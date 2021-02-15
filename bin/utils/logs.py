@@ -7,7 +7,7 @@ from sys import stdout
 
 def log_debug(message):
 	cf = currentframe()
-	file = getframeinfo(cf).filename
+	file = getframeinfo(cf.f_back).filename
 	line = cf.f_back.f_lineno
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
 
@@ -21,7 +21,7 @@ def log_info(message):
 
 def log_warn(message):
 	cf = currentframe()
-	file = getframeinfo(cf).filename
+	file = getframeinfo(cf.f_back).filename
 	line = cf.f_back.f_lineno
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
 
@@ -30,7 +30,7 @@ def log_warn(message):
 
 def log_error(message):
 	cf = currentframe()
-	file = getframeinfo(cf).filename
+	file = getframeinfo(cf.f_back).filename
 	line = cf.f_back.f_lineno
 	timestamp = datetime.now(tz=timezone('Asia/Kolkata'))
 
