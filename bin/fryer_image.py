@@ -8,8 +8,7 @@ from PIL import Image
 from time import sleep
 
 from bin.fryer import __colorize, __fry, __get_caption, __increase_contrast, \
-	__posterize, \
-	__sharpen, __upload_to_imgur
+	__posterize, __sharpen, __upload_to_imgur
 from bin.utils.logs import log_debug, log_error, log_warn
 
 bin_path = path_split(abspath(__file__))[0]
@@ -28,7 +27,11 @@ def fry_image(update, url, number_of_cycles, args):
 		else 0 if args['light']
 		else 0.45
 	)
-	magnitude = 4 if args['deep'] else 1 if args['shallow'] else 2
+	magnitude = (
+		4 if args['deep']
+		else 1 if args['shallow']
+		else 2
+	)
 
 	bio = BytesIO()
 	name = update.message.from_user.first_name
