@@ -7,7 +7,7 @@ from .fryer_gif import fry_gif
 from .fryer_image import fry_image
 from .generator_classic import generate
 from .utils.files import Files
-from .utils.logs import log_command, log_info
+from .utils.logs import log_command, log_debug
 from .utils.text import bs, excluded, ironic, keys
 
 
@@ -53,27 +53,27 @@ def helper_fry(update: Update, context: CallbackContext):
 	if not n:
 		return 0
 
-	log_info(f'Frying requested with command: {text}')
+	log_debug(f'Frying requested with command: {text}')
 	args = {key: 1 if key in text else 0 for key in keys}
-	log_info(f'Parsed frying args: {args}')
+	log_debug(f'Parsed frying args: {args}')
 
 	# FIXME: GIF Fryer
 	if update.message.reply_to_message.document:
-		log_info('document')
+		log_debug('helper_fry found document')
 		url = context.bot.get_file(
 			update.message.reply_to_message.document.file_id
 		).file_path
 		fry_gif(update, url, n, args)
 
 	elif update.message.reply_to_message.video:
-		log_info('video')
+		log_debug('helper_fry found video')
 		url = context.bot.get_file(
 			update.message.reply_to_message.video.file_id
 		).file_path
 		fry_gif(update, url, n, args)
 
 	elif update.message.reply_to_message.photo:
-		log_info('helper_fry found photo')
+		log_debug('helper_fry found photo')
 		url = context.bot.get_file(
 			update.message.reply_to_message.photo[::-1][0].file_id
 		).file_path

@@ -10,13 +10,13 @@ from time import sleep
 from bin.fryer import __colorize, __fry, __get_caption, __increase_contrast, \
 	__posterize, \
 	__sharpen, __upload_to_imgur
-from bin.utils.logs import log_error, log_info, log_warn
+from bin.utils.logs import log_debug, log_error, log_warn
 
 bin_path = path_split(abspath(__file__))[0]
 
 
 def fry_image(update, url, number_of_cycles, args):
-	log_info('Starting Image Fry')
+	log_debug('Starting Image Fry')
 	number_of_emojis = (
 		3 if args['high-fat']
 		else 1 if args['low-fat']
@@ -45,30 +45,30 @@ def fry_image(update, url, number_of_cycles, args):
 	if not success:
 		log_error('Image download failed')
 		return
-	log_info('Image successfully downloaded')
+	log_debug('Image successfully downloaded')
 
 	img = __fry(
 		img, number_of_cycles, number_of_emojis,
 		bulge_probability, not args['no-chilli'], args['vitamin-b']
 	)
 
-	log_info('Frying effects starting')
+	log_debug('Frying effects starting')
 	fs = [__posterize, __sharpen, __increase_contrast, __colorize]
 	for _ in range(number_of_cycles):
 		shuffle(fs)
 		for f in fs:
 			img = f(img, magnitude)
-	log_info('Frying effects applied')
+	log_debug('Frying effects applied')
 
 	img.save(bio, 'PNG')
 	bio.seek(0)
 	update.message.reply_photo(bio, caption=caption, quote=True)
 
-	log_info('Image saved and replied')
+	log_debug('Image saved and replied')
 
 	img.save(filepath, 'PNG')
 	__upload_to_imgur(filepath, caption)
-	log_info('Image frying process completed')
+	log_debug('Image frying process completed')
 
 
 def __get_image(url):

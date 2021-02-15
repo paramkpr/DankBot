@@ -9,7 +9,7 @@ from pyimgur import Imgur
 from time import sleep
 
 from bin.cv import find_chars, find_eyes
-from bin.utils.logs import log_error, log_info, log_warn
+from bin.utils.logs import log_debug, log_error, log_warn
 
 bin_path = path_split(abspath(__file__))[0]
 
@@ -18,34 +18,34 @@ def __fry(
 		img, number_of_cycles, number_of_emojis,
 		bulge_probability, laser, vitamin_b
 ):
-	log_info('__fry starting')
+	log_debug('__fry starting')
 	if laser:
-		log_info('Finding eye coordinates')
+		log_debug('Finding eye coordinates')
 		coords = find_eyes(img)
 		if coords:
-			log_info('Eye coordinates found')
+			log_debug('Eye coordinates found')
 			img = __add_lasers(img, coords)
-			log_info('Laser eyes added')
+			log_debug('Laser eyes added')
 		else:
-			log_info('No eye coordinates found')
+			log_debug('No eye coordinates found')
 
 	if vitamin_b:
-		log_info('Finding char coordinates')
+		log_debug('Finding char coordinates')
 		coords = find_chars(img)
 		if coords:
-			log_info('Char coordinates found')
+			log_debug('Char coordinates found')
 			img = __add_b(img, coords, number_of_emojis / 20)
-			log_info('"B"s added')
+			log_debug('"B"s added')
 		else:
-			log_info('No char coordinates found')
+			log_debug('No char coordinates found')
 
-	log_info('Adding emojis')
+	log_debug('Adding emojis')
 	img = __add_emojis(img, number_of_cycles * number_of_emojis)
-	log_info('emojis added')
+	log_debug('emojis added')
 
-	log_info('Adding bulges')
+	log_debug('Adding bulges')
 	img = __add_bulges_helper(img, number_of_cycles, bulge_probability)
-	log_info('Bulges added, __fry completed')
+	log_debug('Bulges added, __fry completed')
 	return img
 
 
@@ -141,7 +141,7 @@ def __add_bulges_helper(img, number_of_cycles, bulge_probability):
 			6 + random(2)[0],
 			1.2 + random(2)[0]
 		)
-		log_info('Bulge generated')
+		log_debug('Bulge generated')
 
 	return Image.fromarray(img_data)
 
@@ -228,7 +228,7 @@ def __add_bulges(img_data, size, coords, radius, flatness, h, ior):
 
 
 def __upload_to_imgur(path, caption):
-	log_info('__upload started')
+	log_debug('__upload started')
 	if not isfile(path):
 		log_warn('File to be uploaded not found')
 		return
@@ -239,7 +239,7 @@ def __upload_to_imgur(path, caption):
 		log_warn('Skipping mp4 upload')
 		return
 
-	log_info('Authorizing imgur client')
+	log_debug('Authorizing imgur client')
 	im = Imgur(
 		environ.get('IMGUR_CLIENT_ID'),
 		environ.get('IMGUR_CLIENT_KEY'),
@@ -254,7 +254,7 @@ def __upload_to_imgur(path, caption):
 				title=caption,
 				album=environ.get('IMGUR_ALBUM')
 			)
-			log_info('Image successfully uploaded')
+			log_debug('Image successfully uploaded')
 			break
 		except Exception:
 			log_warn('Upload failed, refreshing token')
@@ -264,7 +264,7 @@ def __upload_to_imgur(path, caption):
 	else:
 		log_error('Upload failed, proceeding')
 
-	log_info('Deleting file')
+	log_debug('Deleting file')
 	remove(path)
 	return
 
