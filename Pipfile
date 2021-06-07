@@ -15,7 +15,7 @@ pillow = "==8.2.0"
 pip = "==21.0.1"
 pyimgur = "==0.6.0"
 python-dotenv = "==0.17.1"
-python-telegram-bot = "==13.5"
+python-telegram-bot = "==13.6"
 pytz = "==2021.1"
 requests = "==2.25.1"
 
