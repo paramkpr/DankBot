@@ -60,7 +60,7 @@ def fry_gif(update, url, number_of_cycles, args):
 	height, width, _ = frame.shape
 
 	try:
-		fps = fvs.get(CAP_PROP_FPS)
+		fps = fvs.stream.get(CAP_PROP_FPS)
 		log_debug(f'Detected FPS: {fps}')
 	except:
 		log_warn('FPS Detection failed, defaulting to 30.')
@@ -81,14 +81,19 @@ def fry_gif(update, url, number_of_cycles, args):
 	while fvs.more() or fvs.more():
 		try:
 			log_debug(f'Frying frame {i}')
+			frame = fvs.read()
+			if frame is None:
+				log_warn(f'Skipping frame {i}')
+				continue
 			temp = fry_frame(
-				fvs.read(), number_of_cycles, fs, number_of_emojis,
+				frame, number_of_cycles, fs, number_of_emojis,
 				bulge_probability, magnitude, args
 			)
 			out.write(temp)
 			log_debug(f'Frame {i} fried successfully')
 			i += 1
-		except Exception:
+		except Exception as e:
+			print(e)
 			log_error(f'Encountered error while frying frame {i}')
 			break
 
