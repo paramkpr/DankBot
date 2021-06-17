@@ -63,9 +63,10 @@ def main():
 		updater.start_webhook(
 			listen='0.0.0.0',
 			port=int(environ.get('PORT')),
-			url_path=TOKEN
+			url_path=TOKEN,
+			webhook_url="https://dankbot-tg.herokuapp.com/" + TOKEN
 		)
-		updater.bot.setWebhook('https://dankbot-tg.herokuapp.com/' + TOKEN)
+		# updater.bot.setWebhook('https://dankbot-tg.herokuapp.com/' + TOKEN)
 		updater.idle()
 	else:
 		print("Starting Polling")
